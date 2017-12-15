@@ -13,6 +13,7 @@ public abstract class TypeAbstractViewHolder<T> extends RecyclerView.ViewHolder 
     public static final int TYPE_THREE = 3;
     public static final int TYPE_FOUR = 4;
     public static final int TYPE_FIVE = 5;
+    public static final int TYPE_HEADER = 6;
 
     public TypeAbstractViewHolder(View itemView) {
         super(itemView);

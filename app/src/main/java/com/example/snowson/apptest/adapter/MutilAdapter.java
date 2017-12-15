@@ -14,6 +14,7 @@ import com.example.snowson.apptest.bean.DataTypeTwo;
 import com.example.snowson.apptest.bean.MutilDataType;
 import com.example.snowson.apptest.viewholder.TypeAbstractViewHolder;
 import com.example.snowson.apptest.viewholder.TypeGridViewHolder;
+import com.example.snowson.apptest.viewholder.TypeHeaderViewHolder;
 import com.example.snowson.apptest.viewholder.TypeOneViewHolder;
 import com.example.snowson.apptest.viewholder.TypeThreeViewHolder;
 import com.example.snowson.apptest.viewholder.TypeTwoViewHolder;
@@ -35,8 +36,9 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private List<DataTypeGrid> mDataFive = new ArrayList<DataTypeGrid>();
     //记录全数据中当前item的类型
     private ArrayList<Integer> types = new ArrayList<Integer>();
-    //记录各个类型的type的在总的数据中的其实下标
+    //记录各个类型的type的在总的数据中的起始下标
     private SparseArray<Integer> mRealPosition = new SparseArray<Integer>();
+    private ArrayList<String> mHeader = new ArrayList<String>();
 
 
     private LayoutInflater lInflater;
@@ -53,12 +55,14 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         ArrayList<DataTypeTwo> dataTwo,
                         ArrayList<DataTypeThree> dataThree,
                         ArrayList<DataTypeGrid> dataFour,
-                        ArrayList<DataTypeGrid> dataFive) {
+                        ArrayList<DataTypeGrid> dataFive,
+                        ArrayList<String> headers) {
         mDataOne.addAll(dataOne);
         mDataTwo.addAll(dataTwo);
         mDataThree.addAll(dataThree);
         mDataFour.addAll(dataFour);
         mDataFive.addAll(dataFive);
+        mHeader.addAll(headers);
 
         addDataByType(TypeAbstractViewHolder.TYPE_ONE, dataOne);
         addDataByType(TypeAbstractViewHolder.TYPE_TWO, dataTwo);
@@ -69,6 +73,7 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private void addDataByType(int type, ArrayList data) {
         //记录
+        types.add(TypeAbstractViewHolder.TYPE_HEADER);
         mRealPosition.append(type, types.size());
         for (int i = 0; i < data.size(); i++) {
             types.add(type);
@@ -94,14 +99,22 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             case TypeAbstractViewHolder.TYPE_FIVE:
                 return new TypeGridViewHolder(
                         lInflater.inflate(R.layout.item_grid_one, parent, false));
+            case TypeAbstractViewHolder.TYPE_HEADER:
+                return new TypeHeaderViewHolder(
+                        lInflater.inflate(R.layout.item_type_header, parent, false));
         }
         return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        int realPosition = 0;
         Integer type = types.get(position);
-        int realPosition = position - mRealPosition.get(type);
+        if (type != TypeAbstractViewHolder.TYPE_HEADER) {
+            realPosition = position - mRealPosition.get(type);
+        }else {
+            realPosition = types.get(position + 1) - 1;
+        }
         switch (type) {
             case TypeAbstractViewHolder.TYPE_ONE:
                 ((TypeOneViewHolder) holder).bind(mDataOne.get(realPosition));
@@ -117,6 +130,9 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 return;
             case TypeAbstractViewHolder.TYPE_FIVE:
                 ((TypeGridViewHolder) holder).bind(mDataFive.get(realPosition));
+                return;
+            case TypeAbstractViewHolder.TYPE_HEADER:
+                ((TypeHeaderViewHolder) holder).bind(mHeader.get(realPosition));
                 return;
         }
 

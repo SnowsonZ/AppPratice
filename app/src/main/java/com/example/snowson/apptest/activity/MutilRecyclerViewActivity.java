@@ -40,6 +40,7 @@ public class MutilRecyclerViewActivity extends AppCompatActivity {
                     case TypeAbstractViewHolder.TYPE_ONE:
                     case TypeAbstractViewHolder.TYPE_TWO:
                     case TypeAbstractViewHolder.TYPE_THREE:
+                    case TypeAbstractViewHolder.TYPE_HEADER:
                         return gridLayoutManager.getSpanCount();
                     case TypeAbstractViewHolder.TYPE_FOUR:
                         return gridLayoutManager.getSpanCount() / 2;
@@ -94,8 +95,13 @@ public class MutilRecyclerViewActivity extends AppCompatActivity {
             data_five.add(item);
         }
 
+        ArrayList<String> data_header = new ArrayList<String>();
+        for (int i = 0; i < 5; i++) {
+            data_header.add("Header" + i);
+        }
+
         adapter = new MutilAdapter(this);
-        adapter.setData(data_one, data_two, data_three, data_four, data_five);
+        adapter.setData(data_one, data_two, data_three, data_four, data_five, data_header);
         rv_content.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
