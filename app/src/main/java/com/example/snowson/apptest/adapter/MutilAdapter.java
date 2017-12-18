@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.snowson.apptest.R;
@@ -39,6 +40,7 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     //记录各个类型的type的在总的数据中的起始下标
     private SparseArray<Integer> mRealPosition = new SparseArray<Integer>();
     private ArrayList<String> mHeader = new ArrayList<String>();
+    private View mHeaderView = null;
 
 
     private LayoutInflater lInflater;
@@ -69,6 +71,10 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         addDataByType(TypeAbstractViewHolder.TYPE_THREE, dataThree);
         addDataByType(TypeAbstractViewHolder.TYPE_FOUR, dataFour);
         addDataByType(TypeAbstractViewHolder.TYPE_FIVE, dataFive);
+    }
+
+    public void setHeader(View header) {
+        mHeaderView = header;
     }
 
     private void addDataByType(int type, ArrayList data) {
@@ -112,7 +118,7 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         Integer type = types.get(position);
         if (type != TypeAbstractViewHolder.TYPE_HEADER) {
             realPosition = position - mRealPosition.get(type);
-        }else {
+        } else {
             realPosition = types.get(position + 1) - 1;
         }
         switch (type) {

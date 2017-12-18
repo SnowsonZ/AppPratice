@@ -12,6 +12,7 @@ import com.example.snowson.apptest.bean.DataTypeOne;
 import com.example.snowson.apptest.bean.DataTypeThree;
 import com.example.snowson.apptest.bean.DataTypeTwo;
 import com.example.snowson.apptest.bean.MutilDataType;
+import com.example.snowson.apptest.view.Banner;
 import com.example.snowson.apptest.viewholder.TypeAbstractViewHolder;
 
 import java.util.ArrayList;
@@ -23,13 +24,20 @@ public class MutilRecyclerViewActivity extends AppCompatActivity {
     private List<MutilDataType> mData = new ArrayList<MutilDataType>();
     private int colorSet[] = {android.R.color.holo_green_light,
             android.R.color.holo_orange_light, android.R.color.holo_blue_light};
+    private ArrayList<String> mImageUrl = new ArrayList<String>();
     private MutilAdapter adapter;
+    private Banner mBanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mutil_recycler_view);
         rv_content = findViewById(R.id.rv_content);
+        mBanner = findViewById(R.id.banner);
+        mImageUrl.add("#ff33b5e5");
+        mImageUrl.add("#ff99cc00");
+        mImageUrl.add("#ffffbb33");
+        mBanner.setData(mImageUrl);
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         //根据item type判断item占据RecyclerView一行内容的具体大小,实现Grid,List混合布局
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
