@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
+import android.view.ViewGroup;
 
 import com.example.snowson.apptest.R;
 import com.example.snowson.apptest.adapter.MutilAdapter;
@@ -33,11 +35,18 @@ public class MutilRecyclerViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mutil_recycler_view);
         rv_content = findViewById(R.id.rv_content);
-        mBanner = findViewById(R.id.banner);
+        mBanner = new Banner(this);
+        ViewGroup.LayoutParams params = mBanner.getLayoutParams();
+        if (params == null) {
+            params = new ViewGroup.LayoutParams(getWindowManager().getDefaultDisplay().getWidth(),
+                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200,
+                            getResources().getDisplayMetrics()));
+        }
+        mBanner.setLayoutParams(params);
         mImageUrl.add("#ff33b5e5");
         mImageUrl.add("#ff99cc00");
         mImageUrl.add("#ffffbb33");
-        mBanner.setData(mImageUrl);
+        mBanner.initData(mImageUrl);
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         //根据item type判断item占据RecyclerView一行内容的具体大小,实现Grid,List混合布局
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -109,6 +118,7 @@ public class MutilRecyclerViewActivity extends AppCompatActivity {
         }
 
         adapter = new MutilAdapter(this);
+        adapter.setHeaderView(mBanner);
         adapter.setData(data_one, data_two, data_three, data_four, data_five, data_header);
         rv_content.setAdapter(adapter);
         adapter.notifyDataSetChanged();

@@ -58,24 +58,14 @@ public class Banner extends RelativeLayout {
         setBackgroundColor(Color.TRANSPARENT);
         vpContent = rootView.findViewById(R.id.main_banner);
         ctrIndicator = rootView.findViewById(R.id.ctr_indicator);
-        vpContent.setPageMargin((int) TypedValue.applyDimension(TypedValue.TYPE_DIMENSION,
-                2, getResources().getDisplayMetrics()));
-//        addView(rootView);
+        vpContent.setPageMargin((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                14, getResources().getDisplayMetrics()));
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        initData();
-    }
-
-    public void setData(List<String> imgUrl) {
+    public void initData(List<String> imgUrl) {
         if (imgUrl != null && imgUrl.size() > 0) {
             mImgUrl.addAll(imgUrl);
         }
-    }
-
-    public void initData() {
         for (int i = 0; i < mImgUrl.size(); i++) {
             CardView item = new CardView(getContext());
             item.setCardBackgroundColor(Color.parseColor(mImgUrl.get(i)));
@@ -110,10 +100,11 @@ public class Banner extends RelativeLayout {
             }
         });
         adapter.notifyDataSetChanged();
-        vpContent.setCurrentItem(1);
+        vpContent.setCurrentItem(0);
     }
 
     private void initIndicator() {
+        ctrIndicator.removeAllViews();
         for (int i = 0; i < mImgUrl.size(); i++) {
             ImageView item = new ImageView(getContext());
             item.setBackgroundResource(R.drawable.indicator_point_normal);

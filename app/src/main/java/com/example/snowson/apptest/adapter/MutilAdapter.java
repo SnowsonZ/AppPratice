@@ -2,6 +2,7 @@ package com.example.snowson.apptest.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.example.snowson.apptest.bean.DataTypeThree;
 import com.example.snowson.apptest.bean.DataTypeTwo;
 import com.example.snowson.apptest.bean.MutilDataType;
 import com.example.snowson.apptest.viewholder.TypeAbstractViewHolder;
+import com.example.snowson.apptest.viewholder.TypeBannerViewHolder;
 import com.example.snowson.apptest.viewholder.TypeGridViewHolder;
 import com.example.snowson.apptest.viewholder.TypeHeaderViewHolder;
 import com.example.snowson.apptest.viewholder.TypeOneViewHolder;
@@ -49,6 +51,12 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         lInflater = LayoutInflater.from(context);
     }
 
+    public void setHeaderView(View headerView) {
+        mHeaderView = headerView;
+        types.add(0, TypeAbstractViewHolder.TYPE_BANNER);
+        notifyDataSetChanged();
+    }
+
     public void setData(List<MutilDataType> data) {
         mData.addAll(data);
     }
@@ -71,10 +79,6 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         addDataByType(TypeAbstractViewHolder.TYPE_THREE, dataThree);
         addDataByType(TypeAbstractViewHolder.TYPE_FOUR, dataFour);
         addDataByType(TypeAbstractViewHolder.TYPE_FIVE, dataFive);
-    }
-
-    public void setHeader(View header) {
-        mHeaderView = header;
     }
 
     private void addDataByType(int type, ArrayList data) {
@@ -108,6 +112,8 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             case TypeAbstractViewHolder.TYPE_HEADER:
                 return new TypeHeaderViewHolder(
                         lInflater.inflate(R.layout.item_type_header, parent, false));
+            case TypeAbstractViewHolder.TYPE_BANNER:
+                return new TypeBannerViewHolder(mHeaderView);
         }
         return null;
     }
@@ -116,10 +122,12 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int realPosition = 0;
         Integer type = types.get(position);
-        if (type != TypeAbstractViewHolder.TYPE_HEADER) {
-            realPosition = position - mRealPosition.get(type);
-        } else {
+        if (type == TypeAbstractViewHolder.TYPE_HEADER) {
             realPosition = types.get(position + 1) - 1;
+        } else if (type == TypeAbstractViewHolder.TYPE_BANNER) {
+            return;
+        } else {
+            realPosition = position - mRealPosition.get(type);
         }
         switch (type) {
             case TypeAbstractViewHolder.TYPE_ONE:
