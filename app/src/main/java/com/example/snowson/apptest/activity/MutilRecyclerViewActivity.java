@@ -145,12 +145,12 @@ public class MutilRecyclerViewActivity extends AppCompatActivity
         DataTypeGrid dtg = new DataTypeGrid();
         dtg.setGoodsName("Add Item By LoadMore");
         dtg.setGoodsPic(android.R.color.holo_purple);
-        data_five.add(0, dtg);
+        data_five.add(dtg);
         adapter.updateData(data_one, data_two, data_three, data_four, data_five, data_header);
         rv_content.post(new Runnable() {
             @Override
             public void run() {
-                rv_content.scrollToPosition(adapter.getItemCount());
+                rv_content.scrollToPosition(adapter.getItemCount() - 1);
             }
         });
         mSwipToLoadLayout.setLoadingMore(false);
