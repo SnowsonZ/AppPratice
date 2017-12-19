@@ -2,7 +2,6 @@ package com.example.snowson.apptest.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.method.HideReturnsTransformationMethod;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,28 +50,51 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         lInflater = LayoutInflater.from(context);
     }
 
+    //如果需要headerView, 请在设置数据前添加
     public void setHeaderView(View headerView) {
         mHeaderView = headerView;
-        types.add(0, TypeAbstractViewHolder.TYPE_BANNER);
-        notifyDataSetChanged();
+//        updateData(mDataOne, mDataTwo, mDataThree, mDataFour, mDataFive, mHeader);
     }
 
     public void setData(List<MutilDataType> data) {
         mData.addAll(data);
     }
 
-    public void setData(ArrayList<DataTypeOne> dataOne,
-                        ArrayList<DataTypeTwo> dataTwo,
-                        ArrayList<DataTypeThree> dataThree,
-                        ArrayList<DataTypeGrid> dataFour,
-                        ArrayList<DataTypeGrid> dataFive,
-                        ArrayList<String> headers) {
+    public void updateData(List<DataTypeOne> dataOne,
+                           List<DataTypeTwo> dataTwo,
+                           List<DataTypeThree> dataThree,
+                           List<DataTypeGrid> dataFour,
+                           List<DataTypeGrid> dataFive,
+                           List<String> headers) {
+        mDataOne.clear();
+        mDataTwo.clear();
+        mDataThree.clear();
+        mDataFour.clear();
+        mDataFive.clear();
+        mHeader.clear();
+        types.clear();
+        mRealPosition.clear();
+
+        setData(dataOne, dataTwo, dataThree, dataFour, dataFive, headers);
+        notifyDataSetChanged();
+    }
+
+    public void setData(List<DataTypeOne> dataOne,
+                        List<DataTypeTwo> dataTwo,
+                        List<DataTypeThree> dataThree,
+                        List<DataTypeGrid> dataFour,
+                        List<DataTypeGrid> dataFive,
+                        List<String> headers) {
         mDataOne.addAll(dataOne);
         mDataTwo.addAll(dataTwo);
         mDataThree.addAll(dataThree);
         mDataFour.addAll(dataFour);
         mDataFive.addAll(dataFive);
         mHeader.addAll(headers);
+
+        if (mHeaderView != null) {
+            types.add(0, TypeAbstractViewHolder.TYPE_BANNER);
+        }
 
         addDataByType(TypeAbstractViewHolder.TYPE_ONE, dataOne);
         addDataByType(TypeAbstractViewHolder.TYPE_TWO, dataTwo);
@@ -81,7 +103,7 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         addDataByType(TypeAbstractViewHolder.TYPE_FIVE, dataFive);
     }
 
-    private void addDataByType(int type, ArrayList data) {
+    private void addDataByType(int type, List data) {
         //记录
         types.add(TypeAbstractViewHolder.TYPE_HEADER);
         mRealPosition.append(type, types.size());
@@ -89,6 +111,7 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             types.add(type);
         }
     }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

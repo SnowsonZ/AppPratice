@@ -8,7 +8,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.snowson.apptest.R;
+import com.example.snowson.apptest.utils.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,8 +58,7 @@ public class Banner extends RelativeLayout {
         setBackgroundColor(Color.TRANSPARENT);
         vpContent = rootView.findViewById(R.id.main_banner);
         ctrIndicator = rootView.findViewById(R.id.ctr_indicator);
-        vpContent.setPageMargin((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                14, getResources().getDisplayMetrics()));
+        vpContent.setPageMargin((int) (ScreenUtils.dp2px(getContext(), 14)));
     }
 
     public void initData(List<String> imgUrl) {
@@ -70,6 +69,9 @@ public class Banner extends RelativeLayout {
             CardView item = new CardView(getContext());
             item.setCardBackgroundColor(Color.parseColor(mImgUrl.get(i)));
             item.setRadius(20);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                item.setElevation(ScreenUtils.dp2px(getContext(), 10));
+            }
             mContent.add(item);
         }
         initIndicator();
@@ -114,8 +116,7 @@ public class Banner extends RelativeLayout {
                         , LinearLayout.LayoutParams.WRAP_CONTENT);
             }
             params.setMargins(0, 0,
-                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10,
-                            getResources().getDisplayMetrics()), 0);
+                    (int) (ScreenUtils.dp2px(getContext(), 10)), 0);
             item.setLayoutParams(params);
             ctrIndicator.addView(item);
         }
