@@ -3,5 +3,6 @@
     <declare-styleable name="roundImageButton">
         <attr name="src" format="reference" />
         <attr name="text" format="string" />
+        <attr name="textSize" format="dimension" />
     </declare-styleable>
 </resources>

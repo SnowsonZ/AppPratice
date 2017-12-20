@@ -30,6 +30,8 @@ public class RoundImageButton extends View {
     private Bitmap bitmap;
     private Path path;
     private RectF rectF;
+    private float mTextSize; //unit sp
+    private int mDefPadding = 10; //unit dp
 
     public RoundImageButton(Context context) {
         super(context);
@@ -45,6 +47,7 @@ public class RoundImageButton extends View {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.roundImageButton);
         mDrawable = ta.getResourceId(R.styleable.roundImageButton_src, 0);
         mText = ta.getString(R.styleable.roundImageButton_text);
+        mTextSize = ta.getDimension(R.styleable.roundImageButton_textSize, 0);
         ta.recycle();
         init();
     }
@@ -55,12 +58,14 @@ public class RoundImageButton extends View {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.roundImageButton);
         mDrawable = ta.getInt(R.styleable.roundImageButton_src, -1);
         mText = ta.getString(R.styleable.roundImageButton_text);
+        mTextSize = ta.getDimension(R.styleable.roundImageButton_textSize, 0);
         ta.recycle();
         init();
     }
 
     private void init() {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setTextSize(mTextSize);
         path = new Path();
         if (mDrawable != 0) {
             bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.webwxgetmsgimg);
@@ -70,26 +75,59 @@ public class RoundImageButton extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-//        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-//        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-//        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-//        switch (widthMode)
+        int width = 0, height = 0;
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        switch (widthMode) {
+            case MeasureSpec.EXACTLY:
+                width = widthSize;
+                break;
+            case MeasureSpec.UNSPECIFIED:
+                width = getMeasuredWidth();
+                break;
+            case MeasureSpec.AT_MOST:
+                width = (int) (paint.measureText(mText));
+                break;
+        }
+
+        switch (heightMode) {
+            case MeasureSpec.EXACTLY:
+                height = heightSize;
+                break;
+            case MeasureSpec.UNSPECIFIED:
+                height = getMeasuredHeight();
+                break;
+            case MeasureSpec.AT_MOST:
+                height = (int) (paint.descent() - paint.ascent());
+                break;
+        }
+        int padding = (int) ScreenUtils.dp2px(getContext(), mDefPadding);
+        setPadding(padding, padding, padding,padding);
+        setMeasuredDimension(width + getPaddingLeft() + getPaddingRight(),
+                height + getPaddingTop() + getPaddingBottom());
+
         rectF = new RectF(0, 0, getMeasuredWidth(), getMeasuredHeight());
-        path.addRoundRect(rectF, 20, 20, Path.Direction.CCW);
+        path.addRoundRect(rectF, ScreenUtils.dp2px(getContext(), 6),
+                ScreenUtils.dp2px(getContext(), 6), Path.Direction.CCW);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1);
+        paint.setColor(Color.BLACK);
         canvas.clipPath(path);
-        canvas.drawBitmap(bitmap, (canvas.getWidth() - bitmap.getWidth()) / 2,
-                (canvas.getHeight() - bitmap.getHeight()) / 2, paint);
+        canvas.drawBitmap(bitmap, null, rectF, paint);
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.FILL);
-        paint.setTextSize(ScreenUtils.sp2px(getContext(), 20));
+//        paint.setTextSize(ScreenUtils.sp2px(getContext(), mTextSize));
         paint.setTypeface(Typeface.DEFAULT_BOLD);
-        canvas.drawText(mText, 0, 0, paint);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText(mText, canvas.getWidth() / 2,
+                canvas.getHeight() / 2 - paint.ascent() / 2
+                        - (paint.ascent() - paint.getFontMetrics().top), paint);
     }
 }
