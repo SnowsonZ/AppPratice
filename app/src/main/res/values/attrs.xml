@@ -4,5 +4,6 @@
         <attr name="src" format="reference" />
         <attr name="text" format="string" />
         <attr name="textSize" format="dimension" />
+        <attr name="radius" format="dimension" />
     </declare-styleable>
 </resources>

@@ -2,8 +2,6 @@ package com.example.snowson.apptest.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -21,17 +19,19 @@ import com.example.snowson.apptest.utils.ScreenUtils;
 
 /**
  * Created by snowson on 17-12-20.
+ *  暂时无用，留作例子参考
  */
 
 public class RoundImageButton extends View {
     private Paint paint;
     private String mText;
     private int mDrawable;
-    private Bitmap bitmap;
+    //    private Bitmap bitmap;
     private Path path;
     private RectF rectF;
     private float mTextSize; //unit sp
     private int mDefPadding = 10; //unit dp
+    private float mRadius = 0;
 
     public RoundImageButton(Context context) {
         super(context);
@@ -48,6 +48,7 @@ public class RoundImageButton extends View {
         mDrawable = ta.getResourceId(R.styleable.roundImageButton_src, 0);
         mText = ta.getString(R.styleable.roundImageButton_text);
         mTextSize = ta.getDimension(R.styleable.roundImageButton_textSize, 0);
+        mRadius = ta.getDimension(R.styleable.roundImageButton_radius, 0);
         ta.recycle();
         init();
     }
@@ -68,7 +69,7 @@ public class RoundImageButton extends View {
         paint.setTextSize(mTextSize);
         path = new Path();
         if (mDrawable != 0) {
-            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.webwxgetmsgimg);
+//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.selected_info);
         }
     }
 
@@ -104,26 +105,30 @@ public class RoundImageButton extends View {
                 break;
         }
         int padding = (int) ScreenUtils.dp2px(getContext(), mDefPadding);
-        setPadding(padding, padding, padding,padding);
+        setPadding(padding, padding, padding, padding);
         setMeasuredDimension(width + getPaddingLeft() + getPaddingRight(),
                 height + getPaddingTop() + getPaddingBottom());
 
         rectF = new RectF(0, 0, getMeasuredWidth(), getMeasuredHeight());
-        path.addRoundRect(rectF, ScreenUtils.dp2px(getContext(), 6),
-                ScreenUtils.dp2px(getContext(), 6), Path.Direction.CCW);
+        path.addRoundRect(rectF, mRadius, mRadius, Path.Direction.CCW);
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1);
+        paint.setColor(Color.BLACK);
+        canvas.clipPath(path);
+        canvas.drawPath(path, paint);
+        super.draw(canvas);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(1);
-        paint.setColor(Color.BLACK);
-        canvas.clipPath(path);
-        canvas.drawBitmap(bitmap, null, rectF, paint);
+//        canvas.drawBitmap(bitmap, null, rectF, paint);
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.FILL);
-//        paint.setTextSize(ScreenUtils.sp2px(getContext(), mTextSize));
         paint.setTypeface(Typeface.DEFAULT_BOLD);
         paint.setTextAlign(Paint.Align.CENTER);
         canvas.drawText(mText, canvas.getWidth() / 2,
