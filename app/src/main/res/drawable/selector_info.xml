@@ -2,6 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@android:color/darker_gray" android:state_checked="false" />
-    <item android:drawable="@android:color/holo_orange_light" android:state_checked="true" />
+    <item android:drawable="@drawable/selected_info" android:state_checked="true" />
 
 </selector>
