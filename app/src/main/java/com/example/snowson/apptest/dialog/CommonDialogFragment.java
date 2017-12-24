@@ -3,17 +3,19 @@ package com.example.snowson.apptest.dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 
 /**
  * author: snowson
  * created on: 17-12-24 上午12:57
  * description: 自定义DialogFragment实现Dialog
  * 易忽略点: 1.若需要旋转屏幕时保存dialog中editText中的内容，需要给对应的EditText标记ID
- *          2.目前调查结果：dialog无法使用属性动画
+ * 2.目前调查结果：dialog无法使用属性动画
  */
 
 public class CommonDialogFragment extends AppCompatDialogFragment {
@@ -38,15 +40,18 @@ public class CommonDialogFragment extends AppCompatDialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         Window window = getDialog().getWindow();
-        if(window != null) {
+        if (window != null) {
             window.setBackgroundDrawableResource(android.R.color.transparent);
             window.setWindowAnimations(mParams.getAnimation());
+            WindowManager.LayoutParams attributes = window.getAttributes();
+            attributes.gravity = Gravity.CENTER;
+            window.setAttributes(attributes);
         }
         View rootView = inflater.inflate(mParams.getResId(), container, false);
         ViewGroup.LayoutParams params = rootView.getLayoutParams();
-        if(params == null) {
+        if (params == null) {
             params = new ViewGroup.LayoutParams(mParams.getWidth(), mParams.getHeight());
-        }else {
+        } else {
             params.width = mParams.getWidth();
             params.height = mParams.getHeight();
         }
