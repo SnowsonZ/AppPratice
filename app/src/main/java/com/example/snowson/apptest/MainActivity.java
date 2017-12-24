@@ -1,11 +1,14 @@
 package com.example.snowson.apptest;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.snowson.apptest.activity.DialogActivity;
 import com.example.snowson.apptest.view.RoundImageButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,7 +36,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mRadioGroup.check(mRadioGroup.getChildAt(0).getId());
+        startTargetActivity(DialogActivity.class);
 //        startActivity(new Intent(this, MutilRecyclerViewActivity.class));
 //        startActivity(new Intent(this, ImageShapeActivity.class));
+    }
+
+    private void startTargetActivity(Class<? extends Activity> clazz) {
+        Intent intent = new Intent(this, clazz);
+        startActivity(intent);
     }
 }

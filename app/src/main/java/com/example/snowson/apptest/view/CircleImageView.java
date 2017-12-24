@@ -13,7 +13,6 @@ import android.util.AttributeSet;
 
 public class CircleImageView extends AppCompatImageView {
 
-    private Paint mPaint;
     private Path mPath;
 
     public CircleImageView(Context context) {
@@ -33,16 +32,18 @@ public class CircleImageView extends AppCompatImageView {
 
     private void init() {
         mPath = new Path();
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
+        int diameter = getMeasuredWidth() > getMeasuredHeight() ?
+                getMeasuredHeight() : getMeasuredWidth();
+        setMeasuredDimension(diameter, diameter);
+
         mPath.addCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2,
-                getMeasuredHeight() > getMeasuredWidth() ? getMeasuredWidth() / 2 :
-                        getMeasuredHeight() / 2, Path.Direction.CCW);
+                diameter / 2, Path.Direction.CCW);
     }
 
     @Override
