@@ -105,8 +105,10 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private void addDataByType(int type, List data) {
         //记录
-        types.add(TypeAbstractViewHolder.TYPE_HEADER);
-        mRealPosition.append(type, types.size());
+        if (data.size() > 0) {
+            types.add(TypeAbstractViewHolder.TYPE_HEADER);
+            mRealPosition.append(type, types.size());
+        }
         for (int i = 0; i < data.size(); i++) {
             types.add(type);
         }
