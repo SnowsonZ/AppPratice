@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.snowson.apptest.activity.DialogActivity;
+import com.example.snowson.apptest.activity.CustomeShapeActivity;
 import com.example.snowson.apptest.view.RoundImageButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mRadioGroup.check(mRadioGroup.getChildAt(0).getId());
-        startTargetActivity(DialogActivity.class);
-//        startActivity(new Intent(this, MutilRecyclerViewActivity.class));
-//        startActivity(new Intent(this, ImageShapeActivity.class));
+//        startTargetActivity(DialogActivity.class);
+//        startTargetActivity(MutilRecyclerViewActivity.class);
+        startTargetActivity(CustomeShapeActivity.class);
     }
 
     private void startTargetActivity(Class<? extends Activity> clazz) {
