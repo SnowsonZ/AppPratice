@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.snowson.apptest.R;
+import com.example.snowson.apptest.transition.NoticePageTransformer;
 import com.example.snowson.apptest.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class Banner extends RelativeLayout {
         vpContent = rootView.findViewById(R.id.main_banner);
         ctrIndicator = rootView.findViewById(R.id.ctr_indicator);
         vpContent.setPageMargin((int) (ScreenUtils.dp2px(getContext(), 14)));
+        vpContent.setPageTransformer(true, new NoticePageTransformer());
     }
 
     public void initData(List<String> imgUrl) {
