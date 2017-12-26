@@ -60,6 +60,8 @@ public class MutilRecyclerViewActivity extends AppCompatActivity
         mImageUrl.add("#ff33b5e5");
         mImageUrl.add("#ff99cc00");
         mImageUrl.add("#ffffbb33");
+        mImageUrl.add("#ffaa66cc");
+        mImageUrl.add("#ff00ddff");
         mBanner.initData(mImageUrl);
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         //根据item type判断item占据RecyclerView一行内容的具体大小,实现Grid,List混合布局

@@ -117,9 +117,11 @@ public class Banner extends RelativeLayout {
                 params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT
                         , LinearLayout.LayoutParams.WRAP_CONTENT);
             }
-            params.setMargins(0, 0,
-                    (int) (ScreenUtils.dp2px(getContext(), 10)), 0);
-            item.setLayoutParams(params);
+            if(i < mImgUrl.size() - 1) {
+                params.setMargins(0, 0,
+                        (int) (ScreenUtils.dp2px(getContext(), 10)), 0);
+                item.setLayoutParams(params);
+            }
             ctrIndicator.addView(item);
         }
         ctrIndicator.getChildAt(0).setBackgroundResource(R.drawable.indicator_point_selected);
