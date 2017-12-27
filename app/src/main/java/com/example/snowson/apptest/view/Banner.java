@@ -4,20 +4,21 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.snowson.apptest.R;
+import com.example.snowson.apptest.adapter.BannerAdapter;
 import com.example.snowson.apptest.transition.NoticePageTransformer;
 import com.example.snowson.apptest.utils.ScreenUtils;
+import com.example.snowson.apptest.viewholder.BannerHolderView;
+import com.example.snowson.apptest.viewholder.TypeHolder;
+import com.example.snowson.apptest.viewholder.ViewHolderCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +29,8 @@ import java.util.List;
 
 public class Banner extends RelativeLayout {
     private List<String> mImgUrl = new ArrayList<String>();
-    private List<CardView> mContent = new ArrayList<CardView>();
     private ViewPager vpContent;
     private LinearLayout ctrIndicator;
-    private List<ImageView> mIndicator = new ArrayList<ImageView>();
 
     public Banner(Context context) {
         super(context);
@@ -63,21 +62,19 @@ public class Banner extends RelativeLayout {
         vpContent.setPageTransformer(true, new NoticePageTransformer());
     }
 
+    @SuppressWarnings("unchecked")
     public void initData(List<String> imgUrl) {
-        if (imgUrl != null && imgUrl.size() > 0) {
-            mImgUrl.addAll(imgUrl);
+        if (imgUrl == null && imgUrl.size() <= 0) {
+            return;
         }
-        for (int i = 0; i < mImgUrl.size(); i++) {
-            CardView item = new CardView(getContext());
-            item.setCardBackgroundColor(Color.parseColor(mImgUrl.get(i)));
-            item.setRadius(20);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                item.setElevation(ScreenUtils.dp2px(getContext(), 10));
-            }
-            mContent.add(item);
-        }
+        mImgUrl.addAll(imgUrl);
         initIndicator();
-        BannerAdapter adapter = new BannerAdapter();
+        BannerAdapter adapter = new BannerAdapter(new ViewHolderCreator<TypeHolder>() {
+            @Override
+            public TypeHolder createHolder() {
+                return new BannerHolderView();
+            }
+        }, mImgUrl);
         vpContent.setAdapter(adapter);
         vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -87,12 +84,13 @@ public class Banner extends RelativeLayout {
 
             @Override
             public void onPageSelected(int position) {
+                int realPosition = position % mImgUrl.size();
                 for (int i = 0; i < ctrIndicator.getChildCount(); i++) {
-                    if (i == position) {
-                        ctrIndicator.getChildAt(i).
+                    if (i == realPosition) {
+                        ctrIndicator.getChildAt(i % mImgUrl.size()).
                                 setBackgroundResource(R.drawable.indicator_point_selected);
                     } else {
-                        ctrIndicator.getChildAt(i).
+                        ctrIndicator.getChildAt(i % mImgUrl.size()).
                                 setBackgroundResource(R.drawable.indicator_point_normal);
                     }
                 }
@@ -104,7 +102,7 @@ public class Banner extends RelativeLayout {
             }
         });
         adapter.notifyDataSetChanged();
-        vpContent.setCurrentItem(0);
+        vpContent.setCurrentItem(mImgUrl.size() / 2);
     }
 
     private void initIndicator() {
@@ -117,7 +115,7 @@ public class Banner extends RelativeLayout {
                 params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT
                         , LinearLayout.LayoutParams.WRAP_CONTENT);
             }
-            if(i < mImgUrl.size() - 1) {
+            if (i < mImgUrl.size() - 1) {
                 params.setMargins(0, 0,
                         (int) (ScreenUtils.dp2px(getContext(), 10)), 0);
                 item.setLayoutParams(params);
@@ -125,30 +123,5 @@ public class Banner extends RelativeLayout {
             ctrIndicator.addView(item);
         }
         ctrIndicator.getChildAt(0).setBackgroundResource(R.drawable.indicator_point_selected);
-    }
-
-    class BannerAdapter extends PagerAdapter {
-
-        @Override
-        public int getCount() {
-            return mContent.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            CardView item = mContent.get(position);
-            container.addView(item);
-            return item;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
     }
 }

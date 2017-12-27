@@ -12,6 +12,7 @@ public class NoticePageTransformer implements ViewPager.PageTransformer {
 
     public static final float MIN_SCALE = 0.85f;
     public static final float MIN_ALPHA = 0.5f;
+    public static final float DEFAULT_CENTER = 0.5f;
 
     @Override
     public void transformPage(View page, float position) {
@@ -30,7 +31,7 @@ public class NoticePageTransformer implements ViewPager.PageTransformer {
             float scale = MIN_SCALE + (1 - Math.abs(position)) * (1 - MIN_SCALE);
             page.setScaleX(scale);
             page.setScaleY(scale);
-            page.setPivotX(width * ((1 - position) * 0.5f));
+            page.setPivotX(width * ((1 - position) * DEFAULT_CENTER));
             page.setAlpha(MIN_ALPHA + (1 - Math.abs(position)) * (1 - MIN_ALPHA));
         } else {
             page.setScaleX(MIN_SCALE);
