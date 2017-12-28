@@ -75,6 +75,7 @@ public class Banner extends RelativeLayout {
                 return new BannerHolderView();
             }
         }, mImgUrl);
+        adapter.bindViewPager(vpContent);
         vpContent.setAdapter(adapter);
         vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -102,7 +103,7 @@ public class Banner extends RelativeLayout {
             }
         });
         adapter.notifyDataSetChanged();
-        vpContent.setCurrentItem(mImgUrl.size() / 2);
+        vpContent.setCurrentItem(0, false);
     }
 
     private void initIndicator() {

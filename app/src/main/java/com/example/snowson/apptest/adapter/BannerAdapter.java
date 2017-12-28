@@ -1,6 +1,7 @@
 package com.example.snowson.apptest.adapter;
 
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,11 +19,16 @@ public class BannerAdapter<T> extends PagerAdapter {
     private List<T> mDatas;
     private LinkedList<View> caches;
     private ViewHolderCreator<TypeHolder<T>> mHolderCreator;
+    private ViewPager mViewPager;
 
     public BannerAdapter(ViewHolderCreator<TypeHolder<T>> holderCreator, List<T> datas) {
         this.mDatas = datas;
         caches = new LinkedList<View>();
         mHolderCreator = holderCreator;
+    }
+
+    public void bindViewPager(ViewPager viewPager) {
+        this.mViewPager = viewPager;
     }
 
     @Override
@@ -64,6 +70,20 @@ public class BannerAdapter<T> extends PagerAdapter {
         holder.bindView(container.getContext(), mDatas.get(position));
         return view;
     }
+
+//    @Override
+//    public void finishUpdate(ViewGroup container) {
+//        int position = mViewPager.getCurrentItem();
+//        if(position == 0) {
+//            position = getRealCount();
+//        }
+//        if(position == 0) {
+//            position = getRealCount();
+//        }else if(position == getCount() - 1){
+//            position = getRealCount() - 1;
+//        }
+//        mViewPager.setCurrentItem(position, false);
+//    }
 
     private int getRealCount() {
         if (mDatas == null) {
