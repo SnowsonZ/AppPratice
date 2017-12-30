@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 //        startTargetActivity(DialogActivity.class);
         startTargetActivity(MutilRecyclerViewActivity.class);
 //        startTargetActivity(CustomeShapeActivity.class);
+//        CrashReport.testJavaCrash();
     }
 
     private void startTargetActivity(Class<? extends Activity> clazz) {
