@@ -17,7 +17,8 @@ public class PackageUtils {
 //        return (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
 //    }
 
-    public static <T> T getAppMetaDataBoolean(Context context, String metaName,
+    @SuppressWarnings("unchecked")
+    public static <T> T getAppMetaData(Context context, String metaName,
                                                 T defValue) {
         try {
             T value = (T) context.getPackageManager().getApplicationInfo(context.getPackageName(),

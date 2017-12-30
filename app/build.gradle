@@ -19,6 +19,8 @@ android {
         manifestPlaceholders = [
                 isRelease: false,
                 buglyAppId: project.ext.buglyAppId,
+                umengAppKey: project.ext.umengAppKey,
+                umengChannel: project.ext.umengChannel
         ]
         ndk {
             //config support abi
@@ -28,6 +30,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [
                 isRelease: true,
@@ -37,6 +40,16 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    /*umeng 避免部分三方授权失败*/
+    signingConfigs {
+        debug {
+            storeFile file('umeng_debug.keystore')
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
         }
     }
 }
@@ -56,4 +69,8 @@ dependencies {
     //bugly
     api 'com.tencent.bugly:crashreport:2.6.6.1'
     api 'com.tencent.bugly:nativecrashreport:3.3.1'
+
+    //umeng
+    api 'com.umeng.sdk:common:1.4.1'
+    api 'com.umeng.sdk:analytics:7.4.1'
 }

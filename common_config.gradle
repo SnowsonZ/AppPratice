@@ -14,6 +14,10 @@ project.ext {
     buglyAppId = "a94f6c712b"
     buglyAppKey = "be4cf5cf-cff8-482d-b0e4-02109ef95931"
 
+    //umeng config
+    umengAppKey = "5a47c1b9f43e485d37000065"
+    umengChannel = "channel_snowson_*0783"
+
     //JDK版本兼容
     sourceCompatibility = this.&getJavaVersion()
     targetCompatibility = this.&getJavaVersion()
