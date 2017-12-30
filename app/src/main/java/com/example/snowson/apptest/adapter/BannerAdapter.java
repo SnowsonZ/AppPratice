@@ -2,6 +2,7 @@ package com.example.snowson.apptest.adapter;
 
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -71,19 +72,17 @@ public class BannerAdapter<T> extends PagerAdapter {
         return view;
     }
 
-//    @Override
-//    public void finishUpdate(ViewGroup container) {
-//        int position = mViewPager.getCurrentItem();
-//        if(position == 0) {
-//            position = getRealCount();
-//        }
-//        if(position == 0) {
-//            position = getRealCount();
-//        }else if(position == getCount() - 1){
-//            position = getRealCount() - 1;
-//        }
-//        mViewPager.setCurrentItem(position, false);
-//    }
+    @Override
+    public void finishUpdate(ViewGroup container) {
+        int position = mViewPager.getCurrentItem();
+        if(position == 0) {
+            position = getRealCount();
+        }else if(position == getCount() - 1){
+            position = getRealCount() - 1;
+        }
+        mViewPager.setCurrentItem(position, false);
+        Log.i(getClass().getName(), "position: " + position);
+    }
 
     private int getRealCount() {
         if (mDatas == null) {

@@ -7,7 +7,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -54,11 +54,13 @@ public class Banner extends RelativeLayout {
     }
 
     private void initView(Context context) {
-        View rootView = LayoutInflater.from(context).inflate(R.layout.banner, this, true);
+        ViewGroup rootView = (ViewGroup) LayoutInflater.
+                from(context).inflate(R.layout.banner, this, true);
+        rootView.setClipChildren(false);
         setBackgroundColor(Color.TRANSPARENT);
         vpContent = rootView.findViewById(R.id.main_banner);
         ctrIndicator = rootView.findViewById(R.id.ctr_indicator);
-        vpContent.setPageMargin((int) (ScreenUtils.dp2px(getContext(), 14)));
+        vpContent.setPageMargin((int) (ScreenUtils.dp2px(getContext(), 12)));
         vpContent.setPageTransformer(true, new NoticePageTransformer());
     }
 
