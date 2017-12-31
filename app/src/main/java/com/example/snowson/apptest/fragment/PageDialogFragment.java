@@ -138,7 +138,7 @@ public class PageDialogFragment extends BaseFragment {
                                     LinearLayoutManager.VERTICAL, false));
                             mBottomSheetRv.setItemAnimator(new DefaultItemAnimator());
                             ArrayList<DataTypeOne> datas = new ArrayList<DataTypeOne>();
-                            for (int i = 0; i < 2; i++) {
+                            for (int i = 0; i < 10; i++) {
                                 DataTypeOne item = new DataTypeOne();
                                 item.setColorTinyPic(colorSet[i % colorSet.length]);
                                 item.setTinyName("tinyName" + i);
