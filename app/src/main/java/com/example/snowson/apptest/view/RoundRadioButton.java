@@ -30,9 +30,10 @@ public class RoundRadioButton extends AppCompatRadioButton {
 
     public RoundRadioButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.roundImageButton);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.RoundRadioButton);
         mRadius = ta.getDimension(R.styleable.roundImageButton_radius, 0);
         init();
+        ta.recycle();
     }
 
     public RoundRadioButton(Context context, AttributeSet attrs, int defStyleAttr) {

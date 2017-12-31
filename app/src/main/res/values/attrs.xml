@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <attr name="radius" format="dimension"/>
     <declare-styleable name="roundImageButton">
         <attr name="src" format="reference" />
         <attr name="text" format="string" />
         <attr name="textSize" format="dimension" />
-        <attr name="radius" format="dimension" />
+        <attr name="radius"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundRadioButton">
+        <attr name="radius"/>
     </declare-styleable>
 </resources>

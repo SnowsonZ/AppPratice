@@ -10,4 +10,6 @@
         android:pivotX="60%"
         android:pivotY="60%" />
 
+    <alpha android:fromAlpha="1" android:toAlpha="0"/>
+
 </set>
