@@ -12,4 +12,8 @@
     <declare-styleable name="RoundRadioButton">
         <attr name="radius"/>
     </declare-styleable>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="radius"/>
+    </declare-styleable>
 </resources>

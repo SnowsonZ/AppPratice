@@ -1,4 +1,4 @@
-package com.example.snowson.apptest.dialog;
+package com.example.snowson.apptest.view.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

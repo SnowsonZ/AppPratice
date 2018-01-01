@@ -22,7 +22,7 @@ import com.example.snowson.apptest.bean.DataTypeGrid;
 import com.example.snowson.apptest.bean.DataTypeOne;
 import com.example.snowson.apptest.bean.DataTypeThree;
 import com.example.snowson.apptest.bean.DataTypeTwo;
-import com.example.snowson.apptest.dialog.CommonDialogFragment;
+import com.example.snowson.apptest.view.dialog.CommonDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,7 @@ public class PageDialogFragment extends BaseFragment {
         mDialogTypes = new ArrayList<>();
         mDialogTypes.add("DialogSimplely");
         mDialogTypes.add("BottomSheet");
-        mDialogTypes.add("PopupWindow");
+//        mDialogTypes.add("PopupWindow");
         mDialogTypeSpn.setAdapter(new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1, mDialogTypes));
         mDialogTypeSpn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

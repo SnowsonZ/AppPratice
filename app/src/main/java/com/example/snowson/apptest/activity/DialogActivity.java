@@ -17,7 +17,7 @@ import com.example.snowson.apptest.bean.DataTypeGrid;
 import com.example.snowson.apptest.bean.DataTypeOne;
 import com.example.snowson.apptest.bean.DataTypeThree;
 import com.example.snowson.apptest.bean.DataTypeTwo;
-import com.example.snowson.apptest.dialog.CommonDialogFragment;
+import com.example.snowson.apptest.view.dialog.CommonDialogFragment;
 
 import java.util.ArrayList;
 

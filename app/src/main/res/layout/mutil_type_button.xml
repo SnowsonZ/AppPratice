@@ -2,34 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="电子看板"
-        android:textColor="@android:color/black"
-        android:textSize="18sp" />
-
-    <com.example.snowson.apptest.view.RoundImageButton
-        android:id="@+id/rib_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/selector_info"
-        android:clickable="true"
-        android:focusable="true"
-        app:radius="6dp"
-        app:text="电子看板"
-        app:textSize="18sp" />
-
     <RadioGroup
+        android:layout_marginTop="30dp"
         android:id="@+id/rg_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -63,5 +44,51 @@
             app:radius="6dp" />
 
     </RadioGroup>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="6dp">
+
+        <com.example.snowson.apptest.view.CircleImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test"/>
+
+        <com.example.snowson.apptest.view.RoundImageView
+            android:layout_marginLeft="30dp"
+            android:maxHeight="60dp"
+            android:maxWidth="100dp"
+            app:radius="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test1"/>
+
+    </LinearLayout>
+
+    <com.example.snowson.apptest.view.RoundImageView
+        android:layout_marginTop="20dp"
+        android:maxHeight="100dp"
+        android:maxWidth="200dp"
+        app:radius="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/test1"/>
+
+    <com.example.snowson.apptest.view.CircleImageView
+        android:layout_marginTop="20dp"
+        android:maxHeight="60dp"
+        android:maxWidth="100dp"
+        app:radius="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/test1"/>
 
 </LinearLayout>
