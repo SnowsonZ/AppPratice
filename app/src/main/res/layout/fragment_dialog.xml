@@ -37,8 +37,4 @@
         android:visibility="gone"
         android:ems="10" />
 
-    <include layout="@layout/item_xlist_header_child" />
-    <include layout="@layout/item_xlist_body_child"/>
-    <include layout="@layout/item_xlist_footer_child"/>
-
 </LinearLayout>

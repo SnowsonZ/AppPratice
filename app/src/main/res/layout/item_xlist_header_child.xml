@@ -22,7 +22,8 @@
         android:src="@mipmap/ic_launcher" />
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/iv_shop_name"
+        android:text="森马官方旗舰店"
+        android:id="@+id/tv_shop_name"
         style="@style/contentTextStyle"
         android:layout_centerVertical="true"
         android:layout_marginStart="8dp"
@@ -37,7 +38,7 @@
         android:layout_height="14dp"
         android:layout_centerVertical="true"
         android:layout_marginStart="6dp"
-        android:layout_toEndOf="@id/iv_shop_name"
+        android:layout_toEndOf="@id/tv_shop_name"
         android:src="@mipmap/ic_launcher" />
 
     <android.support.v7.widget.AppCompatTextView

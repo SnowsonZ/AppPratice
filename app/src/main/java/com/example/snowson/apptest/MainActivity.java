@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.snowson.apptest.adapter.IndexContentAdapter;
 import com.example.snowson.apptest.fragment.BaseFragment;
+import com.example.snowson.apptest.fragment.PageCartFragment;
 import com.example.snowson.apptest.fragment.PageDialogFragment;
 import com.example.snowson.apptest.fragment.PageIndexFragment;
 import com.example.snowson.apptest.fragment.PageViewTypeFragment;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         mPageTitle.add("Home");
         mPageTitle.add("Dialog");
         mPageTitle.add("ViewType");
+        mPageTitle.add("Cart");
         mPages = new ArrayList<BaseFragment>();
         PageIndexFragment fragIndex = new PageIndexFragment();
         Bundle bIndex = new Bundle();
@@ -56,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         bViewType.putString("mPageTitle", "ViewType");
         fragViewType.setArguments(bViewType);
         mPages.add(fragViewType);
+        PageCartFragment fragmentCart = new PageCartFragment();
+        mPages.add(fragmentCart);
         mAdapter = new IndexContentAdapter(getSupportFragmentManager(), mPages, mPageTitle);
         mContentVp.setAdapter(mAdapter);
         mNavTab.setupWithViewPager(mContentVp);
