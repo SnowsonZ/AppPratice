@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="20dp"
+    android:padding="6dp">
+
+    <CheckBox
+        android:id="@+id/cb_shop_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true" />
+
+    <ImageView
+        android:id="@+id/iv_shop_logo"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="4dp"
+        android:layout_toEndOf="@id/cb_shop_check"
+        android:src="@mipmap/ic_launcher" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/iv_shop_name"
+        style="@style/contentTextStyle"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@id/iv_shop_logo"
+        android:maxEms="16"
+        android:singleLine="true"
+        android:textColor="@android:color/black" />
+
+    <ImageView
+        android:id="@+id/iv_shop_detail"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="6dp"
+        android:layout_toEndOf="@id/iv_shop_name"
+        android:src="@mipmap/ic_launcher" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_shop_opt"
+        style="@style/contentTextStyle"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:padding="6dp"
+        android:singleLine="true"
+        android:text="编辑"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp" />
+
+</RelativeLayout>

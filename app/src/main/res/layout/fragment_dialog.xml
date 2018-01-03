@@ -34,6 +34,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:visibility="gone"
         android:ems="10" />
+
+    <include layout="@layout/item_xlist_header_child" />
+    <include layout="@layout/item_xlist_body_child"/>
+    <include layout="@layout/item_xlist_footer_child"/>
 
 </LinearLayout>
