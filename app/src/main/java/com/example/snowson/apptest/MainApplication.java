@@ -24,7 +24,7 @@ public class MainApplication extends Application {
 
                 PackageUtils
                         .getAppMetaData(this, Constants.BUGLY_ID, ""),
-                PackageUtils
+                !PackageUtils
                         .getAppMetaData(this, Constants.IS_RELEASE, false));
 
         //init umeng

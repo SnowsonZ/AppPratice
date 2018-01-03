@@ -1,5 +1,6 @@
 package com.example.snowson.apptest.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.snowson.apptest.R;
+import com.example.snowson.apptest.activity.EditTextTestActivity;
 import com.example.snowson.apptest.adapter.MutilAdapter;
 import com.example.snowson.apptest.bean.DataTypeGrid;
 import com.example.snowson.apptest.bean.DataTypeOne;
@@ -70,6 +72,12 @@ public class PageDialogFragment extends BaseFragment {
         mDialogTypeSpn = container.findViewById(R.id.spinner_dialog_type);
         mDialogAnimSpn = container.findViewById(R.id.spinner_anim);
         mDialogShowBtn = container.findViewById(R.id.btn_show_dialog);
+        container.findViewById(R.id.et_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getActivity(), EditTextTestActivity.class));
+            }
+        });
     }
 
     private void initData() {

@@ -17,9 +17,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
-                isRelease: false,
-                buglyAppId: project.ext.buglyAppId,
-                umengAppKey: project.ext.umengAppKey,
+                isRelease   : false,
+                buglyAppId  : project.ext.buglyAppId,
+                umengAppKey : project.ext.umengAppKey,
                 umengChannel: project.ext.umengChannel
         ]
         ndk {
@@ -33,8 +33,8 @@ android {
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [
-                isRelease: true,
-                buglyAppId: project.ext.buglyAppId,
+                    isRelease : true,
+                    buglyAppId: project.ext.buglyAppId,
             ]
         }
         debug {

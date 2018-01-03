@@ -28,4 +28,12 @@
         android:layout_height="wrap_content"
         android:text="show dialog fragment" />
 
+    <EditText
+        android:focusable="false"
+        android:id="@+id/et_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10" />
+
 </LinearLayout>
