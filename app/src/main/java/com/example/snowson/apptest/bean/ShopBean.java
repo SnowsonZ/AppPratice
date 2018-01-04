@@ -8,7 +8,7 @@ import java.util.List;
  * description:
  */
 
-public class CartBean {
+public class ShopBean {
     public String shopName;
     public List<CartGoodsBean> goodsInfo;
 }

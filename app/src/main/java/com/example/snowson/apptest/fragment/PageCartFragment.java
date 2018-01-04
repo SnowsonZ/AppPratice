@@ -9,7 +9,7 @@ import android.widget.ExpandableListView;
 
 import com.example.snowson.apptest.R;
 import com.example.snowson.apptest.adapter.CartExpandAdapter;
-import com.example.snowson.apptest.bean.CartBean;
+import com.example.snowson.apptest.bean.ShopBean;
 import com.example.snowson.apptest.bean.CartGoodsBean;
 
 import java.util.ArrayList;
@@ -47,9 +47,9 @@ public class PageCartFragment extends BaseFragment {
     }
 
     private void initData() {
-        List<CartBean> cartBeans = new ArrayList<CartBean>();
+        List<ShopBean> cartBeans = new ArrayList<ShopBean>();
         for (int i = 0; i < 15; i++) {
-            CartBean cartBean = new CartBean();
+            ShopBean cartBean = new ShopBean();
             cartBean.shopName = "森马旗舰店" + i;
             List<CartGoodsBean> goodsBeans = new ArrayList<CartGoodsBean>();
             int goodsCount = (int) (Math.random() * 5) + 1;

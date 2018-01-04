@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.snowson.apptest.R;
-import com.example.snowson.apptest.bean.CartBean;
-import com.example.snowson.apptest.bean.CartGoodsBean;
+import com.example.snowson.apptest.bean.CartGoodsObservable;
+import com.example.snowson.apptest.bean.ShopObservable;
 
 import java.util.List;
 
@@ -21,10 +23,10 @@ import java.util.List;
 
 public class CartExpandAdapter extends BaseExpandableListAdapter {
 
-    private List<CartBean> mCartData;
+    private List<ShopObservable> mCartData;
     private LayoutInflater mLayoutInflater;
 
-    public CartExpandAdapter(List<CartBean> cartData, Context context) {
+    public CartExpandAdapter(List<ShopObservable> cartData, Context context) {
         this.mCartData = cartData;
         this.mLayoutInflater = LayoutInflater.from(context);
     }
@@ -36,17 +38,17 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return mCartData.get(groupPosition).goodsInfo.size();
+        return mCartData.get(groupPosition).shopObservableSrc.obsCartGoods.size();
     }
 
     @Override
-    public CartBean getGroup(int groupPosition) {
+    public ShopObservable getGroup(int groupPosition) {
         return mCartData.get(groupPosition);
     }
 
     @Override
-    public CartGoodsBean getChild(int groupPosition, int childPosition) {
-        return mCartData.get(groupPosition).goodsInfo.get(childPosition);
+    public CartGoodsObservable getChild(int groupPosition, int childPosition) {
+        return mCartData.get(groupPosition).shopObservableSrc.obsCartGoods.get(childPosition);
     }
 
     @Override
@@ -61,28 +63,31 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean hasStableIds() {
-        return false;
+        return true;
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+    public View getGroupView(final int groupPosition, boolean isExpanded, View convertView,
+                             final ViewGroup parent) {
         GroupViewHolder viewHolder = null;
         if (convertView == null) {
             viewHolder = new GroupViewHolder();
             convertView = mLayoutInflater.inflate(R.layout.item_xlist_header_child,
                     parent, false);
             viewHolder.tv_shop_name = convertView.findViewById(R.id.tv_shop_name);
+            viewHolder.cb_select = convertView.findViewById(R.id.cb_shop_check);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (GroupViewHolder) convertView.getTag();
         }
-        CartBean cartBean = getGroup(groupPosition);
-        viewHolder.tv_shop_name.setText(cartBean.shopName);
+        ShopObservable shopObservable = getGroup(groupPosition);
+        viewHolder.tv_shop_name.setText(shopObservable.shopObservableSrc.shopName);
         return convertView;
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
+                             View convertView, ViewGroup parent) {
         ChildViewHolder viewHolder = null;
         if (convertView == null) {
             viewHolder = new ChildViewHolder();
@@ -93,6 +98,7 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
             viewHolder.tv_goods_count = convertView.findViewById(R.id.tv_goods_count);
             viewHolder.tv_goods_type_edit = convertView.findViewById(R.id.tv_goods_type_edit);
             viewHolder.tv_goods_count_edit = convertView.findViewById(R.id.tv_goods_count_edit);
+            viewHolder.cb_select = convertView.findViewById(R.id.cb_goods_check);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ChildViewHolder) convertView.getTag();
@@ -103,12 +109,18 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
         } else {
             vs_footer.setVisibility(View.GONE);
         }
-        CartGoodsBean goodsBean = getChild(groupPosition, childPosition);
-        viewHolder.tv_goods_name.setText(goodsBean.goodsName);
-        viewHolder.tv_goods_type.setText(goodsBean.goodsType);
-        viewHolder.tv_goods_count.setText(String.valueOf(goodsBean.goodsCount));
-        viewHolder.tv_goods_count_edit.setText(String.valueOf(goodsBean.goodsCount));
-        viewHolder.tv_goods_type_edit.setText(goodsBean.goodsType);
+        final CartGoodsObservable obsCartGoods = getChild(groupPosition, childPosition);
+        viewHolder.tv_goods_name.setText(obsCartGoods.cartGoodsBean.goodsName);
+        viewHolder.tv_goods_type.setText(obsCartGoods.cartGoodsBean.goodsType);
+        viewHolder.tv_goods_count.setText(String.valueOf(obsCartGoods.cartGoodsBean.goodsCount));
+        viewHolder.tv_goods_count_edit.setText(String.valueOf(obsCartGoods.cartGoodsBean.goodsCount));
+        viewHolder.tv_goods_type_edit.setText(obsCartGoods.cartGoodsBean.goodsType);
+        viewHolder.cb_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                obsCartGoods.setCheckedChange(isChecked);
+            }
+        });
         return convertView;
     }
 
@@ -119,6 +131,7 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
 
     class GroupViewHolder {
         TextView tv_shop_name;
+        CheckBox cb_select;
     }
 
     class ChildViewHolder {
@@ -127,5 +140,6 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
         TextView tv_goods_count;
         TextView tv_goods_type_edit;
         TextView tv_goods_count_edit;
+        CheckBox cb_select;
     }
 }
