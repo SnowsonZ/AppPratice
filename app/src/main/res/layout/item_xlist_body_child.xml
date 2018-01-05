@@ -34,7 +34,7 @@
             android:layout_weight="1">
 
             <RelativeLayout
-                android:id="@+id/llayout_display"
+                android:id="@+id/rlayout_display"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="visible">
@@ -85,7 +85,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/llayout_edit"
+                android:id="@+id/rlayout_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"

@@ -8,9 +8,9 @@ import java.util.Observer;
  */
 
 public class ShopObservable extends Observable implements Observer {
+    public boolean isEditing;
     public boolean isChecked;
-    public ShopObservableSrc shopObservableSrc;
-    public List<>
+    public ShopObservableSrc shopObservableSrc = new ShopObservableSrc();
 
     @Override
     public void update(Observable o, Object arg) {
@@ -26,6 +26,19 @@ public class ShopObservable extends Observable implements Observer {
 
     public void setCheckedChange(boolean isChecked) {
         this.isChecked = isChecked;
-        notifyObservers(this.isChecked);
+        setChanged();
+        EventType<Boolean> eventType = new EventType<Boolean>();
+        eventType.type = EventType.TYPE_SELECTED;
+        eventType.value = this.isChecked;
+        notifyObservers(eventType);
+    }
+
+    public void setEditingChange(boolean isEditing) {
+        this.isEditing = isEditing;
+        setChanged();
+        EventType<Boolean> eventType = new EventType<Boolean>();
+        eventType.type = EventType.TYPE_EDITING;
+        eventType.value = this.isEditing;
+        notifyObservers(eventType);
     }
 }

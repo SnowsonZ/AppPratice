@@ -1,5 +1,6 @@
 package com.example.snowson.apptest.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,5 +9,5 @@ import java.util.List;
 
 public class ShopObservableSrc {
     public String shopName;
-    public List<CartGoodsObservable> obsCartGoods;
+    public List<CartGoodsObservable> obsCartGoods = new ArrayList<CartGoodsObservable>();
 }

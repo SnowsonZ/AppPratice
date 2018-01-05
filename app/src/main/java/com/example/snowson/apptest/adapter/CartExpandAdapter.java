@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.snowson.apptest.R;
@@ -76,11 +77,29 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
                     parent, false);
             viewHolder.tv_shop_name = convertView.findViewById(R.id.tv_shop_name);
             viewHolder.cb_select = convertView.findViewById(R.id.cb_shop_check);
+            viewHolder.tv_edit = convertView.findViewById(R.id.tv_shop_opt);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (GroupViewHolder) convertView.getTag();
         }
-        ShopObservable shopObservable = getGroup(groupPosition);
+        final ShopObservable shopObservable = getGroup(groupPosition);
+        final GroupViewHolder finalViewHolder = viewHolder;
+        viewHolder.cb_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shopObservable.setCheckedChange(finalViewHolder.cb_select.isChecked());
+                notifyDataSetChanged();
+            }
+        });
+        viewHolder.tv_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shopObservable.setEditingChange(!shopObservable.isEditing);
+                finalViewHolder.tv_edit.setText(shopObservable.isEditing ? "完成" : "编辑");
+                notifyDataSetChanged();
+            }
+        });
+        viewHolder.cb_select.setChecked(shopObservable.isChecked);
         viewHolder.tv_shop_name.setText(shopObservable.shopObservableSrc.shopName);
         return convertView;
     }
@@ -99,6 +118,8 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
             viewHolder.tv_goods_type_edit = convertView.findViewById(R.id.tv_goods_type_edit);
             viewHolder.tv_goods_count_edit = convertView.findViewById(R.id.tv_goods_count_edit);
             viewHolder.cb_select = convertView.findViewById(R.id.cb_goods_check);
+            viewHolder.rlayout_edit = convertView.findViewById(R.id.rlayout_edit);
+            viewHolder.rlayout_display = convertView.findViewById(R.id.rlayout_display);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ChildViewHolder) convertView.getTag();
@@ -110,6 +131,24 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
             vs_footer.setVisibility(View.GONE);
         }
         final CartGoodsObservable obsCartGoods = getChild(groupPosition, childPosition);
+
+        if (obsCartGoods.isEditing) {
+            viewHolder.rlayout_display.setVisibility(View.GONE);
+            viewHolder.rlayout_edit.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.rlayout_edit.setVisibility(View.GONE);
+            viewHolder.rlayout_display.setVisibility(View.VISIBLE);
+        }
+
+        final ChildViewHolder finalViewHolder = viewHolder;
+        viewHolder.cb_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                obsCartGoods.setCheckedChange(finalViewHolder.cb_select.isChecked());
+                notifyDataSetChanged();
+            }
+        });
+        viewHolder.cb_select.setChecked(obsCartGoods.isChecked);
         viewHolder.tv_goods_name.setText(obsCartGoods.cartGoodsBean.goodsName);
         viewHolder.tv_goods_type.setText(obsCartGoods.cartGoodsBean.goodsType);
         viewHolder.tv_goods_count.setText(String.valueOf(obsCartGoods.cartGoodsBean.goodsCount));
@@ -126,11 +165,12 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
 
     class GroupViewHolder {
         TextView tv_shop_name;
+        TextView tv_edit;
         CheckBox cb_select;
     }
 
@@ -141,5 +181,7 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
         TextView tv_goods_type_edit;
         TextView tv_goods_count_edit;
         CheckBox cb_select;
+        RelativeLayout rlayout_display;
+        RelativeLayout rlayout_edit;
     }
 }
