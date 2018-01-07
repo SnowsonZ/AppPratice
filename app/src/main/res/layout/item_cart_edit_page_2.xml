@@ -26,6 +26,7 @@
                 android:gravity="center"
                 android:text="—"
                 android:textSize="12sp"
+                android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
             <android.support.v7.widget.AppCompatTextView
@@ -50,6 +51,7 @@
                 android:gravity="center"
                 android:text="+"
                 android:textSize="16sp"
+                android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
         </LinearLayout>

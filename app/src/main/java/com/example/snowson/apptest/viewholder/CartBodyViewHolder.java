@@ -1,7 +1,6 @@
 package com.example.snowson.apptest.viewholder;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,8 @@ import com.example.snowson.apptest.bean.CartGoodsObservable;
 
 public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
         implements View.OnClickListener{
+    public static final int MAX_COUNT = 5;
+    public static final int MIN_COUNT = 1;
     private TextView tv_goods_name;
     private TextView tv_goods_type;
     private TextView tv_goods_count;
@@ -93,6 +94,8 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
         tv_goods_count.setText(String.valueOf(cartGoodsBean.goodsCount));
         tv_goods_count_edit.setText(String.valueOf(cartGoodsBean.goodsCount));
         tv_goods_type_edit.setText(cartGoodsBean.goodsType);
+        Integer count = Integer.valueOf(tv_goods_count_edit.getText().toString());
+        changeTextColor(count);
     }
 
     @Override
@@ -107,16 +110,12 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
             case R.id.tv_goods_add:
                 Integer count = Integer.valueOf(tv_goods_count_edit.getText().toString());
                 //此时监测库存是否充足
-                if(count > 99) {
+                if(count >= MAX_COUNT) {
                     Toast.makeText(mContext, "已达购买上限", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 tv_goods_count_edit.setText(String.valueOf(++count));
-                if(count >= 99) {
-                    tv_goods_add.setTextColor(Color.DKGRAY);
-                }else {
-                    tv_goods_add.setTextColor(Color.BLACK);
-                }
+                changeTextColor(count);
                 break;
             case R.id.tv_goods_count_edit:
                 Toast.makeText(mContext, "弹出填写数量对话框", Toast.LENGTH_SHORT).show();
@@ -124,16 +123,12 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
             case R.id.tv_goods_sub:
                 Integer count1 = Integer.valueOf(tv_goods_count_edit.getText().toString());
                 //此时监测库存是否充足
-                if(count1 <= 1) {
+                if(count1 <= MIN_COUNT) {
                     Toast.makeText(mContext, "已达购买下限", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 tv_goods_count_edit.setText(String.valueOf(--count1));
-                if(count1 <= 1) {
-                    tv_goods_add.setTextColor(Color.DKGRAY);
-                }else {
-                    tv_goods_add.setTextColor(Color.BLACK);
-                }
+                changeTextColor(count1);
                 break;
             case R.id.tv_goods_type_edit:
                 Toast.makeText(mContext, "弹出修改商品规格对话框", Toast.LENGTH_SHORT).show();
@@ -146,6 +141,17 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
                 break;
             default:
                 break;
+        }
+    }
+
+    private void changeTextColor(int count) {
+        if(count >= MAX_COUNT) {
+            tv_goods_add.setTextColor(mContext.getResources().getColor(android.R.color.darker_gray));
+        }else if(count <= MIN_COUNT) {
+            tv_goods_sub.setTextColor(mContext.getResources().getColor(android.R.color.darker_gray));
+        }else {
+            tv_goods_sub.setTextColor(mContext.getResources().getColor(android.R.color.black));
+            tv_goods_add.setTextColor(mContext.getResources().getColor(android.R.color.black));
         }
     }
 }
