@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.example.snowson.apptest.R;
-import com.example.snowson.apptest.adapter.CartExpandAdapter;
+import com.example.snowson.apptest.adapter.CommonExpandAdapter;
 import com.example.snowson.apptest.bean.CartGoodsObservable;
 import com.example.snowson.apptest.bean.ShopObservable;
 import com.example.snowson.apptest.viewholder.BaseHeaderViewHolder;
@@ -75,7 +75,7 @@ public class PageCartFragment extends BaseFragment {
             obsShop.shopObservableSrc.obsCartGoods = obsGoods;
             obsCart.add(obsShop);
         }
-        CartExpandAdapter adapter = new CartExpandAdapter(obsCart, getActivity(),
+        CommonExpandAdapter adapter = new CommonExpandAdapter(obsCart, getActivity(),
                 new ViewHolderCreator<TypeHolder>() {
             @Override
             public TypeHolder createHolder() {

@@ -22,7 +22,7 @@ import java.util.List;
  * description:
  */
 
-public class CartExpandAdapter<T, K> extends BaseExpandableListAdapter
+public class CommonExpandAdapter<T, K> extends BaseExpandableListAdapter
         implements OnNotifyDataChangeListener {
 
     private List<TypeData<K>> mCartData;
@@ -30,9 +30,9 @@ public class CartExpandAdapter<T, K> extends BaseExpandableListAdapter
     private ViewHolderCreator<TypeHolder<T>> mBodyCreator;
     private ViewHolderCreator<BaseHeaderViewHolder> mHeaderCreator;
 
-    public CartExpandAdapter(List<TypeData<K>> cartData, Context context,
-                             ViewHolderCreator<TypeHolder<T>> bodyCreator,
-                             ViewHolderCreator<BaseHeaderViewHolder> headerCreator) {
+    public CommonExpandAdapter(List<TypeData<K>> cartData, Context context,
+                               ViewHolderCreator<TypeHolder<T>> bodyCreator,
+                               ViewHolderCreator<BaseHeaderViewHolder> headerCreator) {
         this.mCartData = cartData;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mBodyCreator = bodyCreator;
