@@ -79,6 +79,7 @@ public class PageCartFragment extends BaseFragment {
                 obsGood.cartGoodsBean.goodsName = obsShop.shopObservableSrc.shopName + " 服装 " + j;
                 obsGood.cartGoodsBean.goodsCount = (int) (Math.random() * 3) + 1;
                 obsGood.cartGoodsBean.goodsType = "黑色 XL";
+                obsGood.cartGoodsBean.goodsUnitPrice = (float) (Math.random() * 100) + 100;
                 obsGoods.add(obsGood);
                 obsGood.addObserver(obsShop);
                 obsShop.addObserver(obsGood);

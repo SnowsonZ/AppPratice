@@ -10,4 +10,5 @@ public class CartGoodsBean {
     public String goodsName;
     public int goodsCount;
     public String goodsType;
+    public float goodsUnitPrice;
 }

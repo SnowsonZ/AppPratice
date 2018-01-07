@@ -21,8 +21,8 @@ import com.example.snowson.apptest.bean.CartGoodsObservable;
 
 public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
         implements View.OnClickListener{
-    public static final int MAX_COUNT = 5;
-    public static final int MIN_COUNT = 1;
+    private static final int MAX_COUNT = 99;
+    private static final int MIN_COUNT = 1;
     private TextView tv_goods_name;
     private TextView tv_goods_type;
     private TextView tv_goods_count;
@@ -34,6 +34,7 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
     private TextView tv_goods_add;
     private TextView tv_goods_sub;
     private TextView tv_goods_delete;
+    private TextView tv_goods_price;
     private CartGoodsObservable mData;
     private Context mContext;
 
@@ -55,10 +56,10 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
         tv_goods_add = convertView.findViewById(R.id.tv_goods_add);
         tv_goods_sub = convertView.findViewById(R.id.tv_goods_sub);
         tv_goods_delete = convertView.findViewById(R.id.tv_goods_delete);
+        tv_goods_price = convertView.findViewById(R.id.tv_goods_price);
         rlayout_edit = convertView.findViewById(R.id.rlayout_edit);
         rlayout_display = convertView.findViewById(R.id.rlayout_display);
         convertView.setTag(this);
-
         return convertView;
     }
 
@@ -91,9 +92,12 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
         cb_select.setChecked(bean.isChecked);
         tv_goods_name.setText(cartGoodsBean.goodsName);
         tv_goods_type.setText(cartGoodsBean.goodsType);
-        tv_goods_count.setText(String.valueOf(cartGoodsBean.goodsCount));
+        tv_goods_count.setText(String.format(context.getResources().getString(R.string.goods_count),
+                cartGoodsBean.goodsCount));
         tv_goods_count_edit.setText(String.valueOf(cartGoodsBean.goodsCount));
         tv_goods_type_edit.setText(cartGoodsBean.goodsType);
+        tv_goods_price.setText(String.format(context.getResources().getString(R.string.unit_price),
+                cartGoodsBean.goodsUnitPrice));
         Integer count = Integer.valueOf(tv_goods_count_edit.getText().toString());
         changeTextColor(count);
     }
@@ -108,27 +112,31 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
                 }
                 break;
             case R.id.tv_goods_add:
-                Integer count = Integer.valueOf(tv_goods_count_edit.getText().toString());
                 //此时监测库存是否充足
-                if(count >= MAX_COUNT) {
+                if(mData.cartGoodsBean.goodsCount >= MAX_COUNT) {
                     Toast.makeText(mContext, "已达购买上限", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                tv_goods_count_edit.setText(String.valueOf(++count));
-                changeTextColor(count);
+                tv_goods_count_edit.setText(String.valueOf(++mData.cartGoodsBean.goodsCount));
+                changeTextColor(mData.cartGoodsBean.goodsCount);
+                if (mListener != null) {
+                    mListener.shouldUpdateData();
+                }
                 break;
             case R.id.tv_goods_count_edit:
                 Toast.makeText(mContext, "弹出填写数量对话框", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_goods_sub:
-                Integer count1 = Integer.valueOf(tv_goods_count_edit.getText().toString());
                 //此时监测库存是否充足
-                if(count1 <= MIN_COUNT) {
+                if(mData.cartGoodsBean.goodsCount <= MIN_COUNT) {
                     Toast.makeText(mContext, "已达购买下限", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                tv_goods_count_edit.setText(String.valueOf(--count1));
-                changeTextColor(count1);
+                tv_goods_count_edit.setText(String.valueOf(--mData.cartGoodsBean.goodsCount));
+                changeTextColor(mData.cartGoodsBean.goodsCount);
+                if (mListener != null) {
+                    mListener.shouldUpdateData();
+                }
                 break;
             case R.id.tv_goods_type_edit:
                 Toast.makeText(mContext, "弹出修改商品规格对话框", Toast.LENGTH_SHORT).show();
