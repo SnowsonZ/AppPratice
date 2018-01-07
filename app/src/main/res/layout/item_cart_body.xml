@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--购物车item总布局-->
+<?xml version="1.0" encoding="utf-8"?><!--购物车item总布局-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:minHeight="100dp"
-    android:orientation="horizontal"
-    android:padding="6dp">
+    android:orientation="horizontal">
 
     <CheckBox
+        android:layout_marginStart="6dp"
         android:id="@+id/cb_goods_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -19,15 +18,13 @@
         android:layout_height="90dp"
         android:layout_marginLeft="6dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/test" />
 
     <include
         layout="@layout/item_cart_body_right"
         android:layout_width="0dp"
-        android:layout_height="66dp"
-        android:layout_marginBottom="4dp"
+        android:layout_height="match_parent"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
         android:layout_weight="1" />
 
 </LinearLayout>

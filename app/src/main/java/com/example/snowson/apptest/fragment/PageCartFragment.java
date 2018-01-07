@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.example.snowson.apptest.R;
 import com.example.snowson.apptest.adapter.CommonExpandAdapter;
@@ -46,6 +47,16 @@ public class PageCartFragment extends BaseFragment {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
+                Toast.makeText(getActivity(), "跳转到店铺页面", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        mCartElv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
+                                        int childPosition, long id) {
+                Toast.makeText(getActivity(), "跳转到商品详情页", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });

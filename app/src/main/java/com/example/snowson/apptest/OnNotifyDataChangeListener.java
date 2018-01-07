@@ -1,5 +1,7 @@
 package com.example.snowson.apptest;
 
+import com.example.snowson.apptest.bean.CartGoodsObservable;
+
 /**
  * author: snowson
  * created on: 18-1-6 下午8:28
@@ -8,4 +10,6 @@ package com.example.snowson.apptest;
 
 public interface OnNotifyDataChangeListener {
     void shouldUpdateData();
+
+    void deleteGoods(CartGoodsObservable bean);
 }

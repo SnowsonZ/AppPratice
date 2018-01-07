@@ -1,12 +1,14 @@
 package com.example.snowson.apptest.viewholder;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.snowson.apptest.R;
 import com.example.snowson.apptest.bean.CartGoodsBean;
@@ -18,7 +20,8 @@ import com.example.snowson.apptest.bean.CartGoodsObservable;
  * description:
  */
 
-public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable> {
+public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
+        implements View.OnClickListener{
     private TextView tv_goods_name;
     private TextView tv_goods_type;
     private TextView tv_goods_count;
@@ -26,7 +29,12 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable> {
     private TextView tv_goods_count_edit;
     private CheckBox cb_select;
     private RelativeLayout rlayout_display;
-    private RelativeLayout rlayout_edit;
+    private View rlayout_edit;
+    private TextView tv_goods_add;
+    private TextView tv_goods_sub;
+    private TextView tv_goods_delete;
+    private CartGoodsObservable mData;
+    private Context mContext;
 
     @Override
     public View createView(Context contex) {
@@ -43,6 +51,9 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable> {
         tv_goods_type_edit = convertView.findViewById(R.id.tv_goods_type_edit);
         tv_goods_count_edit = convertView.findViewById(R.id.tv_goods_count_edit);
         cb_select = convertView.findViewById(R.id.cb_goods_check);
+        tv_goods_add = convertView.findViewById(R.id.tv_goods_add);
+        tv_goods_sub = convertView.findViewById(R.id.tv_goods_sub);
+        tv_goods_delete = convertView.findViewById(R.id.tv_goods_delete);
         rlayout_edit = convertView.findViewById(R.id.rlayout_edit);
         rlayout_display = convertView.findViewById(R.id.rlayout_display);
         convertView.setTag(this);
@@ -55,6 +66,8 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable> {
         if (bean == null) {
             return;
         }
+        mContext = context;
+        mData = bean;
         CartGoodsBean cartGoodsBean = bean.cartGoodsBean;
         tv_goods_name.setText(cartGoodsBean.goodsName);
         tv_goods_type.setText(cartGoodsBean.goodsType);
@@ -68,20 +81,71 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable> {
             rlayout_display.setVisibility(View.VISIBLE);
         }
 
-        cb_select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bean.setCheckedChange(cb_select.isChecked());
-                if (mListener != null) {
-                    mListener.shouldUpdateData();
-                }
-            }
-        });
+        cb_select.setOnClickListener(this);
+        tv_goods_add.setOnClickListener(this);
+        tv_goods_count_edit.setOnClickListener(this);
+        tv_goods_sub.setOnClickListener(this);
+        tv_goods_type_edit.setOnClickListener(this);
+        tv_goods_delete.setOnClickListener(this);
         cb_select.setChecked(bean.isChecked);
         tv_goods_name.setText(cartGoodsBean.goodsName);
         tv_goods_type.setText(cartGoodsBean.goodsType);
         tv_goods_count.setText(String.valueOf(cartGoodsBean.goodsCount));
         tv_goods_count_edit.setText(String.valueOf(cartGoodsBean.goodsCount));
         tv_goods_type_edit.setText(cartGoodsBean.goodsType);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.cb_goods_check:
+                mData.setCheckedChange(cb_select.isChecked());
+                if (mListener != null) {
+                    mListener.shouldUpdateData();
+                }
+                break;
+            case R.id.tv_goods_add:
+                Integer count = Integer.valueOf(tv_goods_count_edit.getText().toString());
+                //此时监测库存是否充足
+                if(count > 99) {
+                    Toast.makeText(mContext, "已达购买上限", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                tv_goods_count_edit.setText(String.valueOf(++count));
+                if(count >= 99) {
+                    tv_goods_add.setTextColor(Color.DKGRAY);
+                }else {
+                    tv_goods_add.setTextColor(Color.BLACK);
+                }
+                break;
+            case R.id.tv_goods_count_edit:
+                Toast.makeText(mContext, "弹出填写数量对话框", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.tv_goods_sub:
+                Integer count1 = Integer.valueOf(tv_goods_count_edit.getText().toString());
+                //此时监测库存是否充足
+                if(count1 <= 1) {
+                    Toast.makeText(mContext, "已达购买下限", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                tv_goods_count_edit.setText(String.valueOf(--count1));
+                if(count1 <= 1) {
+                    tv_goods_add.setTextColor(Color.DKGRAY);
+                }else {
+                    tv_goods_add.setTextColor(Color.BLACK);
+                }
+                break;
+            case R.id.tv_goods_type_edit:
+                Toast.makeText(mContext, "弹出修改商品规格对话框", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.tv_goods_delete:
+                //从购物车中删除该商品
+                if(mListener != null) {
+                    mListener.deleteGoods(mData);
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

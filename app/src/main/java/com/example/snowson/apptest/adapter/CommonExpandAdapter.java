@@ -8,6 +8,8 @@ import android.widget.BaseExpandableListAdapter;
 
 import com.example.snowson.apptest.OnNotifyDataChangeListener;
 import com.example.snowson.apptest.R;
+import com.example.snowson.apptest.bean.CartGoodsObservable;
+import com.example.snowson.apptest.bean.ShopObservable;
 import com.example.snowson.apptest.utils.TypeData;
 import com.example.snowson.apptest.viewholder.BaseHeaderViewHolder;
 import com.example.snowson.apptest.viewholder.CartHeaderViewHolder;
@@ -132,6 +134,18 @@ public class CommonExpandAdapter<T, K> extends BaseExpandableListAdapter
 
     @Override
     public void shouldUpdateData() {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void deleteGoods(CartGoodsObservable bean) {
+        for (int i = 0; i < getGroupCount(); i++) {
+            ShopObservable obsShop = (ShopObservable) mCartData.get(i);
+            obsShop.shopObservableSrc.obsCartGoods.remove(bean);
+            if(obsShop.getChildCount() <= 0) {
+                mCartData.remove(obsShop);
+            }
+        }
         notifyDataSetChanged();
     }
 }

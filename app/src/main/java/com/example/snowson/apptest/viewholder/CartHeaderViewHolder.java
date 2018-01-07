@@ -67,6 +67,11 @@ public class CartHeaderViewHolder extends BaseHeaderViewHolder {
                 }
             }
         });
+        if(result.isEditing) {
+            tv_edit.setText("完成");
+        }else {
+            tv_edit.setText("编辑");
+        }
         cb_select.setChecked(result.isChecked);
         tv_shop_name.setText(result.shopObservableSrc.shopName);
     }

@@ -6,7 +6,7 @@
     <include layout="@layout/item_common_detail" />
 
     <include
-        layout="@layout/item_cart_edit_page"
+        layout="@layout/item_cart_edit_page_2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
