@@ -1,14 +1,27 @@
 package com.example.snowson.apptest.viewholder;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+
+import com.example.snowson.apptest.OnNotifyDataChangeListener;
 
 /**
  * Created by snowson on 17-12-27.
  */
 
-public interface TypeHolder<T> {
-    View createView(Context contex);
+public abstract class TypeHolder<T> {
 
-    void bindView(Context context, T resId);
+    protected OnNotifyDataChangeListener mListener;
+
+    public abstract View createView(Context contex);
+
+    public abstract View createView(LayoutInflater inflater, ViewGroup parent, boolean attachToRoot);
+
+    public abstract void bindView(Context context, T bean);
+
+    public void setOnNotifyDataChangeListener(OnNotifyDataChangeListener listener) {
+        mListener = listener;
+    }
 }

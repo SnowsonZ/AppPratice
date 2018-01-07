@@ -5,14 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import com.example.snowson.apptest.OnNotifyDataChangeListener;
 import com.example.snowson.apptest.R;
-import com.example.snowson.apptest.bean.CartGoodsObservable;
-import com.example.snowson.apptest.bean.ShopObservable;
+import com.example.snowson.apptest.utils.TypeData;
+import com.example.snowson.apptest.viewholder.BaseHeaderViewHolder;
+import com.example.snowson.apptest.viewholder.CartHeaderViewHolder;
+import com.example.snowson.apptest.viewholder.TypeHolder;
+import com.example.snowson.apptest.viewholder.ViewHolderCreator;
 
 import java.util.List;
 
@@ -22,14 +22,21 @@ import java.util.List;
  * description:
  */
 
-public class CartExpandAdapter extends BaseExpandableListAdapter {
+public class CartExpandAdapter<T, K> extends BaseExpandableListAdapter
+        implements OnNotifyDataChangeListener {
 
-    private List<ShopObservable> mCartData;
+    private List<TypeData<K>> mCartData;
     private LayoutInflater mLayoutInflater;
+    private ViewHolderCreator<TypeHolder<T>> mBodyCreator;
+    private ViewHolderCreator<BaseHeaderViewHolder> mHeaderCreator;
 
-    public CartExpandAdapter(List<ShopObservable> cartData, Context context) {
+    public CartExpandAdapter(List<TypeData<K>> cartData, Context context,
+                             ViewHolderCreator<TypeHolder<T>> bodyCreator,
+                             ViewHolderCreator<BaseHeaderViewHolder> headerCreator) {
         this.mCartData = cartData;
         this.mLayoutInflater = LayoutInflater.from(context);
+        this.mBodyCreator = bodyCreator;
+        this.mHeaderCreator = headerCreator;
     }
 
     @Override
@@ -39,17 +46,17 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return mCartData.get(groupPosition).shopObservableSrc.obsCartGoods.size();
+        return mCartData.get(groupPosition).getChildCount();
     }
 
     @Override
-    public ShopObservable getGroup(int groupPosition) {
+    public TypeData getGroup(int groupPosition) {
         return mCartData.get(groupPosition);
     }
 
     @Override
-    public CartGoodsObservable getChild(int groupPosition, int childPosition) {
-        return mCartData.get(groupPosition).shopObservableSrc.obsCartGoods.get(childPosition);
+    public K getChild(int groupPosition, int childPosition) {
+        return mCartData.get(groupPosition).getChild(childPosition);
     }
 
     @Override
@@ -67,99 +74,54 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public View getGroupView(final int groupPosition, boolean isExpanded, View convertView,
                              final ViewGroup parent) {
-        GroupViewHolder viewHolder = null;
+        BaseHeaderViewHolder holder;
         if (convertView == null) {
-            viewHolder = new GroupViewHolder();
-            convertView = mLayoutInflater.inflate(R.layout.item_xlist_header_child,
-                    parent, false);
-            viewHolder.tv_shop_name = convertView.findViewById(R.id.tv_shop_name);
-            viewHolder.cb_select = convertView.findViewById(R.id.cb_shop_check);
-            viewHolder.tv_edit = convertView.findViewById(R.id.tv_shop_opt);
-            convertView.setTag(viewHolder);
+            holder = mHeaderCreator.createHolder();
+            convertView = holder.createView(mLayoutInflater, parent, false);
+            convertView.setTag(holder);
         } else {
-            viewHolder = (GroupViewHolder) convertView.getTag();
+            holder = (CartHeaderViewHolder) convertView.getTag();
         }
-        final ShopObservable shopObservable = getGroup(groupPosition);
-        final GroupViewHolder finalViewHolder = viewHolder;
-        viewHolder.cb_select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shopObservable.setCheckedChange(finalViewHolder.cb_select.isChecked());
-                notifyDataSetChanged();
-            }
-        });
-        viewHolder.tv_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shopObservable.setEditingChange(!shopObservable.isEditing);
-                finalViewHolder.tv_edit.setText(shopObservable.isEditing ? "完成" : "编辑");
-                notifyDataSetChanged();
-            }
-        });
-        viewHolder.cb_select.setChecked(shopObservable.isChecked);
-        viewHolder.tv_shop_name.setText(shopObservable.shopObservableSrc.shopName);
+        holder.setOnNotifyDataChangeListener(this);
+        //控制显示组间距
+        if (groupPosition == 0) {
+            convertView.findViewById(R.id.v_header_divider).setVisibility(View.GONE);
+        } else {
+            convertView.findViewById(R.id.v_header_divider).setVisibility(View.VISIBLE);
+        }
+
+        TypeData groupBean = getGroup(groupPosition);
+        holder.bindView(parent.getContext(), groupBean);
         return convertView;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
                              View convertView, ViewGroup parent) {
-        ChildViewHolder viewHolder = null;
+        TypeHolder holder;
         if (convertView == null) {
-            viewHolder = new ChildViewHolder();
-            convertView = mLayoutInflater.inflate(R.layout.item_xlist_body_child,
-                    parent, false);
-            viewHolder.tv_goods_name = convertView.findViewById(R.id.tv_goods_name);
-            viewHolder.tv_goods_type = convertView.findViewById(R.id.tv_goods_type);
-            viewHolder.tv_goods_count = convertView.findViewById(R.id.tv_goods_count);
-            viewHolder.tv_goods_type_edit = convertView.findViewById(R.id.tv_goods_type_edit);
-            viewHolder.tv_goods_count_edit = convertView.findViewById(R.id.tv_goods_count_edit);
-            viewHolder.cb_select = convertView.findViewById(R.id.cb_goods_check);
-            viewHolder.rlayout_edit = convertView.findViewById(R.id.rlayout_edit);
-            viewHolder.rlayout_display = convertView.findViewById(R.id.rlayout_display);
-            convertView.setTag(viewHolder);
+            holder = mBodyCreator.createHolder();
+            convertView = holder.createView(mLayoutInflater, parent, false);
+            convertView.setTag(holder);
         } else {
-            viewHolder = (ChildViewHolder) convertView.getTag();
+            holder = (TypeHolder) convertView.getTag();
         }
+        holder.setOnNotifyDataChangeListener(this);
+        //显示footer
         View vs_footer = convertView.findViewById(R.id.vs_footer);
         if (isLastChild) {
             vs_footer.setVisibility(View.VISIBLE);
         } else {
             vs_footer.setVisibility(View.GONE);
         }
-        final CartGoodsObservable obsCartGoods = getChild(groupPosition, childPosition);
 
-        if (obsCartGoods.isEditing) {
-            viewHolder.rlayout_display.setVisibility(View.GONE);
-            viewHolder.rlayout_edit.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.rlayout_edit.setVisibility(View.GONE);
-            viewHolder.rlayout_display.setVisibility(View.VISIBLE);
-        }
-
-        final ChildViewHolder finalViewHolder = viewHolder;
-        viewHolder.cb_select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                obsCartGoods.setCheckedChange(finalViewHolder.cb_select.isChecked());
-                notifyDataSetChanged();
-            }
-        });
-        viewHolder.cb_select.setChecked(obsCartGoods.isChecked);
-        viewHolder.tv_goods_name.setText(obsCartGoods.cartGoodsBean.goodsName);
-        viewHolder.tv_goods_type.setText(obsCartGoods.cartGoodsBean.goodsType);
-        viewHolder.tv_goods_count.setText(String.valueOf(obsCartGoods.cartGoodsBean.goodsCount));
-        viewHolder.tv_goods_count_edit.setText(String.valueOf(obsCartGoods.cartGoodsBean.goodsCount));
-        viewHolder.tv_goods_type_edit.setText(obsCartGoods.cartGoodsBean.goodsType);
-        viewHolder.cb_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                obsCartGoods.setCheckedChange(isChecked);
-            }
-        });
+        K child = getChild(groupPosition, childPosition);
+        holder.bindView(parent.getContext(), child);
         return convertView;
     }
 
@@ -168,20 +130,8 @@ public class CartExpandAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    class GroupViewHolder {
-        TextView tv_shop_name;
-        TextView tv_edit;
-        CheckBox cb_select;
-    }
-
-    class ChildViewHolder {
-        TextView tv_goods_name;
-        TextView tv_goods_type;
-        TextView tv_goods_count;
-        TextView tv_goods_type_edit;
-        TextView tv_goods_count_edit;
-        CheckBox cb_select;
-        RelativeLayout rlayout_display;
-        RelativeLayout rlayout_edit;
+    @Override
+    public void shouldUpdateData() {
+        notifyDataSetChanged();
     }
 }

@@ -1,5 +1,7 @@
 package com.example.snowson.apptest.bean;
 
+import com.example.snowson.apptest.utils.TypeData;
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -7,7 +9,7 @@ import java.util.Observer;
  * Created by snowson on 18-1-4.
  */
 
-public class ShopObservable extends Observable implements Observer {
+public class ShopObservable extends Observable implements Observer, TypeData<CartGoodsObservable> {
     public boolean isEditing;
     public boolean isChecked;
     public ShopObservableSrc shopObservableSrc = new ShopObservableSrc();
@@ -40,5 +42,15 @@ public class ShopObservable extends Observable implements Observer {
         eventType.type = EventType.TYPE_EDITING;
         eventType.value = this.isEditing;
         notifyObservers(eventType);
+    }
+
+    @Override
+    public CartGoodsObservable getChild(int childPosition) {
+        return shopObservableSrc.obsCartGoods.get(childPosition);
+    }
+
+    @Override
+    public int getChildCount() {
+        return shopObservableSrc.obsCartGoods.size();
     }
 }

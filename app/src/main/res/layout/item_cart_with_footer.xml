@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--购物车item总布局 + footer-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--购物车item总布局-->
+    <include layout="@layout/item_cart_body" />
+
+    <!--footer-->
+    <include
+        android:id="@+id/vs_footer"
+        layout="@layout/item_cart_footer" />
+</LinearLayout>

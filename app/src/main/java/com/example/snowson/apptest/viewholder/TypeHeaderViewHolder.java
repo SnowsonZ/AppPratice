@@ -11,7 +11,7 @@ import com.example.snowson.apptest.R;
 
 public class TypeHeaderViewHolder extends TypeAbstractViewHolder<String> {
 
-    public TextView tv_name;
+    private TextView tv_name;
 
     public TypeHeaderViewHolder(View itemView) {
         super(itemView);

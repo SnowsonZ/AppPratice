@@ -16,7 +16,7 @@ import com.example.snowson.apptest.R;
 import com.example.snowson.apptest.adapter.BannerAdapter;
 import com.example.snowson.apptest.transition.NoticePageTransformer;
 import com.example.snowson.apptest.utils.ScreenUtils;
-import com.example.snowson.apptest.viewholder.BannerHolderView;
+import com.example.snowson.apptest.viewholder.BannerViewHolder;
 import com.example.snowson.apptest.viewholder.TypeHolder;
 import com.example.snowson.apptest.viewholder.ViewHolderCreator;
 
@@ -74,7 +74,7 @@ public class Banner extends RelativeLayout {
         BannerAdapter adapter = new BannerAdapter(new ViewHolderCreator<TypeHolder>() {
             @Override
             public TypeHolder createHolder() {
-                return new BannerHolderView();
+                return new BannerViewHolder();
             }
         }, mImgUrl);
         adapter.bindViewPager(vpContent);

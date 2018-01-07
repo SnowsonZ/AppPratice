@@ -11,6 +11,11 @@ import com.example.snowson.apptest.R;
 import com.example.snowson.apptest.adapter.CartExpandAdapter;
 import com.example.snowson.apptest.bean.CartGoodsObservable;
 import com.example.snowson.apptest.bean.ShopObservable;
+import com.example.snowson.apptest.viewholder.BaseHeaderViewHolder;
+import com.example.snowson.apptest.viewholder.CartBodyViewHolder;
+import com.example.snowson.apptest.viewholder.CartHeaderViewHolder;
+import com.example.snowson.apptest.viewholder.TypeHolder;
+import com.example.snowson.apptest.viewholder.ViewHolderCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +51,7 @@ public class PageCartFragment extends BaseFragment {
         });
     }
 
+    @SuppressWarnings("unchecked")
     private void initData() {
         List<ShopObservable> obsCart = new ArrayList<ShopObservable>();
         for (int i = 0; i < 15; i++) {
@@ -69,7 +75,18 @@ public class PageCartFragment extends BaseFragment {
             obsShop.shopObservableSrc.obsCartGoods = obsGoods;
             obsCart.add(obsShop);
         }
-        CartExpandAdapter adapter = new CartExpandAdapter(obsCart, getActivity());
+        CartExpandAdapter adapter = new CartExpandAdapter(obsCart, getActivity(),
+                new ViewHolderCreator<TypeHolder>() {
+            @Override
+            public TypeHolder createHolder() {
+                return new CartBodyViewHolder();
+            }
+        }, new ViewHolderCreator<BaseHeaderViewHolder>() {
+            @Override
+            public BaseHeaderViewHolder createHolder() {
+                return new CartHeaderViewHolder();
+            }
+        });
         mCartElv.setAdapter(adapter);
         for (int i = 0; i < adapter.getGroupCount(); i++) {
             mCartElv.expandGroup(i);
