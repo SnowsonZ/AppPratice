@@ -1,7 +1,6 @@
 package com.example.snowson.apptest.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,16 +47,19 @@ public class PageCartFragment extends BaseFragment implements View.OnClickListen
     private List<ShopObservable> mObsCart;
     private CommonExpandAdapter mAdapter;
     private CartOptObservable mCartOptObs;
+    private View mRootView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_cart, container, false);
-        initView(rootView);
-        initData();
-        initEvent();
-        return rootView;
+        if (mRootView == null) {
+            mRootView = inflater.inflate(R.layout.fragment_cart, container, false);
+            initView(mRootView);
+            initData();
+            initEvent();
+        }
+        return mRootView;
     }
 
     private void initView(View container) {
@@ -121,15 +123,9 @@ public class PageCartFragment extends BaseFragment implements View.OnClickListen
             }
         });
         mCartElv.setAdapter(mAdapter);
-        //fix bug 切换回该页面时展开eListView失效
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < mAdapter.getGroupCount(); i++) {
-                    mCartElv.expandGroup(i);
-                }
-            }
-        }, 0);
+        for (int i = 0; i < mAdapter.getGroupCount(); i++) {
+            mCartElv.expandGroup(i);
+        }
         //update 购物车操作栏状态
         updateCartOpt();
     }
@@ -222,7 +218,6 @@ public class PageCartFragment extends BaseFragment implements View.OnClickListen
 
     private void updateCartOpt() {
         float priceAmount = 0;
-        mSelectAllCb.setChecked(mCartOptObs.isCheacked);
         List<ShopBean> selectedGoods = getSelectedGoods();
         for (int i = 0; i < selectedGoods.size(); i++) {
             ShopBean shopBean = selectedGoods.get(i);
@@ -233,10 +228,26 @@ public class PageCartFragment extends BaseFragment implements View.OnClickListen
         }
         mPayAmountTv.setText(ScreenUtils.getFormatText(getResources()
                 .getString(R.string.unit_price, priceAmount)));
+        //购物车为空时，全选按钮不可点击
+        if(mObsCart.size() <= 0) {
+            mSelectAllCb.setChecked(false);
+            mSelectAllCb.setEnabled(false);
+        }else {
+            mSelectAllCb.setEnabled(true);
+            mSelectAllCb.setChecked(mCartOptObs.isCheacked);
+        }
     }
 
     @Override
     public void onUpdateViewState() {
         updateCartOpt();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mRootView != null) {
+            ((ViewGroup) mRootView.getParent()).removeView(mRootView);
+        }
     }
 }

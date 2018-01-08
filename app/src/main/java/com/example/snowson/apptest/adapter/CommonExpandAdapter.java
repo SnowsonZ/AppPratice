@@ -147,5 +147,6 @@ public class CommonExpandAdapter<T, K> extends BaseExpandableListAdapter
             }
         }
         notifyDataSetChanged();
+        bean.setCheckedChange(bean.isChecked);
     }
 }

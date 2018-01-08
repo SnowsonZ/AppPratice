@@ -33,10 +33,10 @@ public class CartOptObservable extends Observable implements Observer {
                     }
                 }
                 this.isCheacked = checkFLag;
+                if(mListener != null) {
+                    mListener.onUpdateViewState();
+                }
             }
-        }
-        if(mListener != null) {
-            mListener.onUpdateViewState();
         }
     }
 

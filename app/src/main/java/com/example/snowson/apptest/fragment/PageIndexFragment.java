@@ -49,6 +49,7 @@ public class PageIndexFragment extends BaseFragment
     private ArrayList<DataTypeGrid> data_four;
     private ArrayList<DataTypeGrid> data_five;
     private ArrayList<String> data_header;
+    private View mRootView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,9 +62,11 @@ public class PageIndexFragment extends BaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_index, container, false);
-        initView(rootView);
-        return rootView;
+        if(mRootView == null) {
+            mRootView = inflater.inflate(R.layout.fragment_index, container, false);
+            initView(mRootView);
+        }
+        return mRootView;
     }
 
     private void initView(View container) {
@@ -199,5 +202,8 @@ public class PageIndexFragment extends BaseFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if(mRootView != null) {
+            ((ViewGroup)mRootView.getParent()).removeView(mRootView);
+        }
     }
 }
