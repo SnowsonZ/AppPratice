@@ -11,4 +11,5 @@ public class EventType<T> {
 
     public static final int TYPE_SELECTED = 0;
     public static final int TYPE_EDITING = 1;
+    public static final int TYPE_CHECK_ALL = 2;
 }

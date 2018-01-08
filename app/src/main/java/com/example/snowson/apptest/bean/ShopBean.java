@@ -1,5 +1,6 @@
 package com.example.snowson.apptest.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,5 +11,5 @@ import java.util.List;
 
 public class ShopBean {
     public String shopName;
-    public List<CartGoodsBean> goodsInfo;
+    public List<CartGoodsBean> goodsInfo = new ArrayList<CartGoodsBean>();
 }

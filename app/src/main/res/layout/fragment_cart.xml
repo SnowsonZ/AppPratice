@@ -1,10 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ExpandableListView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:childDivider="@android:color/transparent"
-    android:dividerHeight="0dp"
-    android:childIndicator="@null"
-    android:groupIndicator="@null">
+    android:orientation="vertical"
+    android:layout_height="match_parent">
 
-</ExpandableListView>
+    <ExpandableListView
+        android:id="@+id/elv_cart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:childDivider="@android:color/transparent"
+        android:childIndicator="@null"
+        android:dividerHeight="0dp"
+        android:groupIndicator="@null" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
+        android:paddingStart="4dp">
+
+        <CheckBox
+            android:id="@+id/cb_select_all"
+            style="@style/contentTextStyle"
+            android:gravity="center"
+            android:text="全选" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/llayout_pay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1">
+
+                    <RelativeLayout
+                        android:id="@+id/rlayout_payinfo_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llayout_payinfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:gravity="center_vertical"
+                        android:minWidth="60dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/contentTextStyle"
+                            android:gravity="center"
+                            android:text="合计：" />
+
+                        <TextView
+                            android:id="@+id/tv_payinfo_amount"
+                            style="@style/alertTextStyle"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:text="￥0.00" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_pay"
+                    style="@style/buttonTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:minWidth="90dp"
+                    android:text="结算" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlayout_opt_all"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_delete_all"
+                    style="@style/buttonTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:minWidth="90dp"
+                    android:text="删除" />
+
+                <TextView
+                    android:id="@+id/tv_add_favorite"
+                    style="@style/buttonTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="2dp"
+                    android:layout_toStartOf="@id/tv_delete_all"
+                    android:background="@android:color/holo_orange_dark"
+                    android:minWidth="90dp"
+                    android:text="移入收藏夹" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

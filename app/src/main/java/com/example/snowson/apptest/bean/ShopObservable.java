@@ -16,23 +16,49 @@ public class ShopObservable extends Observable implements Observer, TypeData<Car
 
     @Override
     public void update(Observable o, Object arg) {
-        boolean isFlag = true;
-        for (CartGoodsObservable cartGoodsObservable : shopObservableSrc.obsCartGoods) {
-            if (!cartGoodsObservable.isChecked) {
-                isFlag = false;
-                break;
+        //全选按钮点击
+        if(arg instanceof EventType) {
+            EventType eventType = (EventType) arg;
+            this.isChecked = (boolean) eventType.value;
+            EventType<Boolean> typeChild = new EventType<Boolean>();
+            typeChild.type = EventType.TYPE_SELECTED;
+            typeChild.value = this.isChecked;
+            setChanged();
+            notifyObservers(typeChild);
+        }else {
+            //child checkbox点击
+            boolean isFlag = true;
+            for (CartGoodsObservable cartGoodsObservable : shopObservableSrc.obsCartGoods) {
+                if (!cartGoodsObservable.isChecked) {
+                    isFlag = false;
+                    break;
+                }
             }
+            this.isChecked = isFlag;
+
+            EventType<Boolean> eventTypeAll = new EventType<Boolean>();
+            eventTypeAll.type = EventType.TYPE_CHECK_ALL;
+            eventTypeAll.value = this.isChecked;
+            setChanged();
+            notifyObservers(eventTypeAll);
         }
-        isChecked = isFlag;
     }
 
     public void setCheckedChange(boolean isChecked) {
         this.isChecked = isChecked;
+        //通知child
+        EventType<Boolean> eventTypeChild = new EventType<Boolean>();
+        eventTypeChild.type = EventType.TYPE_SELECTED;
+        eventTypeChild.value = this.isChecked;
         setChanged();
-        EventType<Boolean> eventType = new EventType<Boolean>();
-        eventType.type = EventType.TYPE_SELECTED;
-        eventType.value = this.isChecked;
-        notifyObservers(eventType);
+        notifyObservers(eventTypeChild);
+
+        //通知全选按钮
+        EventType<Boolean> eventTypeAll = new EventType<Boolean>();
+        eventTypeAll.type = EventType.TYPE_CHECK_ALL;
+        eventTypeAll.value = this.isChecked;
+        setChanged();
+        notifyObservers(eventTypeAll);
     }
 
     public void setEditingChange(boolean isEditing) {

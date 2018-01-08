@@ -9,3 +9,4 @@ some practice,test and note in work
 - 圆形图片
 - 自定义DialogFragment
 - BottomSheetDialog Pratice
+- 自定义TabLayout，一定程度解决在fixed模式下字体大小不一的问题
