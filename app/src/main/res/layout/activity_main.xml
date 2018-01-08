@@ -8,13 +8,12 @@
     android:orientation="vertical"
     tools:context="com.example.snowson.apptest.MainActivity">
 
-    <android.support.design.widget.TabLayout
+    <com.example.snowson.apptest.view.FixTextSizeTabLayout
         android:id="@+id/tabl_index"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabIndicatorColor="@color/colorAccent"
         app:tabMode="fixed"
-        app:tabPadding="4dp"
         app:tabIndicatorHeight="4dp"
         app:tabSelectedTextColor="@color/colorAccent"
         app:tabTextAppearance="@style/subTitleStyle"
