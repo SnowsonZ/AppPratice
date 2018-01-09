@@ -37,7 +37,8 @@
             android:name="UMENG_CHANNEL"
             android:value="${umengChannel}" />
 
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -84,9 +85,11 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".activity.EditTextTestActivity"/>
-            <!--android:windowSoftInputMode="stateVisible|adjustPan" -->
-            <!--/>-->
+        <activity android:name=".activity.EditTextTestActivity" />
+        <!-- android:windowSoftInputMode="stateVisible|adjustPan" -->
+        <!-- /> -->
+        <activity android:name=".activity.TransparentStatusActivity"
+            android:theme="@style/AppNoActionBarTheme"/>
     </application>
 
 </manifest>

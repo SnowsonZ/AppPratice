@@ -83,7 +83,8 @@
                     style="@style/buttonTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:minWidth="90dp"
+                    android:textSize="16sp"
+                    android:minWidth="100dp"
                     android:text="结算" />
 
             </LinearLayout>
