@@ -8,6 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="DialogAnimScale" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/anim_dialog_scale_enter</item>
         <item name="android:windowExitAnimation">@anim/anim_dialog_scale_exit</item>

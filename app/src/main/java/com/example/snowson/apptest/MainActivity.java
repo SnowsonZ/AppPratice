@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.example.snowson.apptest.adapter.IndexContentAdapter;
 import com.example.snowson.apptest.fragment.BaseFragment;
@@ -32,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        Toolbar mToolBar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolBar);
+        mToolBar.setOnMenuItemClickListener(mOnMenuItemClickListener);
         mNavTab = findViewById(R.id.tabl_index);
         mContentVp = findViewById(R.id.vp_index);
     }
@@ -64,4 +69,18 @@ public class MainActivity extends AppCompatActivity {
         mContentVp.setAdapter(mAdapter);
         mNavTab.setupWithViewPager(mContentVp);
     }
+
+    private Toolbar.OnMenuItemClickListener mOnMenuItemClickListener
+            = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_opt_all:
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        }
+    };
 }
