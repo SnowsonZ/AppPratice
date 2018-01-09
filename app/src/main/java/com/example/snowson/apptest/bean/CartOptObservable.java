@@ -21,10 +21,11 @@ public class CartOptObservable extends Observable implements Observer {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void update(Observable o, Object event) {
         if(event instanceof EventType) {
-            EventType eventType = (EventType) event;
-            if(eventType.type == EventType.TYPE_CHECK_ALL) {
+            EventType<Boolean> eventType = (EventType<Boolean>) event;
+            if(eventType.type == EventType.TYPE_ALL) {
                 boolean checkFLag = true;
                 for (ShopObservable obsShop : shopObservables) {
                     if(!obsShop.isChecked) {
@@ -42,10 +43,10 @@ public class CartOptObservable extends Observable implements Observer {
 
     public void setCheckedChange(boolean isCheacked) {
         this.isCheacked = isCheacked;
-        setChanged();
         EventType<Boolean> eventType = new EventType<Boolean>();
-        eventType.type = EventType.TYPE_CHECK_ALL;
+        eventType.type = EventType.TYPE_ALL;
         eventType.value = this.isCheacked;
+        setChanged();
         notifyObservers(eventType);
     }
 }

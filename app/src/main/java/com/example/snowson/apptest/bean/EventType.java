@@ -6,10 +6,10 @@ package com.example.snowson.apptest.bean;
 
 public class EventType<T> {
     public int type;
-    public String typeName;
     public T value;
 
-    public static final int TYPE_SELECTED = 0;
-    public static final int TYPE_EDITING = 1;
-    public static final int TYPE_CHECK_ALL = 2;
+    public static final int TYPE_ALL = 0;
+    public static final int TYPE_GROUP_CHECK = 1;
+    public static final int TYPE_CHILD = 2;
+    public static final int TYPE_GROUP_EDITING = 3;
 }

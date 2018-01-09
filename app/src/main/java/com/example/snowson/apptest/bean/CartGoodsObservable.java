@@ -17,10 +17,10 @@ public class CartGoodsObservable extends Observable implements Observer {
         if (event instanceof EventType) {
             EventType eventType = (EventType) event;
             switch (eventType.type) {
-                case EventType.TYPE_SELECTED:
+                case EventType.TYPE_CHILD:
                     this.isChecked = (boolean) eventType.value;
                     break;
-                case EventType.TYPE_EDITING:
+                case EventType.TYPE_GROUP_EDITING:
                     this.isEditing = (boolean) eventType.value;
                     break;
             }
@@ -29,7 +29,10 @@ public class CartGoodsObservable extends Observable implements Observer {
 
     public void setCheckedChange(boolean isChecked) {
         this.isChecked = isChecked;
+        EventType<Boolean> eventType = new EventType<Boolean>();
+        eventType.type = EventType.TYPE_CHILD;
+        eventType.value = this.isChecked;
         setChanged();
-        notifyObservers();
+        notifyObservers(eventType);
     }
 }

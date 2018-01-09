@@ -15,32 +15,36 @@ public class ShopObservable extends Observable implements Observer, TypeData<Car
     public ShopObservableSrc shopObservableSrc = new ShopObservableSrc();
 
     @Override
-    public void update(Observable o, Object arg) {
-        //全选按钮点击
-        if(arg instanceof EventType) {
-            EventType eventType = (EventType) arg;
-            this.isChecked = (boolean) eventType.value;
-            EventType<Boolean> typeChild = new EventType<Boolean>();
-            typeChild.type = EventType.TYPE_SELECTED;
-            typeChild.value = this.isChecked;
-            setChanged();
-            notifyObservers(typeChild);
-        }else {
-            //child checkbox点击
-            boolean isFlag = true;
-            for (CartGoodsObservable cartGoodsObservable : shopObservableSrc.obsCartGoods) {
-                if (!cartGoodsObservable.isChecked) {
-                    isFlag = false;
+    @SuppressWarnings("unchecked")
+    public void update(Observable o, Object eventType) {
+        if(eventType instanceof EventType) {
+            EventType<Boolean> resultType = (EventType<Boolean>) eventType;
+            EventType<Boolean> postType = new EventType<Boolean>();
+            switch (resultType.type) {
+                //接收到全选按钮事件，通知child更新状态
+                case EventType.TYPE_ALL:
+                    this.isChecked = resultType.value;
+                    postType.type = EventType.TYPE_CHILD;
+                    postType.value = isChecked;
                     break;
-                }
+                //接收到child事件，通知全选按钮状态刷新
+                case EventType.TYPE_CHILD:
+                    boolean isFlag = true;
+                    for (CartGoodsObservable cartGoodsObservable : shopObservableSrc.obsCartGoods) {
+                        if (!cartGoodsObservable.isChecked) {
+                            isFlag = false;
+                            break;
+                        }
+                    }
+                    this.isChecked = isFlag;
+                    postType.type = EventType.TYPE_ALL;
+                    postType.value = this.isChecked;
+                    break;
+                default:
+                    break;
             }
-            this.isChecked = isFlag;
-
-            EventType<Boolean> eventTypeAll = new EventType<Boolean>();
-            eventTypeAll.type = EventType.TYPE_CHECK_ALL;
-            eventTypeAll.value = this.isChecked;
             setChanged();
-            notifyObservers(eventTypeAll);
+            notifyObservers(postType);
         }
     }
 
@@ -48,14 +52,14 @@ public class ShopObservable extends Observable implements Observer, TypeData<Car
         this.isChecked = isChecked;
         //通知child
         EventType<Boolean> eventTypeChild = new EventType<Boolean>();
-        eventTypeChild.type = EventType.TYPE_SELECTED;
+        eventTypeChild.type = EventType.TYPE_CHILD;
         eventTypeChild.value = this.isChecked;
         setChanged();
         notifyObservers(eventTypeChild);
 
         //通知全选按钮
         EventType<Boolean> eventTypeAll = new EventType<Boolean>();
-        eventTypeAll.type = EventType.TYPE_CHECK_ALL;
+        eventTypeAll.type = EventType.TYPE_ALL;
         eventTypeAll.value = this.isChecked;
         setChanged();
         notifyObservers(eventTypeAll);
@@ -65,7 +69,7 @@ public class ShopObservable extends Observable implements Observer, TypeData<Car
         this.isEditing = isEditing;
         setChanged();
         EventType<Boolean> eventType = new EventType<Boolean>();
-        eventType.type = EventType.TYPE_EDITING;
+        eventType.type = EventType.TYPE_GROUP_EDITING;
         eventType.value = this.isEditing;
         notifyObservers(eventType);
     }
