@@ -12,9 +12,9 @@ import android.widget.Toast;
 
 import com.example.snowson.apptest.R;
 import com.example.snowson.apptest.adapter.CommonExpandAdapter;
-import com.example.snowson.apptest.bean.CartGoodsBean;
 import com.example.snowson.apptest.bean.CartGoodsObservable;
 import com.example.snowson.apptest.bean.CartOptObservable;
+import com.example.snowson.apptest.bean.GoodsBean;
 import com.example.snowson.apptest.bean.ShopBean;
 import com.example.snowson.apptest.bean.ShopObservable;
 import com.example.snowson.apptest.utils.ScreenUtils;
@@ -193,7 +193,7 @@ public class PageCartFragment extends BaseFragment implements View.OnClickListen
             if (shopObservable.isChecked) {
                 shopBean = new ShopBean();
                 for (int j = 0; j < shopObservable.shopObservableSrc.obsCartGoods.size(); j++) {
-                    CartGoodsBean cartGoodsBean
+                    GoodsBean cartGoodsBean
                             = shopObservable.shopObservableSrc.obsCartGoods.get(j).cartGoodsBean;
                     shopBean.goodsInfo.add(cartGoodsBean);
                 }
@@ -203,7 +203,7 @@ public class PageCartFragment extends BaseFragment implements View.OnClickListen
                         if (shopBean == null) {
                             shopBean = new ShopBean();
                         }
-                        CartGoodsBean cartGoodsBean = shopObservable
+                        GoodsBean cartGoodsBean = shopObservable
                                 .shopObservableSrc.obsCartGoods.get(j).cartGoodsBean;
                         shopBean.goodsInfo.add(cartGoodsBean);
                     }
@@ -222,12 +222,12 @@ public class PageCartFragment extends BaseFragment implements View.OnClickListen
         for (int i = 0; i < selectedGoods.size(); i++) {
             ShopBean shopBean = selectedGoods.get(i);
             for (int j = 0; j < shopBean.goodsInfo.size(); j++) {
-                CartGoodsBean cartGoodsBean = shopBean.goodsInfo.get(j);
+                GoodsBean cartGoodsBean = shopBean.goodsInfo.get(j);
                 priceAmount += cartGoodsBean.goodsUnitPrice * cartGoodsBean.goodsCount;
             }
         }
         mPayAmountTv.setText(ScreenUtils.getFormatText(getResources()
-                .getString(R.string.unit_price, priceAmount)));
+                .getString(R.string.price_format, priceAmount)));
         //购物车为空时，全选按钮不可点击
         if(mObsCart.size() <= 0) {
             mSelectAllCb.setChecked(false);

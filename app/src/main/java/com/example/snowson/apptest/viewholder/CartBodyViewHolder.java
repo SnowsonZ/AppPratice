@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.snowson.apptest.R;
-import com.example.snowson.apptest.bean.CartGoodsBean;
+import com.example.snowson.apptest.bean.GoodsBean;
 import com.example.snowson.apptest.bean.CartGoodsObservable;
 
 /**
@@ -70,7 +70,7 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
         }
         mContext = context;
         mData = bean;
-        CartGoodsBean cartGoodsBean = bean.cartGoodsBean;
+        GoodsBean cartGoodsBean = bean.cartGoodsBean;
         tv_goods_name.setText(cartGoodsBean.goodsName);
         tv_goods_type.setText(cartGoodsBean.goodsType);
         tv_goods_count.setText(String.valueOf(cartGoodsBean.goodsCount));
@@ -96,7 +96,7 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
                 cartGoodsBean.goodsCount));
         tv_goods_count_edit.setText(String.valueOf(cartGoodsBean.goodsCount));
         tv_goods_type_edit.setText(cartGoodsBean.goodsType);
-        tv_goods_price.setText(String.format(context.getResources().getString(R.string.unit_price),
+        tv_goods_price.setText(String.format(context.getResources().getString(R.string.price_format),
                 cartGoodsBean.goodsUnitPrice));
         Integer count = Integer.valueOf(tv_goods_count_edit.getText().toString());
         changeTextColor(count);
