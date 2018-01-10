@@ -11,5 +11,5 @@ import java.util.List;
 
 public class ShopBean {
     public String shopName;
-    public List<CartGoodsBean> goodsInfo = new ArrayList<CartGoodsBean>();
+    public List<GoodsBean> goodsInfo = new ArrayList<GoodsBean>();
 }

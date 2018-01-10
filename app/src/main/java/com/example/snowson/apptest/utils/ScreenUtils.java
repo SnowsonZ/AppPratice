@@ -27,11 +27,11 @@ public class ScreenUtils {
                 dp, context.getResources().getDisplayMetrics());
     }
 
-    public static float sp2px(Context context, float sp) {
+    public static int sp2px(Context context, float sp) {
         if (context == null || sp <= 0) {
             return 0;
         }
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
                 sp, context.getResources().getDisplayMetrics());
     }
 
@@ -43,6 +43,9 @@ public class ScreenUtils {
     public static CharSequence getFormatText(CharSequence text) {
         if(TextUtils.isEmpty(text)) {
             return "";
+        }
+        if(!text.toString().contains(".")) {
+            return text;
         }
         Spannable wordToSpan = new SpannableStringBuilder(text);
         int dotIndex = text.toString().indexOf(".");

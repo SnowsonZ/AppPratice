@@ -12,6 +12,7 @@ import com.example.snowson.apptest.fragment.BaseFragment;
 import com.example.snowson.apptest.fragment.PageCartFragment;
 import com.example.snowson.apptest.fragment.PageDialogFragment;
 import com.example.snowson.apptest.fragment.PageIndexFragment;
+import com.example.snowson.apptest.fragment.PageOrderFragment;
 import com.example.snowson.apptest.fragment.PageViewTypeFragment;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         mPageTitle.add("Dialog");
         mPageTitle.add("ViewType");
         mPageTitle.add("Cart");
+        mPageTitle.add("Order");
         mPages = new ArrayList<BaseFragment>();
         PageIndexFragment fragIndex = new PageIndexFragment();
         Bundle bIndex = new Bundle();
@@ -65,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         mPages.add(fragViewType);
         PageCartFragment fragmentCart = new PageCartFragment();
         mPages.add(fragmentCart);
+        PageOrderFragment fragmentOrder = new PageOrderFragment();
+        mPages.add(fragmentOrder);
         mAdapter = new IndexContentAdapter(getSupportFragmentManager(), mPages, mPageTitle);
         mContentVp.setAdapter(mAdapter);
         mNavTab.setupWithViewPager(mContentVp);

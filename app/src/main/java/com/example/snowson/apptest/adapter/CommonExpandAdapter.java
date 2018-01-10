@@ -12,7 +12,6 @@ import com.example.snowson.apptest.bean.CartGoodsObservable;
 import com.example.snowson.apptest.bean.ShopObservable;
 import com.example.snowson.apptest.utils.TypeData;
 import com.example.snowson.apptest.viewholder.BaseHeaderViewHolder;
-import com.example.snowson.apptest.viewholder.CartHeaderViewHolder;
 import com.example.snowson.apptest.viewholder.TypeHolder;
 import com.example.snowson.apptest.viewholder.ViewHolderCreator;
 
@@ -86,7 +85,7 @@ public class CommonExpandAdapter<T, K> extends BaseExpandableListAdapter
             convertView = holder.createView(mLayoutInflater, parent, false);
             convertView.setTag(holder);
         } else {
-            holder = (CartHeaderViewHolder) convertView.getTag();
+            holder = (BaseHeaderViewHolder) convertView.getTag();
         }
         holder.setOnNotifyDataChangeListener(this);
         //控制显示组间距

@@ -10,7 +10,7 @@ import java.util.Observer;
 public class CartGoodsObservable extends Observable implements Observer {
     public boolean isEditing;
     public boolean isChecked;
-    public CartGoodsBean cartGoodsBean = new CartGoodsBean();
+    public GoodsBean cartGoodsBean = new GoodsBean();
 
     @Override
     public void update(Observable o, Object event) {

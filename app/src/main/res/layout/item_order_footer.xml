@@ -5,21 +5,12 @@
     android:layout_marginTop="10dp"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@android:color/darker_gray" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxHeight="80dp"
         android:minHeight="60dp"
         android:paddingBottom="10dp"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp"
         android:paddingTop="4dp">
 
         <LinearLayout
@@ -32,7 +23,7 @@
             android:padding="8dp">
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tv_goods_amout"
+                android:id="@+id/tv_goods_count_amount"
                 style="@style/contentTextStyle"
                 android:text="共10件商品" />
 
@@ -40,9 +31,15 @@
                 android:id="@+id/tv_price_amount"
                 style="@style/contentTextStyle"
                 android:layout_marginStart="8dp"
-                android:text="合计：￥999.34"
+                android:text="合计：￥0.00"
                 android:textSize="16sp" />
         </LinearLayout>
+
+        <View
+            android:layout_below="@id/llayout_amount"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/darker_gray" />
 
         <LinearLayout
             android:id="@+id/llayout_status"
@@ -50,9 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/llayout_amount"
-            android:layout_marginBottom="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginEnd="6dp"
+            android:paddingTop="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -60,6 +56,7 @@
                 android:id="@+id/tv_order_cancel"
                 style="@style/orderStatusTextStyle"
                 android:layout_marginEnd="10dp"
+                android:visibility="gone"
                 android:text="取消订单" />
 
             <android.support.v7.widget.AppCompatTextView
@@ -71,14 +68,26 @@
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_order_pay"
                 style="@style/orderStatusTextStyle"
-                android:layout_marginEnd="10dp"
-                android:text="付款"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:text="付款" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_goods_get"
                 style="@style/orderStatusTextStyle"
+                android:visibility="gone"
                 android:text="确认收货" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_order_comment"
+                android:visibility="gone"
+                style="@style/orderStatusTextStyle"
+                android:text="评价" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_order_cancel_detail"
+                style="@style/orderStatusTextStyle"
+                android:text="查看详情" />
+
         </LinearLayout>
 
     </RelativeLayout>

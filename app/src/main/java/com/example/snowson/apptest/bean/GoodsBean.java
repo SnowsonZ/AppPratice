@@ -6,7 +6,7 @@ package com.example.snowson.apptest.bean;
  * description:
  */
 
-public class CartGoodsBean {
+public class GoodsBean {
     public String goodsName;
     public int goodsCount;
     public String goodsType;
