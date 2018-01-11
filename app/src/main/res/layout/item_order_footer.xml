@@ -38,8 +38,10 @@
         <View
             android:layout_below="@id/llayout_amount"
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@android:color/darker_gray" />
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_height="1dp"
+            android:background="#ccc" />
 
         <LinearLayout
             android:id="@+id/llayout_status"
