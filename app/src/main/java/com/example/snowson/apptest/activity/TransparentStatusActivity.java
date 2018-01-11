@@ -7,6 +7,10 @@ import android.view.View;
 import com.example.snowson.apptest.R;
 import com.example.snowson.apptest.utils.ScreenUtils;
 
+/**
+ * 沉浸式状态栏适配，自带虚拟按键背景冲突解决
+ */
+
 public class TransparentStatusActivity extends AppCompatActivity {
 
     @Override

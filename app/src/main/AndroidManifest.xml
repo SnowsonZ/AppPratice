@@ -88,8 +88,10 @@
         <activity android:name=".activity.EditTextTestActivity" />
         <!-- android:windowSoftInputMode="stateVisible|adjustPan" -->
         <!-- /> -->
-        <activity android:name=".activity.TransparentStatusActivity"
-            android:theme="@style/AppNoActionBarTheme"/>
+        <activity
+            android:name=".activity.TransparentStatusActivity"
+            android:theme="@style/AppNoActionBarTheme" />
+        <activity android:name=".activity.RecordActivity"></activity>
     </application>
 
 </manifest>
