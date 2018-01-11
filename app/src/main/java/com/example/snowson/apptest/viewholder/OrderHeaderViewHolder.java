@@ -59,7 +59,8 @@ public class OrderHeaderViewHolder extends BaseHeaderViewHolder {
                 tv_order_status.setText("交易成功");
                 break;
             case OrderStatus.STATUS_CANCEL:
-                tv_order_status.setVisibility(View.GONE);
+                tv_order_status.setText("交易取消");
+                tv_order_status.setVisibility(View.INVISIBLE);
                 break;
         }
         tv_shop_name.setText(result.shopName);
