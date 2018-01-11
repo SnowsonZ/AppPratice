@@ -21,6 +21,8 @@ public abstract class TypeHolder<T> {
 
     public abstract void bindView(Context context, T bean);
 
+    public abstract void bindView(Context context, T bean, int position);
+
     public void setOnNotifyDataChangeListener(OnNotifyDataChangeListener listener) {
         mListener = listener;
     }

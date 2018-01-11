@@ -13,6 +13,7 @@ import com.example.snowson.apptest.utils.TypeData;
  * description:
  */
 
+@Deprecated
 public class BaseHeaderViewHolder extends TypeHolder<TypeData> {
     @Override
     public View createView(Context contex) {
@@ -26,6 +27,11 @@ public class BaseHeaderViewHolder extends TypeHolder<TypeData> {
 
     @Override
     public void bindView(Context context, TypeData bean) {
+
+    }
+
+    @Override
+    public void bindView(Context context, TypeData bean, int position) {
 
     }
 }

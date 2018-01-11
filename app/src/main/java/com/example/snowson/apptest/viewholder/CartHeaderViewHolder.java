@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.snowson.apptest.OnNotifyDataChangeListener;
 import com.example.snowson.apptest.R;
 import com.example.snowson.apptest.bean.ShopObservable;
-import com.example.snowson.apptest.utils.TypeData;
 
 /**
  * author: snowson
@@ -18,7 +17,7 @@ import com.example.snowson.apptest.utils.TypeData;
  * description:
  */
 
-public class CartHeaderViewHolder extends BaseHeaderViewHolder {
+public class CartHeaderViewHolder extends TypeHolder<ShopObservable> {
 
     private TextView tv_shop_name;
     private TextView tv_edit;
@@ -43,15 +42,14 @@ public class CartHeaderViewHolder extends BaseHeaderViewHolder {
     }
 
     @Override
-    public void bindView(Context context, final TypeData bean) {
+    public void bindView(Context context, final ShopObservable bean) {
         if (bean == null) {
             return;
         }
-        final ShopObservable result = (ShopObservable) bean;
         cb_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                result.setCheckedChange(cb_select.isChecked());
+                bean.setCheckedChange(cb_select.isChecked());
                 if (mListener != null) {
                     mListener.shouldUpdateData();
                 }
@@ -60,19 +58,24 @@ public class CartHeaderViewHolder extends BaseHeaderViewHolder {
         tv_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                result.setEditingChange(!result.isEditing);
-                tv_edit.setText(result.isEditing ? "完成" : "编辑");
+                bean.setEditingChange(!bean.isEditing);
+                tv_edit.setText(bean.isEditing ? "完成" : "编辑");
                 if (mListener != null) {
                     mListener.shouldUpdateData();
                 }
             }
         });
-        if(result.isEditing) {
+        if(bean.isEditing) {
             tv_edit.setText("完成");
         }else {
             tv_edit.setText("编辑");
         }
-        cb_select.setChecked(result.isChecked);
-        tv_shop_name.setText(result.shopObservableSrc.shopName);
+        cb_select.setChecked(bean.isChecked);
+        tv_shop_name.setText(bean.shopObservableSrc.shopName);
+    }
+
+    @Override
+    public void bindView(Context context, ShopObservable bean, int position) {
+
     }
 }

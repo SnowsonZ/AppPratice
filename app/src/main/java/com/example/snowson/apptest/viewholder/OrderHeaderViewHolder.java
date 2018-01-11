@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.snowson.apptest.R;
 import com.example.snowson.apptest.bean.OrderBean;
 import com.example.snowson.apptest.bean.OrderStatus;
-import com.example.snowson.apptest.utils.TypeData;
 
 /**
  * author: snowson
@@ -18,7 +17,7 @@ import com.example.snowson.apptest.utils.TypeData;
  * description: 订单header组件ViewHolder
  */
 
-public class OrderHeaderViewHolder extends BaseHeaderViewHolder {
+public class OrderHeaderViewHolder extends TypeHolder<OrderBean> {
 
     private TextView tv_shop_name;
     private TextView tv_order_status;
@@ -40,12 +39,11 @@ public class OrderHeaderViewHolder extends BaseHeaderViewHolder {
     }
 
     @Override
-    public void bindView(Context context, TypeData bean) {
+    public void bindView(Context context, OrderBean bean) {
         if (bean == null) {
             return;
         }
-        OrderBean result = (OrderBean) bean;
-        switch (result.status) {
+        switch (bean.status) {
             case OrderStatus.STATUS_UNPAY:
                 tv_order_status.setText("等待买家付款");
                 break;
@@ -63,6 +61,11 @@ public class OrderHeaderViewHolder extends BaseHeaderViewHolder {
                 tv_order_status.setVisibility(View.INVISIBLE);
                 break;
         }
-        tv_shop_name.setText(result.shopName);
+        tv_shop_name.setText(bean.shopName);
+    }
+
+    @Override
+    public void bindView(Context context, OrderBean bean, int position) {
+
     }
 }

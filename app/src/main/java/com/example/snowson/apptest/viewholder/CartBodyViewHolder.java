@@ -10,8 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.snowson.apptest.R;
-import com.example.snowson.apptest.bean.GoodsBean;
 import com.example.snowson.apptest.bean.CartGoodsObservable;
+import com.example.snowson.apptest.bean.GoodsBean;
+import com.example.snowson.apptest.bean.ShopObservable;
 
 /**
  * author: snowson
@@ -19,7 +20,7 @@ import com.example.snowson.apptest.bean.CartGoodsObservable;
  * description:
  */
 
-public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
+public class CartBodyViewHolder extends TypeHolder<ShopObservable>
         implements View.OnClickListener{
     private static final int MAX_COUNT = 99;
     private static final int MIN_COUNT = 1;
@@ -64,13 +65,18 @@ public class CartBodyViewHolder extends TypeHolder<CartGoodsObservable>
     }
 
     @Override
-    public void bindView(Context context, final CartGoodsObservable bean) {
+    public void bindView(Context context, final ShopObservable bean) {
+
+    }
+
+    @Override
+    public void bindView(Context context, ShopObservable bean, int position) {
         if (bean == null) {
             return;
         }
         mContext = context;
-        mData = bean;
-        GoodsBean cartGoodsBean = bean.cartGoodsBean;
+        mData = bean.getChild(position);
+        GoodsBean cartGoodsBean = mData.cartGoodsBean;
         tv_goods_name.setText(cartGoodsBean.goodsName);
         tv_goods_type.setText(cartGoodsBean.goodsType);
         tv_goods_count.setText(String.valueOf(cartGoodsBean.goodsCount));

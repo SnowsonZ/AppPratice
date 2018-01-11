@@ -18,7 +18,6 @@ import com.example.snowson.apptest.bean.GoodsBean;
 import com.example.snowson.apptest.bean.ShopBean;
 import com.example.snowson.apptest.bean.ShopObservable;
 import com.example.snowson.apptest.utils.ScreenUtils;
-import com.example.snowson.apptest.viewholder.BaseHeaderViewHolder;
 import com.example.snowson.apptest.viewholder.CartBodyViewHolder;
 import com.example.snowson.apptest.viewholder.CartHeaderViewHolder;
 import com.example.snowson.apptest.viewholder.TypeHolder;
@@ -116,9 +115,9 @@ public class PageCartFragment extends BaseFragment implements View.OnClickListen
                     public TypeHolder createHolder() {
                         return new CartBodyViewHolder();
                     }
-                }, new ViewHolderCreator<BaseHeaderViewHolder>() {
+                }, new ViewHolderCreator<TypeHolder>() {
             @Override
-            public BaseHeaderViewHolder createHolder() {
+            public TypeHolder createHolder() {
                 return new CartHeaderViewHolder();
             }
         });

@@ -36,4 +36,9 @@ public class BannerViewHolder extends TypeHolder<String> {
             cardView.setElevation(ScreenUtils.dp2px(context, 7));
         }
     }
+
+    @Override
+    public void bindView(Context context, String bean, int position) {
+
+    }
 }

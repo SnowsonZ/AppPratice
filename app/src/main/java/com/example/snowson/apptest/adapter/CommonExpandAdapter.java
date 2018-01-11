@@ -79,13 +79,13 @@ public class CommonExpandAdapter<T, K> extends BaseExpandableListAdapter
     @Override
     public View getGroupView(final int groupPosition, boolean isExpanded, View convertView,
                              final ViewGroup parent) {
-        BaseHeaderViewHolder holder;
+        TypeHolder holder;
         if (convertView == null) {
             holder = mHeaderCreator.createHolder();
             convertView = holder.createView(mLayoutInflater, parent, false);
             convertView.setTag(holder);
         } else {
-            holder = (BaseHeaderViewHolder) convertView.getTag();
+            holder = (TypeHolder) convertView.getTag();
         }
         holder.setOnNotifyDataChangeListener(this);
         //控制显示组间距
@@ -121,8 +121,9 @@ public class CommonExpandAdapter<T, K> extends BaseExpandableListAdapter
             vs_footer.setVisibility(View.GONE);
         }
 
-        K child = getChild(groupPosition, childPosition);
-        holder.bindView(parent.getContext(), child);
+//        K child = getChild(groupPosition, childPosition);
+//        holder.bindView(parent.getContext(), child);
+        holder.bindView(parent.getContext(), mCartData.get(groupPosition), childPosition);
         return convertView;
     }
 

@@ -12,6 +12,7 @@ import com.example.snowson.apptest.utils.TypeData;
  * Created by snowson on 18-1-10.
  */
 
+@Deprecated
 public class CartFooterViewHolder extends BaseHeaderViewHolder {
 
     @Override

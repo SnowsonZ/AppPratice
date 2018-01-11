@@ -13,7 +13,6 @@ import com.example.snowson.apptest.adapter.CommonExpandAdapter;
 import com.example.snowson.apptest.bean.GoodsBean;
 import com.example.snowson.apptest.bean.OrderBean;
 import com.example.snowson.apptest.bean.OrderItemBean;
-import com.example.snowson.apptest.viewholder.BaseHeaderViewHolder;
 import com.example.snowson.apptest.viewholder.OrderBodyViewHolder;
 import com.example.snowson.apptest.viewholder.OrderHeaderViewHolder;
 import com.example.snowson.apptest.viewholder.TypeHolder;
@@ -84,9 +83,9 @@ public class PageOrderFragment extends BaseFragment implements View.OnClickListe
                     public TypeHolder createHolder() {
                         return new OrderBodyViewHolder();
                     }
-                }, new ViewHolderCreator<BaseHeaderViewHolder>() {
+                }, new ViewHolderCreator<TypeHolder>() {
             @Override
-            public BaseHeaderViewHolder createHolder() {
+            public TypeHolder createHolder() {
                 return new OrderHeaderViewHolder();
             }
         });
