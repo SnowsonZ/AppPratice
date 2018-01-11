@@ -56,8 +56,9 @@ public class BannerAdapter<T> extends PagerAdapter {
         caches.add(view);
     }
 
+    @SuppressWarnings("unchecked")
     private View getView(int position, ViewGroup container) {
-        TypeHolder<T> holder;
+        TypeHolder holder;
         View view;
         if (caches.isEmpty()) {
             holder = mHolderCreator.createHolder();
@@ -65,7 +66,7 @@ public class BannerAdapter<T> extends PagerAdapter {
             view.setTag(holder);
         } else {
             view = caches.removeFirst();
-            holder = (TypeHolder<T>) view.getTag();
+            holder = (TypeHolder) view.getTag();
         }
 
         holder.bindView(container.getContext(), mDatas.get(position));

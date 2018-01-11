@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * author: snowson
  * created on: 18-1-4 上午12:25
- * description:
+ * description: 购物车店铺原始类
  */
 
 public class ShopBean {

@@ -17,7 +17,7 @@ import com.example.snowson.apptest.bean.ShopObservable;
 /**
  * author: snowson
  * created on: 18-1-6 下午2:20
- * description:
+ * description: 购物车单一商品信息及footer
  */
 
 public class CartBodyViewHolder extends TypeHolder<ShopObservable>

@@ -7,6 +7,7 @@ import java.util.Observer;
 
 /**
  * Created by snowson on 18-1-8.
+ * 购物车批量操作计算包装类
  */
 
 public class CartOptObservable extends Observable implements Observer {

@@ -13,7 +13,8 @@ import com.example.snowson.apptest.bean.OrderStatus;
 import com.example.snowson.apptest.utils.ScreenUtils;
 import com.example.snowson.apptest.utils.TypeData;
 
-/** 订单footer组件ViewHolder
+/**
+ * 订单footer组件ViewHolder
  * Created by snowson on 18-1-10.
  */
 

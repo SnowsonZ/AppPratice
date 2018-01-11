@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Created by snowson on 18-1-10.
+ * 订单店铺原始类
  */
 
 public class OrderBean implements TypeData<OrderItemBean> {

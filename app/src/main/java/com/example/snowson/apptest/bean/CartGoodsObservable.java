@@ -5,6 +5,7 @@ import java.util.Observer;
 
 /**
  * Created by snowson on 18-1-4.
+ * 购物车单一商品包装类
  */
 
 public class CartGoodsObservable extends Observable implements Observer {

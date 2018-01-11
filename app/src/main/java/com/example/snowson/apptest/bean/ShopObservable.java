@@ -7,6 +7,7 @@ import java.util.Observer;
 
 /**
  * Created by snowson on 18-1-4.
+ * 实现观察者莫事的购物车店铺包装类
  */
 
 public class ShopObservable extends Observable implements Observer, TypeData<CartGoodsObservable> {
