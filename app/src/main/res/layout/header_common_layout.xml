@@ -5,7 +5,9 @@
     android:background="@android:color/white"
     android:gravity="center_vertical">
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/tv_header_title"
         style="@style/titleStyle"
         android:layout_centerInParent="true"
@@ -25,7 +27,9 @@
         android:paddingTop="5dp"
         android:src="@drawable/leftarrow" />
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/tv_right_opt"
         style="@style/contentTextStyle"
         android:layout_alignParentEnd="true"
