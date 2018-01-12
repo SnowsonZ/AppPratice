@@ -9,8 +9,10 @@ import android.util.Log;
 
 import com.example.snowson.apptest.bean.AudioStatus;
 import com.example.snowson.apptest.utils.AudioFileUtils;
+import com.example.snowson.apptest.utils.encoder.NativeMp3Encoder;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -52,6 +54,7 @@ public class AudioRecordManager {
             synchronized (AudioRecordManager.class) {
                 if (mInstance == null) {
                     mInstance = new AudioRecordManager();
+                    NativeMp3Encoder.init(1, AUDIO_SAMPLE_RATE, 90);
                 }
             }
         }
@@ -137,7 +140,28 @@ public class AudioRecordManager {
         if (status == AudioStatus.STATUS_NO_READY || status == AudioStatus.STATUS_READY) {
             throw new IllegalStateException("录音尚未开始");
         } else {
-            if(mFilesName.size() > 0) {
+            if (mFilesName.size() > 0) {
+                String result = "result";
+                for (File file : AudioFileUtils.getPCMFileDirectory().listFiles()) {
+                    FileInputStream fis = null;
+                    FileOutputStream fos = null;
+                    try {
+                        fis = new FileInputStream(file);
+                        fos = new FileOutputStream(AudioFileUtils.getMP3FileDirectory() + result);
+                        pcmToMp3(fis, fos);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            fis.close();
+                            fos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
             mFilesName.clear();
             mAudioRecord.stop();
@@ -147,8 +171,24 @@ public class AudioRecordManager {
         }
     }
 
-    public void pcmToMp3() {
+    public void pcmToMp3(FileInputStream stream, FileOutputStream fos) throws IOException {
+        byte[] buffer = new byte[bufferSize];
+        stream.read(buffer, 0, buffer.length);
+        short[] shorts = toShortArray(buffer);
+        NativeMp3Encoder.encode(shorts, shorts.length);
+        fos = new FileOutputStream(AudioFileUtils.getMP3FileDirectory());
+        fos.write(buffer, 0, buffer.length);
+        fos.flush();
+    }
 
+    private short[] toShortArray(byte[] src) {
+
+        int count = src.length >> 1;
+        short[] dest = new short[count];
+        for (int i = 0; i < count; i++) {
+            dest[i] = (short) (src[i * 2] << 8 | src[2 * i + 1] & 0xff);
+        }
+        return dest;
     }
 
     /**

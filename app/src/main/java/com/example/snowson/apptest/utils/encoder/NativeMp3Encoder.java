@@ -26,6 +26,10 @@ public class NativeMp3Encoder {
     public native static void init(int inSamplerate, int inChannel,
                                    int outSamplerate, int outBitrate, int quality);
 
+    public native static void init(int channel, int sampleRate, int brate);
+
+    public native static byte[] encode(short[] buffer, int len);
+
     /**
      * Encode buffer to mp3.
      *

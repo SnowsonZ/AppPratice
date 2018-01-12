@@ -16,7 +16,7 @@ public class AudioFileUtils {
     //原始文件(不能播放)
     private final static String AUDIO_PCM_BASEPATH = "/" + rootPath + "/pcm/";
     //可播放的高质量音频文件
-    private final static String AUDIO_WAV_BASEPATH = "/" + rootPath + "/wav/";
+    private final static String AUDIO_MP3_BASEPATH = "/" + rootPath + "/mp3/";
 
     private static void setRootPath(String rootPath) {
         rootPath = rootPath;
@@ -59,7 +59,7 @@ public class AudioFileUtils {
             if (!fileName.endsWith(".wav")) {
                 fileName = fileName + ".wav";
             }
-            String fileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath() + AUDIO_WAV_BASEPATH;
+            String fileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath() + AUDIO_MP3_BASEPATH;
             File file = new File(fileBasePath);
             //创建目录
             if (!file.exists()) {
@@ -110,7 +110,7 @@ public class AudioFileUtils {
      */
     public static List<File> getWavFiles() {
         List<File> list = new ArrayList<>();
-        String fileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath() + AUDIO_WAV_BASEPATH;
+        String fileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath() + AUDIO_MP3_BASEPATH;
 
         File rootFile = new File(fileBasePath);
         if (!rootFile.exists()) {
@@ -134,6 +134,15 @@ public class AudioFileUtils {
     }
 
     public static File getPCMFileDirectory() {
+        String fileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath() + AUDIO_PCM_BASEPATH;
+        File rootFile = new File(fileBasePath);
+        if (!rootFile.exists()) {
+            rootFile.mkdirs();
+        }
+        return rootFile;
+    }
+
+    public static File getMP3FileDirectory() {
         String fileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath() + AUDIO_PCM_BASEPATH;
         File rootFile = new File(fileBasePath);
         if (!rootFile.exists()) {
