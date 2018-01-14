@@ -7,9 +7,10 @@ import android.media.MediaRecorder;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.czt.mp3recorder.MP3Recorder;
+import com.czt.mp3recorder.util.LameUtil;
 import com.example.snowson.apptest.bean.AudioStatus;
 import com.example.snowson.apptest.utils.AudioFileUtils;
-import com.example.snowson.apptest.utils.encoder.NativeMp3Encoder;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,9 +26,10 @@ import java.util.List;
 
 public class AudioRecordManager {
     private static final String TAG = "AudioRecordManager";
+    private static byte[] mMp3Buffer;
     private AudioRecord mAudioRecord;
     private static AudioRecordManager mInstance;
-    private static final int bufferSize = 320;
+    private static final int bufferSize = 256;
     //音频输入-麦克风
     private final static int AUDIO_INPUT = MediaRecorder.AudioSource.MIC;
     //采用频率
@@ -48,13 +50,15 @@ public class AudioRecordManager {
 
     //录音文件
     private List<String> mFilesName = new ArrayList<>();
+    private static MP3Recorder mRecorder;
 
-    public static AudioRecordManager getmInstance() {
+    public static AudioRecordManager newInstance() {
         if (mInstance == null) {
             synchronized (AudioRecordManager.class) {
                 if (mInstance == null) {
                     mInstance = new AudioRecordManager();
-                    NativeMp3Encoder.init(1, AUDIO_SAMPLE_RATE, 90);
+                    LameUtil.init(AUDIO_SAMPLE_RATE, 1, AUDIO_SAMPLE_RATE, 32, 7);
+                    mRecorder = new MP3Recorder(new File(AudioFileUtils.getMP3FileDirectory(), "test.mp3"));
                 }
             }
         }
@@ -90,6 +94,7 @@ public class AudioRecordManager {
         // 获得缓冲区字节大小
         bufferSizeInBytes = AudioRecord.getMinBufferSize(AUDIO_SAMPLE_RATE,
                 AUDIO_CHANNEL, AUDIO_ENCODING);
+        mMp3Buffer = new byte[(int) (7200 + (bufferSizeInBytes * 2 * 1.25))];
         mAudioRecord = new AudioRecord(AUDIO_INPUT, AUDIO_SAMPLE_RATE, AUDIO_CHANNEL, AUDIO_ENCODING, bufferSizeInBytes);
         this.mFileName = fileName;
         status = AudioStatus.STATUS_READY;
@@ -109,14 +114,21 @@ public class AudioRecordManager {
             throw new IllegalStateException("正在录音");
         }
         Log.d("AudioRecorder", "===startRecord===" + mAudioRecord.getState());
-        mAudioRecord.startRecording();
+        AudioFileUtils.deleteAllMP3Files();
+        try {
+            mRecorder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        mAudioRecord.startRecording();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                writeDataToFile(listener);
-            }
-        }).start();
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                writeDataToFile(listener);
+//            }
+//        }).start();
     }
 
     /**
@@ -136,48 +148,53 @@ public class AudioRecordManager {
      * 停止录音
      */
     public void stopRecord() {
-        Log.d("AudioRecorder", "===stopRecord===");
-        if (status == AudioStatus.STATUS_NO_READY || status == AudioStatus.STATUS_READY) {
-            throw new IllegalStateException("录音尚未开始");
-        } else {
-            if (mFilesName.size() > 0) {
-                String result = "result";
-                for (File file : AudioFileUtils.getPCMFileDirectory().listFiles()) {
-                    FileInputStream fis = null;
-                    FileOutputStream fos = null;
-                    try {
-                        fis = new FileInputStream(file);
-                        fos = new FileOutputStream(AudioFileUtils.getMP3FileDirectory() + result);
-                        pcmToMp3(fis, fos);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } finally {
-                        try {
-                            fis.close();
-                            fos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-            mFilesName.clear();
-            mAudioRecord.stop();
-            status = AudioStatus.STATUS_STOP;
-            AudioFileUtils.deleteAllPCMFiles();
-//            release();
-        }
+        mRecorder.stop();
+//        Log.d("AudioRecorder", "===stopRecord===");
+//        if (status == AudioStatus.STATUS_NO_READY || status == AudioStatus.STATUS_READY) {
+//            throw new IllegalStateException("录音尚未开始");
+//        } else {
+//            mAudioRecord.stop();
+//            status = AudioStatus.STATUS_STOP;
+//            if (mFilesName.size() > 0) {
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        String result = "result.mp3";
+//                        for (File file : AudioFileUtils.getPCMFileDirectory().listFiles()) {
+//                            FileInputStream fis = null;
+//                            FileOutputStream fos = null;
+//                            try {
+//                                fis = new FileInputStream(file);
+//                                File outFile = new File(AudioFileUtils.getMP3FileDirectory(), result);
+//                                fos = new FileOutputStream(outFile, true);
+//                                pcmToMp3(fis, fos);
+//                            } catch (FileNotFoundException e) {
+//                                e.printStackTrace();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            } finally {
+//                                try {
+//                                    fis.close();
+//                                    fos.close();
+//                                    mFilesName.clear();
+//                                    AudioFileUtils.deleteAllPCMFiles();
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        }
+//                    }
+//                }).start();
+//            }
+//        }
     }
 
     public void pcmToMp3(FileInputStream stream, FileOutputStream fos) throws IOException {
         byte[] buffer = new byte[bufferSize];
         stream.read(buffer, 0, buffer.length);
         short[] shorts = toShortArray(buffer);
-        NativeMp3Encoder.encode(shorts, shorts.length);
-        fos = new FileOutputStream(AudioFileUtils.getMP3FileDirectory());
-        fos.write(buffer, 0, buffer.length);
+        LameUtil.encode(shorts, shorts, shorts.length, mMp3Buffer);
+        fos.write(mMp3Buffer, 0, mMp3Buffer.length);
         fos.flush();
     }
 
@@ -254,16 +271,18 @@ public class AudioRecordManager {
         int readsize = 0;
         try {
             String currentFileName = mFileName;
-            if (status == AudioStatus.STATUS_PAUSE) {
-                //假如是暂停录音 将文件名后面加个数字,防止重名文件内容被覆盖
-                currentFileName += mFilesName.size();
-            }
-            mFilesName.add(currentFileName);
+//            if (status == AudioStatus.STATUS_PAUSE) {
+//                //假如是暂停录音 将文件名后面加个数字,防止重名文件内容被覆盖
+//                currentFileName += mFilesName.size();
+//            }
             File file = new File(AudioFileUtils.getPcmFileAbsolutePath(currentFileName));
-            if (file.exists()) {
-                file.delete();
+            if (!file.exists()) {
+                mFilesName.add(currentFileName);
             }
-            fos = new FileOutputStream(file);// 建立一个可存取字节的文件
+//            if (file.exists()) {
+//                file.delete();
+//            }
+            fos = new FileOutputStream(file, true);// 建立一个可存取字节的文件
         } catch (IllegalStateException e) {
             Log.e("AudioRecorder", e.getMessage());
             throw new IllegalStateException(e.getMessage());

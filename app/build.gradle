@@ -73,4 +73,6 @@ dependencies {
     //umeng
     api 'com.umeng.sdk:common:1.4.1'
     api 'com.umeng.sdk:analytics:7.4.1'
+
+    api 'com.czt.mp3recorder:library:1.0.4'
 }

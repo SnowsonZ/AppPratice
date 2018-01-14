@@ -133,6 +133,16 @@ public class AudioFileUtils {
         }
     }
 
+    public static void deleteAllMP3Files() {
+        String fileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath() + AUDIO_MP3_BASEPATH;
+        File rootFile = new File(fileBasePath);
+        if (rootFile.exists()) {
+            for (File item : rootFile.listFiles()) {
+                item.delete();
+            }
+        }
+    }
+
     public static File getPCMFileDirectory() {
         String fileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath() + AUDIO_PCM_BASEPATH;
         File rootFile = new File(fileBasePath);
@@ -143,7 +153,7 @@ public class AudioFileUtils {
     }
 
     public static File getMP3FileDirectory() {
-        String fileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath() + AUDIO_PCM_BASEPATH;
+        String fileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath() + AUDIO_MP3_BASEPATH;
         File rootFile = new File(fileBasePath);
         if (!rootFile.exists()) {
             rootFile.mkdirs();
