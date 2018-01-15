@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -16,16 +17,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.snowson.apptest.AudioRecordManager;
+import com.czt.mp3recorder.MP3Recorder;
+import com.czt.mp3recorder.bean.AudioStatus;
 import com.example.snowson.apptest.R;
-import com.example.snowson.apptest.bean.AudioStatus;
 import com.example.snowson.apptest.utils.ScreenUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.ref.SoftReference;
 
 public class RecordActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private AudioRecordManager mRecorderManager;
     private String mFileName;
     private LinearLayout mPlayLlayout;
     private ImageView mPreviousIv;
@@ -43,6 +45,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     private String[] permissions = new String[]{Manifest.permission.RECORD_AUDIO,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE};
+    private MP3Recorder mRecorder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,19 +91,19 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initRecord() {
-        mFileName = "currentAudio";
-        mRecorderManager = AudioRecordManager.getmInstance();
-        mRecorderManager.createDefaultAudio(this, mFileName);
+        mFileName = "result.mp3";
+        mRecorder = new MP3Recorder(Environment
+                .getExternalStorageDirectory().getAbsolutePath() + File.separator + "autoaudio", mFileName);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.llayout_play:
-                switch (mRecorderManager.getCurrentStatus()) {
+                switch (mRecorder.getCurrentStatus()) {
                     case AudioStatus.STATUS_START:
                         mHandler.removeMessages(MESSAGE_TIME_UPDATE);
-                        mRecorderManager.pauseRecord();
+                        mRecorder.pause();
                         mPlayIv.setImageResource(android.R.drawable.ic_btn_speak_now);
                         mAlertTv.setText("录音已暂停");
                         break;
@@ -109,10 +112,14 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                         mAlertTv.setText("请检查是否未授予录音权限");
                         break;
                     default:
-                        mRecorderManager.startRecord(null);
-                        mPlayIv.setImageResource(android.R.drawable.ic_media_pause);
-                        mAlertTv.setText("录音中...");
-                        mHandler.sendEmptyMessageDelayed(MESSAGE_TIME_UPDATE, 1000);
+                        try {
+                            mRecorder.start();
+                            mPlayIv.setImageResource(android.R.drawable.ic_media_pause);
+                            mAlertTv.setText("录音中...");
+                            mHandler.sendEmptyMessageDelayed(MESSAGE_TIME_UPDATE, 1000);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         break;
                 }
                 break;
@@ -121,22 +128,22 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.iv_next:
                 break;
             case R.id.llayout_stop:
-                if(!mRecorderManager.isRecording()) {
+                if (!mRecorder.isRecording()) {
                     return;
                 }
                 mHandler.removeMessages(MESSAGE_TIME_UPDATE);
-                mRecorderManager.stopRecord();
+                mRecorder.stop();
                 mAlertTv.setText("录音已停止");
                 curTime = 0;
                 mRecordTime.setText(ScreenUtils.timeFormat(curTime));
                 mPlayIv.setImageResource(android.R.drawable.ic_btn_speak_now);
                 break;
             case R.id.iv_cancel:
-                if(!mRecorderManager.isRecording()) {
+                if (!mRecorder.isRecording()) {
                     return;
                 }
                 mHandler.removeMessages(MESSAGE_TIME_UPDATE);
-                mRecorderManager.cancel();
+                mRecorder.cancel();
                 mAlertTv.setText("录音已取消");
                 curTime = 0;
                 mRecordTime.setText(ScreenUtils.timeFormat(curTime));
@@ -174,8 +181,8 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mRecorderManager != null) {
-            mRecorderManager.release();
+        if (mRecorder != null) {
+            mRecorder.release();
         }
     }
 }

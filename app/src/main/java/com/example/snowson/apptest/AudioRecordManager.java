@@ -9,7 +9,7 @@ import android.util.Log;
 
 import com.czt.mp3recorder.MP3Recorder;
 import com.czt.mp3recorder.util.LameUtil;
-import com.example.snowson.apptest.bean.AudioStatus;
+import com.czt.mp3recorder.bean.AudioStatus;
 import com.example.snowson.apptest.utils.AudioFileUtils;
 
 import java.io.File;
@@ -58,7 +58,7 @@ public class AudioRecordManager {
                 if (mInstance == null) {
                     mInstance = new AudioRecordManager();
                     LameUtil.init(AUDIO_SAMPLE_RATE, 1, AUDIO_SAMPLE_RATE, 32, 7);
-                    mRecorder = new MP3Recorder(new File(AudioFileUtils.getMP3FileDirectory(), "test.mp3"));
+//                    mRecorder = new MP3Recorder(new File(AudioFileUtils.getMP3FileDirectory(), "test.mp3"));
                 }
             }
         }

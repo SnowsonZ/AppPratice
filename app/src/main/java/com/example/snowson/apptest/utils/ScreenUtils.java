@@ -80,11 +80,11 @@ public class ScreenUtils {
     public static String timeFormat(int seconds) {
         String hour = "", min = "", second = "";
         if (seconds < 60) {
-            hour = "00:";
-            min = "00:";
+            hour = "00";
+            min = "00";
             second = formatTimeRange(seconds);
         } else if (seconds < 60 * 60) {
-            hour = "00:";
+            hour = "00";
             min = formatTimeRange(seconds / 60);
             second = formatTimeRange(seconds % 60);
         } else {
@@ -92,7 +92,7 @@ public class ScreenUtils {
             min = String.valueOf(seconds / 60 % 60);
             second = String.valueOf(seconds / 60 / 60 % 60);
         }
-        return hour + min + second;
+        return hour + ":" + min + ":" + second;
     }
 
     private static String formatTimeRange(int time) {

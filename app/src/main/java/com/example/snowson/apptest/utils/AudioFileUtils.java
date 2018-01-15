@@ -128,6 +128,9 @@ public class AudioFileUtils {
         File rootFile = new File(fileBasePath);
         if (rootFile.exists()) {
             for (File item : rootFile.listFiles()) {
+                if (item.getName().equals("result.pcm")) {
+                    continue;
+                }
                 item.delete();
             }
         }

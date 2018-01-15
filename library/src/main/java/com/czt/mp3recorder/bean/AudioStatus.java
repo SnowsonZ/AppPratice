@@ -1,4 +1,4 @@
-package com.example.snowson.apptest.bean;
+package com.czt.mp3recorder.bean;
 
 /**
  * Created by snowson on 18-1-12.
