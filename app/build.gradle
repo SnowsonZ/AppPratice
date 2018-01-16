@@ -26,7 +26,7 @@ android {
             //config support abi
             abiFilters 'armeabi'
             moduleName "mp3lame"
-            ldLibs 'android','OpenSLES', 'log'
+            ldLibs 'android', 'OpenSLES', 'log'
         }
     }
 
@@ -81,4 +81,6 @@ dependencies {
     api 'com.umeng.sdk:common:1.4.1'
     api 'com.umeng.sdk:analytics:7.4.1'
     implementation project(':library')
+
+    api 'com.orhanobut:logger:2.1.1'
 }
