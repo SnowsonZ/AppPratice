@@ -4,7 +4,6 @@ apply plugin: 'com.jfrog.bintray'
 version = "1.0.4"
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
     resourcePrefix "AndroidMP3RecorderLibrary_"	//这个随便填
     defaultConfig {
         minSdkVersion 9

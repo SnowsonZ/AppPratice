@@ -34,5 +34,6 @@ public class MainApplication extends Application {
 //        PlatformConfig.setWeixin();
         PlatformConfig.setQQZone("ID1106650050", "HATNxrHJ4w70Akro");
 //        PlatformConfig.setAlipay();
+
     }
 }
