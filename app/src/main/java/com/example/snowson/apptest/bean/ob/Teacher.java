@@ -12,7 +12,7 @@ import io.objectbox.annotation.Transient;
 @Entity
 public class Teacher {
     @Id
-    long id;
+    public long id;
     String teacherId;
     String subject;
     @Index

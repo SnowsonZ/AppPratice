@@ -14,7 +14,7 @@ import io.objectbox.Box;
 import io.objectbox.BoxStore;
 import io.objectbox.query.Query;
 
-public class ObjectBoxActivity extends AppCompatActivity {
+public class ObjectBoxGeneralActivity extends AppCompatActivity {
 
     private BoxStore boxStore;
     private Box<Teacher> mTeacherBox;

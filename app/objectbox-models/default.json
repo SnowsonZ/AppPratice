@@ -22,11 +22,114 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:2272906990055360064",
+      "lastPropertyId": "4:1232153237975733521",
+      "name": "Order",
+      "properties": [
+        {
+          "id": "1:7304561658068500497",
+          "name": "id"
+        },
+        {
+          "id": "2:1407293580743326688",
+          "name": "date"
+        },
+        {
+          "id": "3:953669335580142132",
+          "name": "text"
+        },
+        {
+          "id": "4:1232153237975733521",
+          "indexId": "1:5828492572033833547",
+          "name": "customerId"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:7458133450175411623",
+      "lastPropertyId": "3:4654207016299425488",
+      "name": "Customer",
+      "properties": [
+        {
+          "id": "1:707854872156433029",
+          "name": "id"
+        },
+        {
+          "id": "2:8464112533908960104",
+          "name": "name"
+        },
+        {
+          "id": "3:4654207016299425488",
+          "name": "isVip"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:4691889043746690448",
+      "lastPropertyId": "4:1451302723286914142",
+      "name": "Goods",
+      "properties": [
+        {
+          "id": "1:6673776121951083196",
+          "name": "id"
+        },
+        {
+          "id": "2:976504093736029346",
+          "name": "goodsName"
+        },
+        {
+          "id": "3:235735234890986459",
+          "name": "goodsPrice"
+        },
+        {
+          "id": "4:1451302723286914142",
+          "name": "goodsType"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:361436136753906356",
+      "lastPropertyId": "1:2436796790171616768",
+      "name": "Student",
+      "properties": [
+        {
+          "id": "1:2436796790171616768",
+          "name": "id"
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:978534641035247072",
+          "name": "teachers"
+        }
+      ]
+    },
+    {
+      "id": "6:7680024253631733071",
+      "lastPropertyId": "2:1867082077751663675",
+      "name": "TreeNode",
+      "properties": [
+        {
+          "id": "1:2403264830607112143",
+          "name": "id"
+        },
+        {
+          "id": "2:1867082077751663675",
+          "indexId": "2:8941050286791023387",
+          "name": "parentId"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:7405109566125856664",
-  "lastIndexId": "0:0",
-  "lastRelationId": "0:0",
+  "lastEntityId": "6:7680024253631733071",
+  "lastIndexId": "2:8941050286791023387",
+  "lastRelationId": "1:978534641035247072",
   "lastSequenceId": "0:0",
   "modelVersion": 4,
   "modelVersionParserMinimum": 4,
