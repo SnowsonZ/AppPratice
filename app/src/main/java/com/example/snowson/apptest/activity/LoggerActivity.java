@@ -4,13 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.snowson.apptest.R;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.CsvFormatStrategy;
-import com.orhanobut.logger.DiskLogAdapter;
-import com.orhanobut.logger.FormatStrategy;
-import com.orhanobut.logger.LogAdapter;
 import com.orhanobut.logger.Logger;
-import com.orhanobut.logger.PrettyFormatStrategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +18,6 @@ public class LoggerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logger);
-        initLogger();
         initData();
     }
 
@@ -47,6 +40,7 @@ public class LoggerActivity extends AppCompatActivity {
         lists.add("listtwo");
         lists.add("listthree");
 
+        Logger.d("error!!!!!!!!!!");
         //log
         Logger.d(value);
         Logger.w(value);
@@ -59,32 +53,5 @@ public class LoggerActivity extends AppCompatActivity {
         Logger.json(jsonString);
         Logger.d(map);
         Logger.d(lists);
-    }
-
-    private void initLogger() {
-        FormatStrategy logcatStrategy = PrettyFormatStrategy
-                .newBuilder()
-                .methodCount(5)
-                .tag("AppTest")
-                .build();
-        FormatStrategy fileLogStrategy = CsvFormatStrategy
-                .newBuilder()
-                .tag("AppTest")
-                .build();
-        LogAdapter logcatAdapter = new AndroidLogAdapter(logcatStrategy) {
-            @Override
-            public boolean isLoggable(int priority, String tag) {
-                return true;
-            }
-        };
-
-        LogAdapter fileAdapter = new DiskLogAdapter(fileLogStrategy) {
-            @Override
-            public boolean isLoggable(int priority, String tag) {
-                return true;
-            }
-        };
-        Logger.addLogAdapter(logcatAdapter);
-        Logger.addLogAdapter(fileAdapter);
     }
 }
