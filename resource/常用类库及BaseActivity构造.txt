@@ -1,0 +1,22 @@
+第三方库
+1.图片选择库 https://github.com/jeasonlzy/ImagePicker
+2.android-gif-drawable https://github.com/koral--/android-gif-drawable
+3.okhttp 
+4.WheelPicker https://github.com/AigeStudio/WheelPicker
+5.glide
+6.fastjson
+7.butterknife
+8.compress image https://github.com/Curzibn/Luban
+9.滑动返回  https://github.com/ikew0ng/SwipeBackLayout
+10. 内存泄漏监测 https://github.com/square/leakcanary
+
+
+BaseActivity
+1.设置屏幕方向
+2.透明状态栏
+3.头部组件(back,title,operate)
+4.加载组件(正在加载，加载失败)
+
+BaseRefreshActivity extends BaseActivity
+1. 记录当前加载页数
+2. SwipeRefreshLayout组件，RecyclerView组件

@@ -1,0 +1,59 @@
+Builder 描述product的组成部分，抽象为接口
+
+public class abstract Builder {
+
+    //各个组成部分
+    public abstract void productPartA();
+    public abstract void productPartB();
+    //输出结果
+    public abstruct Product getResult();
+} 
+
+public class  Product() {
+    private List<String> parts = new ArrayList<String>();
+    private partA;
+    Private partB;
+    
+    public void setPartA();
+    getPartA;
+    setPartB;
+    getPartB;
+
+    public void add(String part) {
+        parts.add(part);
+    }
+}
+
+public class ConcreteBuilder extends Builder {
+    Product product = new Product();
+    //具体构造Product
+    @override
+    public void productPartA() {
+        product.add();
+    }
+
+    @override
+    public void productPartB() {
+        
+    }
+
+    @override
+    public Product getResult() {
+        return product;
+    }
+}
+
+//指挥者
+public class Director {
+    public void construct(Builder builder){
+        builder.productPartA();
+        builder.productPartB();
+    }
+}
+
+main() {
+    Director director = new Director();
+    Builder b1 = new ConcreteBuilder();
+    director.construct(b1);
+    Product product = b1.getResult();
+}

@@ -100,7 +100,8 @@
         <activity android:name=".activity.LoggerActivity" />
         <activity android:name=".activity.ObjectBoxGeneralActivity" />
         <activity android:name=".activity.ObjectRelationActivity" />
-        <activity android:name=".activity.RxTestActivity"></activity>
+        <activity android:name=".activity.RxTestActivity" />
+        <activity android:name=".activity.RxBinddingTestActivity"></activity>
     </application>
 
 </manifest>
