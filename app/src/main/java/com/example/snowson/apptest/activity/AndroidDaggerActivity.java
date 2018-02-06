@@ -17,6 +17,8 @@ public class AndroidDaggerActivity extends AppCompatActivity {
 
     @Inject
     CartBean cBean;
+    @Inject
+    String packageName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,5 +29,6 @@ public class AndroidDaggerActivity extends AppCompatActivity {
                 = ((MainApplication) getApplicationContext()).getApplicationComponent();
         Logger.d(appComponent.toString());
         Logger.d(cBean.getCartId());
+        Logger.d(packageName);
     }
 }
