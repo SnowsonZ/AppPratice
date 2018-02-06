@@ -101,7 +101,10 @@
         <activity android:name=".activity.ObjectBoxGeneralActivity" />
         <activity android:name=".activity.ObjectRelationActivity" />
         <activity android:name=".activity.RxTestActivity" />
-        <activity android:name=".activity.RxBinddingTestActivity"></activity>
+        <activity android:name=".activity.RxBinddingTestActivity" />
+        <activity android:name=".activity.NetWorkTestActivity" />
+        <activity android:name=".activity.Dagger2Activity" />
+        <activity android:name=".activity.AndroidDaggerActivity"></activity>
     </application>
 
 </manifest>

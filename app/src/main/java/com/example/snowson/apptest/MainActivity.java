@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.example.snowson.apptest.activity.RxTestActivity;
+import com.example.snowson.apptest.activity.AndroidDaggerActivity;
 import com.example.snowson.apptest.adapter.IndexContentAdapter;
 import com.example.snowson.apptest.fragment.BaseFragment;
 import com.example.snowson.apptest.fragment.PageCartFragment;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(this, RxTestActivity.class));
+        startActivity(new Intent(this, AndroidDaggerActivity.class));
         initView();
         initData();
     }
