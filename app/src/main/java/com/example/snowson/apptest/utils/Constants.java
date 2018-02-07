@@ -9,4 +9,8 @@ package com.example.snowson.apptest.utils;
 public class Constants {
     public static final String IS_RELEASE = "isRelease";
     public static final String BUGLY_ID = "buglyId";
+
+    public static class URL {
+        public static final String BASE_URL= "http://45.77.151.3:8080";
+    }
 }
