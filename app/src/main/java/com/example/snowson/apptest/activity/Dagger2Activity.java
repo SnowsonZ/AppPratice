@@ -9,7 +9,7 @@ import com.example.snowson.apptest.DaggerComponent.DaggerActivityDagger2Componen
 import com.example.snowson.apptest.DaggerModule.ActivityDagger2Module;
 import com.example.snowson.apptest.R;
 import com.example.snowson.apptest.bean.dagger2.CartBean;
-import com.example.snowson.apptest.fragment.Dagger2SubFragment;
+import com.example.snowson.apptest.fragment.Dagger2Fragment;
 import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
@@ -44,7 +44,7 @@ public class Dagger2Activity extends AppCompatActivity {
         Logger.d(mBuilder.hashCode());
         Logger.d(mRetrofit.hashCode());
         getSupportFragmentManager().beginTransaction().add(R.id.flayout_fragment,
-                Dagger2SubFragment.getInstance(null), Dagger2SubFragment.class.getName()).commit();
+                Dagger2Fragment.getInstance(null), Dagger2Fragment.class.getName()).commit();
     }
 
     public ActivityDagger2Component getComponent() {

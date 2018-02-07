@@ -15,16 +15,20 @@ import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
 
+import okhttp3.Request;
 import retrofit2.Retrofit;
 
 /**
  * Created by snowson on 18-2-7.
  */
-
 public class Dagger2Fragment extends Fragment {
 
     @Inject
     Retrofit mRetrofit;
+    @Inject
+    Request mRequest;
+    @Inject
+    Request mRequest1;
 
     public static Dagger2Fragment getInstance(Bundle bundle) {
         Dagger2Fragment fragment = new Dagger2Fragment();
@@ -47,5 +51,7 @@ public class Dagger2Fragment extends Fragment {
         DaggerFragmentDagger2Component.builder()
                 .activityDagger2Component(component).build().inject(this);
         Logger.d("Fragment with depdency: " + mRetrofit.baseUrl());
+        Logger.d("Fragment with depdency: " + mRequest.hashCode());
+        Logger.d("Fragment with depdency: " + mRequest1.hashCode());
     }
 }

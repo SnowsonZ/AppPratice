@@ -9,6 +9,11 @@ import retrofit2.Retrofit;
 /**
  * Created by snowson on 18-2-7.
  */
+
+/**
+ * Component与SubComponent的scope必须不同
+ */
+@com.example.snowson.apptest.inter.Dagger2Activity
 @Component(modules = {ActivityDagger2Module.class})
 public interface ActivityDagger2Component {
     void inject(Dagger2Activity activity);
