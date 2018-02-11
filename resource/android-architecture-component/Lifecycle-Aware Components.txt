@@ -1,0 +1,54 @@
+1. ViewModel  --- object that save some thing eg. state
+2. LiveData   --- use observer pattern that ui update automatically when data changed
+3. Lifecycle-aware  --- eg @Lifecycle.Event.ON_RESUME annotation and so on
+
+communicate with ViewModel:
+1. fragment and activity
+2. two fragments
+3. a single ViewModel with LiveData
+
+声明周期状态
+CREATED: onCreate(), onStop()(version > 1.0.0-rc1,为onSaveInstaceState(),详见*problem)
+STARTED: onStart(), onPause()
+RESUMED: onResume()
+DESTROYED: onDestroy()
+INITIALIZEED: before onCreate();
+
+*problem:
+onStop()之后的状态保存问题
+1.0.0-rc1版本之后,调用onSaveInstanceState()之后将Licycle标记为CREATED而不等待onStop的调用
+
+
+       -----------------------------    callback   ----------------------------      data      ------------------
+       |  UI(activity,fragment...) |<--------------| ViewModel(with LiveData) |<---------------| data component |
+       -----------------------------               ----------------------------                ------------------ 
+       
+
+
+comptibale lower version:
+contruct lifecycle get from lifecycle-component
+
+public class MyActivity extends Activity implements LifecycleOwner {
+    private LifecycleRegistry mLifecycleRegistry;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mLifecycleRegistry = new LifecycleRegistry(this);
+        mLifecycleRegistry.markState(Lifecycle.State.CREATED);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mLifecycleRegistry.markState(Lifecycle.State.STARTED);
+    }
+
+    @NonNull
+    @Override
+    public Lifecycle getLifecycle() {
+        return mLifecycleRegistry;
+    }
+}
+

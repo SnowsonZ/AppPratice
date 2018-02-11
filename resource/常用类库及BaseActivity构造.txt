@@ -9,6 +9,12 @@
 8.compress image https://github.com/Curzibn/Luban
 9.滑动返回  https://github.com/ikew0ng/SwipeBackLayout
 10. 内存泄漏监测 https://github.com/square/leakcanary
+11. 图片视频选择库   https://github.com/RomanTruba/AndroidTouchGallery
+12. 图片查看器   https://github.com/RomanTruba/AndroidTouchGallery
+13. 自定义TabLayout https://github.com/H07000223/FlycoTabLayout
+14. 自定义dialog动画效果  https://github.com/sd6352051/NiftyDialogEffects
+15. Banner https://github.com/youth5201314/banner
+16. Fragment https://github.com/YoKeyword/Fragmentation
 
 
 BaseActivity
