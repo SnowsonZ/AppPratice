@@ -104,7 +104,8 @@
         <activity android:name=".activity.RxBinddingTestActivity" />
         <activity android:name=".activity.NetWorkTestActivity" />
         <activity android:name=".activity.Dagger2Activity" />
-        <activity android:name=".activity.AndroidDaggerActivity"></activity>
+        <activity android:name=".activity.AndroidDaggerActivity" />
+        <activity android:name=".AComponentsActivity"></activity>
     </application>
 
 </manifest>

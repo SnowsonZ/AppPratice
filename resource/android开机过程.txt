@@ -1,0 +1,11 @@
+开机键 -> 从ROM中读取加载程序到RAM,加载执行bootLoader(加载引导程序)
+内核初始化
+启动init进程,读取init.rc配置文件
+开启守护进程zygote进程(负责后续的java进程)和servicemanager进程(负责Binder通信)
+zygote启动system_server进程,并建立socket与之后的AMS通信
+system_server初始化AMS,创建上下文,创建ActivityThread,通过SystemServiceManager开启并管理系统服务,系统进入systemready状态
+引导完成,发送开机广播
+    *1、在systemReady状态，ActivityManagerService会与zygote的Socket通信，请求启动Home。 
+    *2、zygote收到AMS的连接请求后，执行runSelectLoopMode处理请求。 
+    *3、zygote处理请求会通过forkAndSpecialize启动新的应用进程，并最终启动Home。
+
