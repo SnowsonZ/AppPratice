@@ -1,7 +1,9 @@
-package com.example.snowson.apptest;
+package com.example.snowson.apptest.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.snowson.apptest.R;
 
 public class AComponentsActivity extends AppCompatActivity {
 

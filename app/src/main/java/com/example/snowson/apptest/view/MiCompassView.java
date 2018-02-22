@@ -2,10 +2,13 @@ package com.example.snowson.apptest.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RadialGradient;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -29,21 +32,33 @@ public class MiCompassView extends View {
     private int mCenterY;
     //外部圆的半径
     private int mOutSideRadius;
-    //外接圆的半径
-    private int mCircumRadius;
+    //内层圆的半径
+    private int mInsideRadius;
     //camera最大平移距离
     private float mMaxCameraTranslate;
     //当前方位
-    private float mCurDirection;
+    private float mCurDirection = 0;
     private Paint mTextPaint;
     private Rect mTextRect;
     private Canvas mCanvas;
     private Path mOutsideTriangle;
-    private Paint mOutSideCircumPaint;
+    private Paint mOutSidetrianglePaint;
     private Paint mDarkRedPaint;
     private Paint mLightGrayPaint;
     private Paint mDeepGrayPaint;
     private RectF mOutSideRectF;
+    //内层三角形path
+    private Path mInsideTriangle;
+    //内层三角形paint
+    private Paint mInsideTrianglePaint;
+    //内层圆rectF
+    private RectF mInsideRectF;
+
+    //旋转的轨迹paint
+    private Paint mAnglePaint;
+
+    //中心圆paint
+    private Paint mInnerPaint;
 
     public MiCompassView(Context context) {
         super(context);
@@ -69,10 +84,11 @@ public class MiCompassView extends View {
         mTextRect = new Rect();
         mCanvas = new Canvas();
         mOutsideTriangle = new Path();
+        mInsideTriangle = new Path();
 
-        mOutSideCircumPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mOutSideCircumPaint.setStyle(Paint.Style.FILL);
-        mOutSideCircumPaint.setColor(getContext().getResources().getColor(R.color.darkGray));
+        mOutSidetrianglePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mOutSidetrianglePaint.setStyle(Paint.Style.FILL);
+        mOutSidetrianglePaint.setColor(getContext().getResources().getColor(R.color.darkGray));
 
         mDarkRedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mDarkRedPaint.setStyle(Paint.Style.STROKE);
@@ -86,11 +102,22 @@ public class MiCompassView extends View {
         mDeepGrayPaint.setStyle(Paint.Style.STROKE);
         mDeepGrayPaint.setColor(getContext().getResources().getColor(R.color.darkGray));
 
-        mTextPaint = new Paint();
+        mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setStyle(Paint.Style.STROKE);
         mTextPaint.setAntiAlias(true);
         mTextPaint.setTextSize(80);
-        mTextPaint.setColor(getContext().getResources().getColor(android.R.color.white));
+        mTextPaint.setColor(Color.WHITE);
+
+        mInsideTrianglePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mInsideTrianglePaint.setStyle(Paint.Style.FILL);
+        mInsideTrianglePaint.setColor(Color.RED);
+
+        mAnglePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mAnglePaint.setStyle(Paint.Style.STROKE);
+        mAnglePaint.setColor(Color.RED);
+
+        mInnerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mInnerPaint.setStyle(Paint.Style.FILL);
     }
 
     @Override
@@ -110,7 +137,7 @@ public class MiCompassView extends View {
         mCenterX = mWidth / 2;
         mCenterY = mWidth / 2 + mTextHeight;
         mOutSideRadius = mWidth * 3 / 8;
-        mCircumRadius = mOutSideRadius * 4 / 5;
+        mInsideRadius = mOutSideRadius * 4 / 5;
         mMaxCameraTranslate = 0.02f * mOutSideRadius;
         setMeasuredDimension(mWidth, mWidth + mWidth / 3);
     }
@@ -155,7 +182,7 @@ public class MiCompassView extends View {
         mOutsideTriangle.lineTo(mWidth / 2 - mTriangleSide / 2, mTextHeight);
         mOutsideTriangle.lineTo(mWidth / 2 + mTriangleSide / 2, mTextHeight);
         mOutsideTriangle.close();
-        mCanvas.drawPath(mOutsideTriangle, mOutSideCircumPaint);
+        mCanvas.drawPath(mOutsideTriangle, mOutSidetrianglePaint);
 
         //绘制外层圆弧
         mDarkRedPaint.setStrokeWidth((float) 5);
@@ -168,6 +195,48 @@ public class MiCompassView extends View {
         mCanvas.drawArc(mOutSideRectF, 40, 20, false, mLightGrayPaint);
         mCanvas.drawArc(mOutSideRectF, -100, -20, false, mDeepGrayPaint);
         mCanvas.drawArc(mOutSideRectF, -120, -120, false, mDarkRedPaint);
+        mCanvas.restore();
+    }
+
+    //绘制内层圆
+    private void drawCompassInside() {
+        mCanvas.save();
+        //内层小三角形的高
+        int triangleHeight = (mOutSideRadius - mInsideRadius) / 2;
+        mCanvas.rotate(mCurDirection, mWidth / 2, mTextHeight + mOutSideRadius);
+        mInsideTriangle.moveTo(mWidth / 2, mTextHeight + triangleHeight);
+        //内层小三角形边长
+        float triangleSlide = (float) (triangleHeight * 2 / Math.sqrt(3));
+        //绘制内层三角形
+        mInsideTriangle.lineTo(mWidth / 2 - triangleSlide / 2, mTextHeight + 2 * triangleHeight);
+        mInsideTriangle.lineTo(mWidth / 2 + triangleSlide / 2, mTextHeight + 2 * triangleHeight);
+        mInsideTriangle.close();
+        mCanvas.drawPath(mInsideTriangle, mInsideTrianglePaint);
+
+        //绘制内层圆弧
+        mInsideRectF = new RectF(mWidth / 2 - mInsideRadius, mTextHeight + mOutSideRadius - mInsideRadius,
+                mWidth / 2 + mInsideRadius, mTextHeight + mOutSideRadius + mInsideRadius);
+        mCanvas.drawArc(mInsideRectF, -85, 350, false, mDeepGrayPaint);
+        //绘制旋转轨迹.
+        mAnglePaint.setStrokeWidth(5);
+        float resultDirection;
+        if (mCurDirection < 180) {
+            resultDirection = mCurDirection;
+            mCanvas.drawArc(mInsideRectF, -95, -resultDirection, false, mAnglePaint);
+        } else {
+            resultDirection = 360 - mCurDirection;
+            mCanvas.drawArc(mInsideRectF, -85, resultDirection, false, mAnglePaint);
+        }
+
+    }
+
+    private void drawInnerCricle() {
+        RadialGradient sg = new RadialGradient(mCenterX, mTextHeight + mOutSideRadius,
+                mInsideRadius - 40, Color.parseColor("#323232"),
+                Color.parseColor("#000000"), Shader.TileMode.CLAMP);
+        mInnerPaint.setShader(sg);
+        mCanvas.drawCircle(mWidth / 2, mTextHeight + mOutSideRadius,
+                mInsideRadius - 40, mInnerPaint);
     }
 
     @Override
@@ -176,6 +245,8 @@ public class MiCompassView extends View {
         mCanvas = canvas;
         drawText();
         drawCompassOutSide();
+        drawCompassInside();
+        drawInnerCricle();
     }
 
     public float getCurDirection() {

@@ -1,6 +1,7 @@
 package com.example.java.dagger2;
 
-import com.sun.glass.ui.View;
+
+import javax.swing.text.View;
 
 /**
  * Created by snowson on 18-2-6.
