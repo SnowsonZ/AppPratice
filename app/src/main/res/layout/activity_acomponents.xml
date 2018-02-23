@@ -6,6 +6,7 @@
     android:gravity="center">
 
     <com.example.snowson.apptest.view.MiCompassView
+        android:id="@+id/compassView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
