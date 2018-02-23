@@ -469,6 +469,9 @@ public class MiCompassView extends View {
     }
 
     public void setCurDirection(float curDirection) {
+        if(curDirection < 0) {
+            curDirection += 360;
+        }
         if (curDirection == 360) {
             curDirection = 0;
         }

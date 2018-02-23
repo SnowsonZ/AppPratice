@@ -35,13 +35,20 @@ public class DirectionManager {
         @OnLifecycleEvent(Lifecycle.Event.ON_START)
         private void start() {
             mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
-            mSensorManager.registerListener(mListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
-                    SensorManager.SENSOR_DELAY_GAME);
+            //使用重力加速度及磁场判定当前方向
+            if (mSensorManager != null) {
+                mSensorManager.registerListener(mListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                        SensorManager.SENSOR_DELAY_NORMAL);
+                mSensorManager.registerListener(mListener, mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
+                        SensorManager.SENSOR_DELAY_NORMAL);
+            }
         }
 
         @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
         private void stop() {
-            mSensorManager.unregisterListener(mListener);
+            if(mSensorManager != null) {
+                mSensorManager.unregisterListener(mListener);
+            }
         }
     }
 }
