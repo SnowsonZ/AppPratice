@@ -105,7 +105,8 @@
         <activity android:name=".activity.NetWorkTestActivity" />
         <activity android:name=".activity.Dagger2Activity" />
         <activity android:name=".activity.AndroidDaggerActivity" />
-        <activity android:name=".activity.AComponentsActivity"></activity>
+        <activity android:name=".activity.AComponentsActivity" />
+        <activity android:name=".activity.NestActivity"></activity>
     </application>
 
 </manifest>
