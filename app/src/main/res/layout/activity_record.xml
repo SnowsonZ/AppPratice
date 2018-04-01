@@ -40,15 +40,6 @@
             android:text="00:00:00"
             android:textSize="50sp"/>
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/tv_alert"
-            android:textSize="18sp"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@id/llayout_control"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_red_dark"/>
-
 
         <LinearLayout
             android:id="@+id/llayout_control"
@@ -125,6 +116,15 @@
                 android:src="@android:drawable/ic_menu_revert" />
 
         </LinearLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_alert"
+            android:textSize="18sp"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/llayout_control"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"/>
 
     </RelativeLayout>
 </LinearLayout>

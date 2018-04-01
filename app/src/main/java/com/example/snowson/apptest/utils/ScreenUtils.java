@@ -64,6 +64,10 @@ public class ScreenUtils {
         Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * 透明状态栏
+     * @param activity
+     */
     public static void transparentStatus(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
@@ -77,6 +81,11 @@ public class ScreenUtils {
         }
     }
 
+    /**
+     * 秒转化为时间点
+     * @param seconds
+     * @return
+     */
     public static String timeFormat(int seconds) {
         String hour = "", min = "", second = "";
         if (seconds < 60) {
