@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.snowson.apptest.activity.FileProviderActivity;
+import com.example.snowson.apptest.activity.ViewMeasureActivity;
 import com.example.snowson.apptest.adapter.IndexContentAdapter;
 import com.example.snowson.apptest.fragment.BaseFragment;
 import com.example.snowson.apptest.fragment.PageCartFragment;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(this, FileProviderActivity.class));
+        startActivity(new Intent(this, ViewMeasureActivity.class));
         initView();
         initData();
     }

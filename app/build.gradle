@@ -9,7 +9,7 @@ bugly {
 }
 
 android {
-    compileSdkVersion project.ext.compileSdkVersion
+    compileSdkVersion 'android-P'
     defaultConfig {
         applicationId "com.example.snowson.apptest"
         minSdkVersion project.ext.minSdkVersion
@@ -25,7 +25,7 @@ android {
         ]
         ndk {
             //config support abi
-            abiFilters 'armeabi'
+            abiFilters 'armeabi', 'x86', 'x86_64'
             moduleName "mp3lame"
             ldLibs 'android', 'OpenSLES', 'log'
         }
@@ -102,8 +102,9 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.14.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
     compile 'com.google.dagger:dagger-android:2.14.1'
-    compile 'com.google.dagger:dagger-android-support:2.14.1' // if you use the support libraries
+    compile 'com.google.dagger:dagger-android-support:2.14.1'
+    // if you use the support libraries
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.14.1'
     // ViewModel and LiveData
-    implementation "android.arch.lifecycle:extensions:1.1.0"
+    implementation 'android.arch.lifecycle:extensions:1.1.0'
 }

@@ -5,11 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/AppPratice.iml" filepath="$PROJECT_DIR$/AppPratice.iml" />
       <module fileurl="file://E:\gitproject\AppPratice\AppTest.iml" filepath="E:\gitproject\AppPratice\AppTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://E:\gitproject\AppPratice\app\app.iml" filepath="E:\gitproject\AppPratice\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/java/java.iml" filepath="$PROJECT_DIR$/java/java.iml" />
-      <module fileurl="file://E:\gitproject\AppPratice\java\java.iml" filepath="E:\gitproject\AppPratice\java\java.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://E:\gitproject\AppPratice\library\library.iml" filepath="E:\gitproject\AppPratice\library\library.iml" />
     </modules>
   </component>
 </project>
