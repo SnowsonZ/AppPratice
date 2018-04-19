@@ -29,11 +29,24 @@ android {
             moduleName "mp3lame"
             ldLibs 'android', 'OpenSLES', 'log'
         }
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-frtti -fexceptions"
+            }
+        }
     }
 
     sourceSets {
         main {
             jni.srcDirs = []
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
         }
     }
 

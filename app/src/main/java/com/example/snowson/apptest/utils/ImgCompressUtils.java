@@ -40,6 +40,13 @@ public class ImgCompressUtils {
         return BitmapFactory.decodeResource(context.getResources(), R.drawable.temp, options);
     }
 
+    /**
+     * 质量压缩
+     * @param context
+     * @param path
+     * @param rate
+     * @return
+     */
     public static Bitmap quality(Context context, String path, int rate) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.temp);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -47,4 +54,7 @@ public class ImgCompressUtils {
         byte[] bytes = baos.toByteArray();
         return BitmapFactory.decodeByteArray(bytes, 0, baos.size());
     }
+
+    public native void compressBitmap(Bitmap bit, int w, int h, int quality, byte[] fileNameBytes,
+                                      boolean optimize);
 }
