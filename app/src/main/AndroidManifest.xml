@@ -120,7 +120,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".activity.ViewMeasureActivity"></activity>
+        <activity android:name=".activity.ViewMeasureActivity" />
+        <activity android:name=".activity.MapTestActivity"></activity>
     </application>
 
 </manifest>

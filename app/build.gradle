@@ -9,7 +9,7 @@ bugly {
 }
 
 android {
-    compileSdkVersion 'android-P'
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.snowson.apptest"
         minSdkVersion project.ext.minSdkVersion
@@ -30,25 +30,25 @@ android {
             ldLibs 'android', 'OpenSLES', 'log'
         }
 
-        externalNativeBuild {
-            cmake {
-                cppFlags "-frtti -fexceptions"
-            }
-        }
+//        externalNativeBuild {
+//            cmake {
+//                cppFlags "-frtti -fexceptions"
+//            }
+//        }
     }
 
     sourceSets {
         main {
             jni.srcDirs = []
-            jniLibs.srcDirs = ['libs']
+            jniLibs.srcDirs = ['libs/native']
         }
     }
 
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-        }
-    }
+//    externalNativeBuild {
+//        cmake {
+//            path "CMakeLists.txt"
+//        }
+//    }
 
     buildTypes {
         release {
@@ -82,6 +82,13 @@ android {
         targetCompatibility project.ext.targetCompatibility
         sourceCompatibility project.ext.sourceCompatibility
     }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
 }
 
 dependencies {
@@ -120,4 +127,5 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.14.1'
     // ViewModel and LiveData
     implementation 'android.arch.lifecycle:extensions:1.1.0'
+    testImplementation "org.robolectric:robolectric:3.8"
 }
