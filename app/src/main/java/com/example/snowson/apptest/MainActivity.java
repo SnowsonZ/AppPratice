@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.example.snowson.apptest.activity.FileProviderActivity;
 import com.example.snowson.apptest.activity.MapTestActivity;
+import com.example.snowson.apptest.activity.ServiceActivity;
 import com.example.snowson.apptest.activity.ViewMeasureActivity;
 import com.example.snowson.apptest.adapter.IndexContentAdapter;
 import com.example.snowson.apptest.fragment.BaseFragment;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(this, MapTestActivity.class));
+        startActivity(new Intent(this, ServiceActivity.class));
         initView();
         initData();
     }

@@ -121,7 +121,13 @@
         </provider>
 
         <activity android:name=".activity.ViewMeasureActivity" />
-        <activity android:name=".activity.MapTestActivity"></activity>
+        <activity android:name=".activity.MapTestActivity" />
+
+        <service
+            android:name=".AidlService"
+            android:process=":remote" />
+
+        <activity android:name=".activity.ServiceActivity" />
     </application>
 
 </manifest>
