@@ -1,3 +1,5 @@
+package com.example.java.pattern_design.bridging;
+
 /**
  * 实现类接口扩展
  */
@@ -11,7 +13,8 @@ public class Linux implements Platform {
 
     }
 
-    public void prev() {
+    @Override
+    public void previous() {
 
     }
 

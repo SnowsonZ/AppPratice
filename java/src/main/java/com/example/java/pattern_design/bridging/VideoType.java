@@ -1,3 +1,5 @@
+package com.example.java.pattern_design.bridging;
+
 /**
  * 抽象类
  */

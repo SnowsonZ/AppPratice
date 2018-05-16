@@ -1,3 +1,5 @@
+package com.example.java.pattern_design.bridging;
+
 public class QiaoJieTest {
     public static void main(String[] args) {
         Platform platformOne = new Windows();

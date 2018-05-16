@@ -1,3 +1,8 @@
+package com.example.java.pattern_design.bridging;
+
+import com.example.java.pattern_design.bridging.Platform;
+import com.example.java.pattern_design.bridging.VideoType;
+
 /**
  * 
  * 扩充抽象类
