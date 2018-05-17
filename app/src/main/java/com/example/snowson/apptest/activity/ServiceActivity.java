@@ -33,6 +33,7 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
     private Intent intent;
     private int num = 0;
     private IAidlInterface binder;
+    //    private AidlService.AidlBinder binder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,11 +102,22 @@ public class ServiceActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             binder = IAidlInterface.Stub.asInterface(service);
+//            binder = (AidlService.AidlBinder) service;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
 
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(mConnection);
+        stopService(intent);
+        if(mConnection != null) {
+            mConnection = null;
         }
     }
 }
