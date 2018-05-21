@@ -14,6 +14,7 @@ import com.example.snowson.apptest.activity.ServiceActivity;
 import com.example.snowson.apptest.activity.ViewMeasureActivity;
 import com.example.snowson.apptest.adapter.IndexContentAdapter;
 import com.example.snowson.apptest.fragment.BaseFragment;
+import com.example.snowson.apptest.fragment.PageAnimationFragment;
 import com.example.snowson.apptest.fragment.PageCartFragment;
 import com.example.snowson.apptest.fragment.PageDialogFragment;
 import com.example.snowson.apptest.fragment.PageIndexFragment;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(this, ServiceActivity.class));
+//        startActivity(new Intent(this, ServiceActivity.class));
         initView();
         initData();
     }
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         mPageTitle.add("ViewType");
         mPageTitle.add("Cart");
         mPageTitle.add("Order");
+        mPageTitle.add("Animation");
         mPages = new ArrayList<BaseFragment>();
         PageIndexFragment fragIndex = new PageIndexFragment();
         Bundle bIndex = new Bundle();
@@ -75,9 +77,12 @@ public class MainActivity extends AppCompatActivity {
         mPages.add(fragmentCart);
         PageOrderFragment fragmentOrder = new PageOrderFragment();
         mPages.add(fragmentOrder);
+        PageAnimationFragment fragmentAnimation = new PageAnimationFragment();
+        mPages.add(fragmentAnimation);
         mAdapter = new IndexContentAdapter(getSupportFragmentManager(), mPages, mPageTitle);
         mContentVp.setAdapter(mAdapter);
         mNavTab.setupWithViewPager(mContentVp);
+
     }
 
     private Toolbar.OnMenuItemClickListener mOnMenuItemClickListener

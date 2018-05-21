@@ -3,6 +3,7 @@ project.ext {
     //java version
     javaVersion = 8
     javaMaxHeapSize = '4G'
+    supportLibVersion = "26.1.0"
 
     //Android compile
     compileSdkVersion = 26
