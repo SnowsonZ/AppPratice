@@ -11,7 +11,7 @@ include_directories( src/main/cpp/jpeg/
 add_library(jpegbither SHARED IMPORTED)
 set_target_properties(jpegbither
   PROPERTIES IMPORTED_LOCATION
-  ${CMAKE_SOURCE_DIR}/libs/${ANDROID_ABI}/libjpegbither.so)
+  ${CMAKE_SOURCE_DIR}/libs/native/${ANDROID_ABI}/libjpegbither.so)
 
 
 find_library( log-lib

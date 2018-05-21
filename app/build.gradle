@@ -25,16 +25,16 @@ android {
         ]
         ndk {
             //config support abi
-            abiFilters 'armeabi', 'x86', 'x86_64'
+            abiFilters 'armeabi'/*, 'x86', 'x86_64'*/
             moduleName "mp3lame"
             ldLibs 'android', 'OpenSLES', 'log'
         }
 
-//        externalNativeBuild {
-//            cmake {
-//                cppFlags "-frtti -fexceptions"
-//            }
-//        }
+        externalNativeBuild {
+            cmake {
+                cppFlags "-frtti -fexceptions"
+            }
+        }
     }
 
     sourceSets {
@@ -44,11 +44,11 @@ android {
         }
     }
 
-//    externalNativeBuild {
-//        cmake {
-//            path "CMakeLists.txt"
-//        }
-//    }
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
 
     buildTypes {
         release {
