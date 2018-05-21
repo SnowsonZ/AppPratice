@@ -95,7 +95,7 @@ public class CartBodyViewHolder extends TypeHolder<ShopObservable>
         tv_goods_sub.setOnClickListener(this);
         tv_goods_type_edit.setOnClickListener(this);
         tv_goods_delete.setOnClickListener(this);
-        cb_select.setChecked(bean.isChecked);
+        cb_select.setChecked(mData.isChecked);
         tv_goods_name.setText(cartGoodsBean.goodsName);
         tv_goods_type.setText(cartGoodsBean.goodsType);
         tv_goods_count.setText(String.format(context.getResources().getString(R.string.goods_count),
