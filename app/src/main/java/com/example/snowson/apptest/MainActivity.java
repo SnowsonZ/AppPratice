@@ -1,6 +1,5 @@
 package com.example.snowson.apptest;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -8,10 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.example.snowson.apptest.activity.FileProviderActivity;
-import com.example.snowson.apptest.activity.MapTestActivity;
-import com.example.snowson.apptest.activity.ServiceActivity;
-import com.example.snowson.apptest.activity.ViewMeasureActivity;
 import com.example.snowson.apptest.adapter.IndexContentAdapter;
 import com.example.snowson.apptest.fragment.BaseFragment;
 import com.example.snowson.apptest.fragment.PageAnimationFragment;

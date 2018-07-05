@@ -36,20 +36,17 @@ android {
             }
         }
     }
-
     sourceSets {
         main {
             jni.srcDirs = []
             jniLibs.srcDirs = ['libs/native']
         }
     }
-
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
         }
     }
-
     buildTypes {
         release {
             minifyEnabled true
@@ -68,7 +65,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     /*umeng 避免部分三方授权失败*/
     signingConfigs {
         debug {
@@ -82,13 +78,12 @@ android {
         targetCompatibility project.ext.targetCompatibility
         sourceCompatibility project.ext.sourceCompatibility
     }
-
     testOptions {
         unitTests {
             includeAndroidResources = true
         }
     }
-
+    buildToolsVersion '27.0.3'
 }
 
 dependencies {
@@ -127,10 +122,9 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.14.1'
     // ViewModel and LiveData
     implementation 'android.arch.lifecycle:extensions:1.1.1'
-    testImplementation "org.robolectric:robolectric:3.8"
-
+    testImplementation 'org.robolectric:robolectric:3.8'
     // lottie
-    compile ('com.airbnb.android:lottie:2.5.1') {
+    implementation('com.airbnb.android:lottie:2.5.1') {
         exclude group: 'com.android.support'
     }
 }
