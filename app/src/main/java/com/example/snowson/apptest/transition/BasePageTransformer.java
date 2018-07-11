@@ -16,6 +16,7 @@ public abstract class BasePageTransformer implements ViewPager.PageTransformer
     protected ViewPager.PageTransformer mPageTransformer = NonPageTransformer.INSTANCE;
     public static final float DEFAULT_CENTER = 0.5f;
 
+    @Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void transformPage(View view, float position)
     {

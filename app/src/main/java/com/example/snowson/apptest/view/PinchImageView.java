@@ -775,6 +775,7 @@ public class PinchImageView extends android.support.v7.widget.AppCompatImageView
     private GestureDetector mGestureDetector = new GestureDetector(PinchImageView.this.getContext(),
             new GestureDetector.SimpleOnGestureListener() {
 
+        @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             //只有在单指模式结束之后才允许执行fling
             if (mPinchMode == PINCH_MODE_FREE && !(mScaleAnimator != null && mScaleAnimator.isRunning())) {
@@ -783,6 +784,7 @@ public class PinchImageView extends android.support.v7.widget.AppCompatImageView
             return true;
         }
 
+        @Override
         public void onLongPress(MotionEvent e) {
             //触发长按
             if (mOnLongClickListener != null) {
@@ -790,6 +792,7 @@ public class PinchImageView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
+        @Override
         public boolean onDoubleTap(MotionEvent e) {
             //当手指快速第二次按下触发,此时必须是单指模式才允许执行doubleTap
             if (mPinchMode == PINCH_MODE_SCROLL && !(mScaleAnimator != null && mScaleAnimator.isRunning())) {
@@ -798,6 +801,7 @@ public class PinchImageView extends android.support.v7.widget.AppCompatImageView
             return true;
         }
 
+        @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             //触发点击
             if (mOnClickListener != null) {

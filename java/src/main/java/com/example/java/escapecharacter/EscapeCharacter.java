@@ -8,7 +8,7 @@ public class EscapeCharacter {
     public static void main(String[] args) {
         String content = "a||b||c||d||e";
 //        String content = "a\\b\\c\\d";
-        String[] arrays = content.split("\\|");
+        String[] arrays = content.split("\\|\\|");
         for (int i = 0; i < arrays.length; i++) {
             System.out.print(i + " : " +arrays[i] + ", ");
         }

@@ -76,10 +76,11 @@ public class AudioFileUtils {
      * @return true | false
      */
     public static boolean isSdcardExit() {
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     /**
@@ -128,7 +129,7 @@ public class AudioFileUtils {
         File rootFile = new File(fileBasePath);
         if (rootFile.exists()) {
             for (File item : rootFile.listFiles()) {
-                if (item.getName().equals("result.pcm")) {
+                if ("result.pcm".equals(item.getName())) {
                     continue;
                 }
                 item.delete();

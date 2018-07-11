@@ -79,12 +79,16 @@ public class BlackJUtil {
      * @return Application
      */
     public static Application getApp() {
-        if (sApplication != null) return sApplication;
+        if (sApplication != null) {
+            return sApplication;
+        }
         throw new NullPointerException("u should init first");
     }
 
     private static void setTopActivityWeakRef(final Activity activity) {
-        if (activity.getClass() == PermissionUtils.PermissionActivity.class) return;
+        if (activity.getClass() == PermissionUtils.PermissionActivity.class) {
+            return;
+        }
         if (sTopActivityWeakRef == null || !activity.equals(sTopActivityWeakRef.get())) {
             sTopActivityWeakRef = new WeakReference<>(activity);
         }

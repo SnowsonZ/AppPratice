@@ -36,6 +36,7 @@ public class CustPagerTransformer extends BasePageTransformer {
     }
 
 
+    @Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void pageTransform(View view, float position) {
         Log.i(this.getClass().getName(), "position: " + position );

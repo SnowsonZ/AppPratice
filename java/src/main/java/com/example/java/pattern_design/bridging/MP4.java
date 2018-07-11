@@ -8,6 +8,7 @@ import com.example.java.pattern_design.bridging.VideoType;
  * 扩充抽象类
  */
 public class MP4 extends VideoType {
+    @Override
     public void play() {
         Platform platform = getPlatform();
         if (platform != null) {
@@ -15,18 +16,22 @@ public class MP4 extends VideoType {
         }
     }
 
+    @Override
     public void pause() {
 
     }
 
+    @Override
     public void prev() {
 
     }
 
+    @Override
     public void next() {
 
     }
 
+    @Override
     public void stop() {
 
     }

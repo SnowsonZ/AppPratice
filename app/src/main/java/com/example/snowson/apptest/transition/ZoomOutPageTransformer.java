@@ -14,6 +14,7 @@ public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
     private static final float MIN_SCALE = 0.6f;
     private static final float MIN_ALPHA = 0.5f;
 
+    @Override
     public void transformPage(View view, float position) {
         Log.i(this.getClass().getName(), "view.color: " + view.getDrawingCacheBackgroundColor() + "; position: " + position);
         int pageWidth = view.getWidth();

@@ -23,6 +23,7 @@ public class CartHeaderViewHolder extends TypeHolder<ShopObservable> {
     private TextView tv_edit;
     private CheckBox cb_select;
 
+    @Override
     public void setOnNotifyDataChangeListener(OnNotifyDataChangeListener listener) {
         mListener = listener;
     }
