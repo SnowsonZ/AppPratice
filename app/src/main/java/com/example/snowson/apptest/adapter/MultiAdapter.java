@@ -2,7 +2,7 @@ package com.example.snowson.apptest.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,8 @@ import com.example.snowson.apptest.bean.DataTypeGrid;
 import com.example.snowson.apptest.bean.DataTypeOne;
 import com.example.snowson.apptest.bean.DataTypeThree;
 import com.example.snowson.apptest.bean.DataTypeTwo;
-import com.example.snowson.apptest.bean.MutilDataType;
+import com.example.snowson.apptest.bean.MultiTypeBase;
+import com.example.snowson.apptest.bean.TypesBlock;
 import com.example.snowson.apptest.viewholder.TypeAbstractViewHolder;
 import com.example.snowson.apptest.viewholder.TypeBannerViewHolder;
 import com.example.snowson.apptest.viewholder.TypeGridViewHolder;
@@ -28,9 +29,9 @@ import java.util.List;
  * Created by snowson on 17-12-14.
  */
 
-public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<MutilDataType> mData = new ArrayList<MutilDataType>();
+    private List<TypesBlock> mData = new ArrayList<TypesBlock>();
     private List<DataTypeOne> mDataOne = new ArrayList<DataTypeOne>();
     private List<DataTypeTwo> mDataTwo = new ArrayList<DataTypeTwo>();
     private List<DataTypeThree> mDataThree = new ArrayList<DataTypeThree>();
@@ -39,14 +40,15 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     //记录全数据中当前item的类型
     private ArrayList<Integer> types = new ArrayList<Integer>();
     //记录各个类型的type的在总的数据中的起始下标
-    private SparseArray<Integer> mRealPosition = new SparseArray<Integer>();
+    private SparseIntArray mRealPosition = new SparseIntArray();
+    private SparseIntArray mHeaderIndex = new SparseIntArray();
     private ArrayList<String> mHeader = new ArrayList<String>();
     private View mHeaderView = null;
 
 
     private LayoutInflater lInflater;
 
-    public MutilAdapter(Context context) {
+    public MultiAdapter(Context context) {
         lInflater = LayoutInflater.from(context);
     }
 
@@ -56,7 +58,7 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 //        updateData(mDataOne, mDataTwo, mDataThree, mDataFour, mDataFive, mHeader);
     }
 
-    public void setData(List<MutilDataType> data) {
+    public void setData(List<TypesBlock> data) {
         mData.addAll(data);
     }
 
@@ -74,6 +76,8 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mHeader.clear();
         types.clear();
         mRealPosition.clear();
+        mHeaderIndex.clear();
+        recordHeaderIndex = 0;
 
         setData(dataOne, dataTwo, dataThree, dataFour, dataFive, headers);
         notifyDataSetChanged();
@@ -103,10 +107,12 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         addDataByType(TypeAbstractViewHolder.TYPE_FIVE, dataFive);
     }
 
+    private int recordHeaderIndex = 0;
     private void addDataByType(int type, List data) {
         //记录
         if (data.size() > 0) {
             types.add(TypeAbstractViewHolder.TYPE_HEADER);
+            mHeaderIndex.append(types.size() - 1, recordHeaderIndex++);
             mRealPosition.append(type, types.size());
         }
         for (int i = 0; i < data.size(); i++) {
@@ -146,9 +152,10 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int realPosition = 0;
+        //获取当前Item的type
         Integer type = types.get(position);
         if (type == TypeAbstractViewHolder.TYPE_HEADER) {
-            realPosition = types.get(position + 1) - 1;
+            realPosition = mHeaderIndex.get(position);
         } else if (type == TypeAbstractViewHolder.TYPE_BANNER) {
             return;
         } else {
@@ -174,7 +181,6 @@ public class MutilAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 ((TypeHeaderViewHolder) holder).bind(mHeader.get(realPosition));
                 return;
         }
-
     }
 
     @Override

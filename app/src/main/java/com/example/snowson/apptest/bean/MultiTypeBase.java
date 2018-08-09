@@ -4,7 +4,7 @@ package com.example.snowson.apptest.bean;
  * Created by snowson on 17-12-14.
  */
 
-public class MutilDataType {
+public class MultiTypeBase {
 
     private int colorTinyPic;
 

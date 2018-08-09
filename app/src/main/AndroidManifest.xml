@@ -23,23 +23,23 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
-        android:name=".bugly.MainApplication"
+        android:name=".bugly.MainApplicationLike"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base">
-        <meta-data
+        <meta-lists
             android:name="isRelease"
             android:value="${isRelease}" />
-        <meta-data
+        <meta-lists
             android:name="buglyId"
             android:value="${buglyAppId}" />
-        <meta-data
+        <meta-lists
             android:name="UMENG_APPKEY"
             android:value="${umengAppKey}" />
-        <meta-data
+        <meta-lists
             android:name="UMENG_CHANNEL"
             android:value="${umengChannel}" />
 
@@ -88,7 +88,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent100424468" />
+                <lists android:scheme="tencent100424468" />
             </intent-filter>
         </activity>
         <activity
@@ -120,7 +120,7 @@
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-            <meta-data
+            <meta-lists
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>

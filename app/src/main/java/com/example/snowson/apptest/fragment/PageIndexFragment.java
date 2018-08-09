@@ -13,12 +13,12 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.example.snowson.apptest.R;
-import com.example.snowson.apptest.adapter.MutilAdapter;
+import com.example.snowson.apptest.adapter.MultiAdapter;
 import com.example.snowson.apptest.bean.DataTypeGrid;
 import com.example.snowson.apptest.bean.DataTypeOne;
 import com.example.snowson.apptest.bean.DataTypeThree;
 import com.example.snowson.apptest.bean.DataTypeTwo;
-import com.example.snowson.apptest.bean.MutilDataType;
+import com.example.snowson.apptest.bean.MultiTypeBase;
 import com.example.snowson.apptest.utils.ScreenUtils;
 import com.example.snowson.apptest.view.Banner;
 import com.example.snowson.apptest.viewholder.TypeAbstractViewHolder;
@@ -36,11 +36,11 @@ public class PageIndexFragment extends BaseFragment
         implements OnRefreshListener, OnLoadMoreListener {
 
     private RecyclerView rv_content;
-    private List<MutilDataType> mData;
+    private List<MultiTypeBase> mData;
     private int colorSet[] = {android.R.color.holo_green_light,
             android.R.color.holo_orange_light, android.R.color.holo_blue_light};
     private ArrayList<String> mImageUrl;
-    private MutilAdapter adapter;
+    private MultiAdapter adapter;
     private Banner mBanner;
     private SwipeToLoadLayout mSwipToLoadLayout;
     private ArrayList<DataTypeOne> data_one;
@@ -159,7 +159,7 @@ public class PageIndexFragment extends BaseFragment
             data_header.add("Header" + i);
         }
 
-        adapter = new MutilAdapter(getActivity());
+        adapter = new MultiAdapter(getActivity());
         adapter.setHeaderView(mBanner);
         adapter.setData(data_one, data_two, data_three, data_four, data_five, data_header);
         rv_content.setAdapter(adapter);

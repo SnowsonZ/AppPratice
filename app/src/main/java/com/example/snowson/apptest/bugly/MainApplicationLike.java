@@ -23,16 +23,16 @@ import com.tencent.tinker.loader.app.DefaultApplicationLike;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 
-public class MainApplicationLike extends DefaultApplicationLike {
+public class MainApplicationLike extends Application {
     private Application mContext;
 
-    public MainApplicationLike(Application application, int tinkerFlags,
-                               boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime,
-                               long applicationStartMillisTime, Intent tinkerResultIntent) {
-        super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime,
-                applicationStartMillisTime, tinkerResultIntent);
-        mContext = application;
-    }
+//    public MainApplicationLike(Application application, int tinkerFlags,
+//                               boolean tinkerLoadVerifyFlag, long applicationStartElapsedTime,
+//                               long applicationStartMillisTime, Intent tinkerResultIntent) {
+//        super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime,
+//                applicationStartMillisTime, tinkerResultIntent);
+//        mContext = application;
+//    }
 
     @Override
     public void onCreate() {
@@ -40,6 +40,7 @@ public class MainApplicationLike extends DefaultApplicationLike {
 //        DaggerAndroidDaggerApplicationComponent.create().inject(this);
         //init logger
         initLogger();
+        mContext = this;
         //init bugly 添加热修复
 //        CrashReport.initCrashReport(mContext,
 
@@ -60,12 +61,12 @@ public class MainApplicationLike extends DefaultApplicationLike {
 //        PlatformConfig.setAlipay();
     }
 
-    @Override
-    public void onBaseContextAttached(Context base) {
-        super.onBaseContextAttached(base);
-        MultiDex.install(base);
-        Beta.installTinker(this);
-    }
+//    @Override
+//    public void onBaseContextAttached(Context base) {
+//        super.onBaseContextAttached(base);
+//        MultiDex.install(base);
+//        Beta.installTinker(this);
+//    }
 
     private void initLogger() {
         FormatStrategy logcatStrategy = PrettyFormatStrategy
@@ -94,8 +95,8 @@ public class MainApplicationLike extends DefaultApplicationLike {
 //        Logger.addLogAdapter(fileAdapter);
     }
 
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    public void registerActivityLifecycleCallback(Application.ActivityLifecycleCallbacks callbacks) {
-        getApplication().registerActivityLifecycleCallbacks(callbacks);
-    }
+//    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+//    public void registerActivityLifecycleCallback(Application.ActivityLifecycleCallbacks callbacks) {
+//        getApplication().registerActivityLifecycleCallbacks(callbacks);
+//    }
 }

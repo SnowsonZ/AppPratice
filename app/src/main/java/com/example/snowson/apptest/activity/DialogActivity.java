@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.snowson.apptest.R;
-import com.example.snowson.apptest.adapter.MutilAdapter;
+import com.example.snowson.apptest.adapter.MultiAdapter;
 import com.example.snowson.apptest.bean.DataTypeGrid;
 import com.example.snowson.apptest.bean.DataTypeOne;
 import com.example.snowson.apptest.bean.DataTypeThree;
@@ -72,7 +72,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 ArrayList<String> headers = new ArrayList<String>();
                 headers.add("Header" + 1);
-                MutilAdapter adapter = new MutilAdapter(this);
+                MultiAdapter adapter = new MultiAdapter(this);
                 adapter.setData(datas, new ArrayList<DataTypeTwo>(), new ArrayList<DataTypeThree>(),
                         new ArrayList<DataTypeGrid>(), new ArrayList<DataTypeGrid>(), headers);
                 mBottomSheetRv.setAdapter(adapter);

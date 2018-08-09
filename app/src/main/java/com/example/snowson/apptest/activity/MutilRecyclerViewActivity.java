@@ -11,46 +11,62 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.example.snowson.apptest.R;
-import com.example.snowson.apptest.adapter.MutilAdapter;
+import com.example.snowson.apptest.adapter.MultiAdapter;
 import com.example.snowson.apptest.bean.DataTypeGrid;
 import com.example.snowson.apptest.bean.DataTypeOne;
 import com.example.snowson.apptest.bean.DataTypeThree;
 import com.example.snowson.apptest.bean.DataTypeTwo;
-import com.example.snowson.apptest.bean.MutilDataType;
+import com.example.snowson.apptest.bean.TypesBlock;
+import com.example.snowson.apptest.utils.JsonUtil;
 import com.example.snowson.apptest.utils.ScreenUtils;
 import com.example.snowson.apptest.view.Banner;
 import com.example.snowson.apptest.viewholder.TypeAbstractViewHolder;
+import com.google.gson.reflect.TypeToken;
+import com.orhanobut.logger.Logger;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class MutilRecyclerViewActivity extends AppCompatActivity
         implements OnRefreshListener, OnLoadMoreListener {
 
-    private RecyclerView rv_content;
-    private List<MutilDataType> mData = new ArrayList<MutilDataType>();
-    private int colorSet[] = {android.R.color.holo_green_light,
+    private RecyclerView mContextRv;
+    private List<TypesBlock> mDatas = new ArrayList<TypesBlock>();
+    private int[] colorSet = {android.R.color.holo_green_light,
             android.R.color.holo_orange_light, android.R.color.holo_blue_light};
     private ArrayList<String> mImageUrl = new ArrayList<String>();
-    private MutilAdapter adapter;
+    private MultiAdapter adapter;
     private Banner mBanner;
-    private SwipeToLoadLayout mSwipToLoadLayout;
-    private ArrayList<DataTypeOne> data_one;
-    private ArrayList<DataTypeTwo> data_two;
-    private ArrayList<DataTypeThree> data_three;
-    private ArrayList<DataTypeGrid> data_four;
-    private ArrayList<DataTypeGrid> data_five;
-    private ArrayList<String> data_header;
+    private SwipeToLoadLayout mSwipeToLoadLayout;
+    private ArrayList<DataTypeOne> mDataOne;
+    private ArrayList<DataTypeTwo> mDataTwo;
+    private ArrayList<DataTypeThree> mDataThree;
+    private ArrayList<DataTypeGrid> mDataFour;
+    private ArrayList<DataTypeGrid> mDataFive;
+    private ArrayList<String> mDataHeader;
+    private Disposable disposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mutil_recycler_view);
-        rv_content = findViewById(R.id.swipe_target);
+        mContextRv = findViewById(R.id.swipe_target);
         mBanner = new Banner(this);
-        mSwipToLoadLayout = findViewById(R.id.swipToLoadLayout);
-        mSwipToLoadLayout.setOnRefreshListener(this);
-        mSwipToLoadLayout.setOnLoadMoreListener(this);
+        mSwipeToLoadLayout = findViewById(R.id.swipToLoadLayout);
+        mSwipeToLoadLayout.setOnRefreshListener(this);
+        mSwipeToLoadLayout.setOnLoadMoreListener(this);
         ViewGroup.LayoutParams params = mBanner.getLayoutParams();
         if (params == null) {
             params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -68,7 +84,7 @@ public class MutilRecyclerViewActivity extends AppCompatActivity
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                int viewType = rv_content.getAdapter().getItemViewType(position);
+                int viewType = mContextRv.getAdapter().getItemViewType(position);
                 switch (viewType) {
                     case TypeAbstractViewHolder.TYPE_ONE:
                     case TypeAbstractViewHolder.TYPE_TWO:
@@ -83,61 +99,91 @@ public class MutilRecyclerViewActivity extends AppCompatActivity
                 }
             }
         });
-        rv_content.setLayoutManager(gridLayoutManager);
-        initData();
+        mContextRv.setLayoutManager(gridLayoutManager);
+        disposable = Observable.create(new ObservableOnSubscribe<ArrayList<TypesBlock>>() {
+            @Override
+            public void subscribe(ObservableEmitter<ArrayList<TypesBlock>> emitter) throws Exception {
+                emitter.onNext(getData());
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ArrayList<TypesBlock>>() {
+                    @Override
+                    public void accept(ArrayList<TypesBlock> typesBlocks) throws Exception {
+                        mDatas = typesBlocks;
+                        adapter = new MultiAdapter(MutilRecyclerViewActivity.this);
+                        adapter.setHeaderView(mBanner);
+                        adapter.setData(mDatas);
+                        mContextRv.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+
+                    }
+                });
+//        initData();
+    }
+
+    private ArrayList<TypesBlock> getData() {
+        try {
+            return JsonUtil.fromJsonReader(new InputStreamReader(getResources().getAssets()
+                    .open("index.json")));
+        } catch (IOException e) {
+            e.printStackTrace();
+            Logger.e("解析错误");
+        }
+        return null;
     }
 
     private void initData() {
-        data_one = new ArrayList<DataTypeOne>();
+        mDataOne = new ArrayList<DataTypeOne>();
         for (int i = 0; i < 10; i++) {
             DataTypeOne item = new DataTypeOne();
             item.setColorTinyPic(colorSet[i % colorSet.length]);
             item.setTinyName("TinyName" + i);
             item.setLastMsg("lastMst:" + i);
-            data_one.add(item);
+            mDataOne.add(item);
         }
 
-        data_two = new ArrayList<DataTypeTwo>();
+        mDataTwo = new ArrayList<DataTypeTwo>();
         for (int i = 0; i < 10; i++) {
             DataTypeTwo item = new DataTypeTwo();
             item.setColorTinyPic(colorSet[i % colorSet.length]);
             item.setTinyName("TinyName" + i);
-            data_two.add(item);
+            mDataTwo.add(item);
         }
 
-        data_three = new ArrayList<DataTypeThree>();
+        mDataThree = new ArrayList<DataTypeThree>();
         for (int i = 0; i < 10; i++) {
             DataTypeThree item = new DataTypeThree();
             item.setColorTinyPic(colorSet[i % colorSet.length]);
             item.setTinyName("TinyName" + i);
             item.setColorBg(colorSet[i % colorSet.length]);
-            data_three.add(item);
+            mDataThree.add(item);
         }
 
-        data_four = new ArrayList<DataTypeGrid>();
+        mDataFour = new ArrayList<DataTypeGrid>();
         for (int i = 0; i <= 10; i++) {
             DataTypeGrid item = new DataTypeGrid();
             item.setGoodsName("GoodsName" + i);
             item.setGoodsPic(colorSet[i % colorSet.length]);
-            data_four.add(item);
+            mDataFour.add(item);
         }
-        data_five = new ArrayList<DataTypeGrid>();
+        mDataFive = new ArrayList<DataTypeGrid>();
         for (int i = 0; i < 10; i++) {
             DataTypeGrid item = new DataTypeGrid();
             item.setGoodsName("GoodsName" + i);
             item.setGoodsPic(colorSet[i % colorSet.length]);
-            data_five.add(item);
+            mDataFive.add(item);
         }
 
-        data_header = new ArrayList<String>();
+        mDataHeader = new ArrayList<String>();
         for (int i = 0; i < 5; i++) {
-            data_header.add("Header" + i);
+            mDataHeader.add("Header" + i);
         }
 
-        adapter = new MutilAdapter(this);
+        adapter = new MultiAdapter(this);
         adapter.setHeaderView(mBanner);
-        adapter.setData(data_one, data_two, data_three, data_four, data_five, data_header);
-        rv_content.setAdapter(adapter);
+        adapter.setData(mDataOne, mDataTwo, mDataThree, mDataFour, mDataFive, mDataHeader);
+        mContextRv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
@@ -147,15 +193,15 @@ public class MutilRecyclerViewActivity extends AppCompatActivity
         DataTypeGrid dtg = new DataTypeGrid();
         dtg.setGoodsName("Add Item By LoadMore");
         dtg.setGoodsPic(android.R.color.holo_purple);
-        data_five.add(dtg);
-        adapter.updateData(data_one, data_two, data_three, data_four, data_five, data_header);
-        rv_content.post(new Runnable() {
+        mDataFive.add(dtg);
+        adapter.updateData(mDataOne, mDataTwo, mDataThree, mDataFour, mDataFive, mDataHeader);
+        mContextRv.post(new Runnable() {
             @Override
             public void run() {
-                rv_content.scrollToPosition(adapter.getItemCount() - 1);
+                mContextRv.scrollToPosition(adapter.getItemCount() - 1);
             }
         });
-        mSwipToLoadLayout.setLoadingMore(false);
+        mSwipeToLoadLayout.setLoadingMore(false);
     }
 
     @Override
@@ -165,8 +211,17 @@ public class MutilRecyclerViewActivity extends AppCompatActivity
         dto.setColorTinyPic(android.R.color.holo_purple);
         dto.setTinyName("Add Item By Refresh");
         dto.setLastMsg("new message");
-        data_one.add(0, dto);
-        adapter.updateData(data_one, data_two, data_three, data_four, data_five, data_header);
-        mSwipToLoadLayout.setRefreshing(false);
+        mDataOne.add(0, dto);
+        adapter.updateData(mDataOne, mDataTwo, mDataThree, mDataFour, mDataFive, mDataHeader);
+        mSwipeToLoadLayout.setRefreshing(false);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (disposable != null) {
+            disposable.dispose();
+            disposable = null;
+        }
     }
 }

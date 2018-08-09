@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.snowson.apptest.R;
 import com.example.snowson.apptest.activity.EditTextTestActivity;
-import com.example.snowson.apptest.adapter.MutilAdapter;
+import com.example.snowson.apptest.adapter.MultiAdapter;
 import com.example.snowson.apptest.bean.DataTypeGrid;
 import com.example.snowson.apptest.bean.DataTypeOne;
 import com.example.snowson.apptest.bean.DataTypeThree;
@@ -155,7 +155,7 @@ public class PageDialogFragment extends BaseFragment {
                             }
                             ArrayList<String> headers = new ArrayList<String>();
                             headers.add("Header" + 1);
-                            MutilAdapter adapter = new MutilAdapter(getActivity());
+                            MultiAdapter adapter = new MultiAdapter(getActivity());
                             adapter.setData(datas, new ArrayList<DataTypeTwo>(),
                                     new ArrayList<DataTypeThree>(),
                                     new ArrayList<DataTypeGrid>(), new ArrayList<DataTypeGrid>(),
