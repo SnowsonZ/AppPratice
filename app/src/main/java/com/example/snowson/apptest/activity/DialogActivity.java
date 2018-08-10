@@ -20,7 +20,7 @@ import com.example.snowson.apptest.bean.DataTypeTwo;
 import com.example.snowson.apptest.view.dialog.CommonDialogFragment;
 
 import java.util.ArrayList;
-
+@Deprecated
 public class DialogActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button mDialogShowBtn;

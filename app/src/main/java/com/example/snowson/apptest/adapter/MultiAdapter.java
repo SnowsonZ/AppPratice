@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Created by snowson on 17-12-14.
  */
-
+//TODO 更新adapter数据结构
 public class MultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<TypesBlock> mData = new ArrayList<TypesBlock>();

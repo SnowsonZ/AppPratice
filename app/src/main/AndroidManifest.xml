@@ -108,7 +108,6 @@
         <activity android:name=".activity.ObjectRelationActivity" />
         <activity android:name=".activity.RxTestActivity" />
         <activity android:name=".activity.RxBinddingTestActivity" />
-        <activity android:name=".activity.NetWorkTestActivity" />
         <activity android:name=".activity.Dagger2Activity" />
         <activity android:name=".activity.AndroidDaggerActivity" />
         <activity android:name=".activity.AComponentsActivity" />
@@ -125,7 +124,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".activity.ViewMeasureActivity" />
         <activity android:name=".activity.MapTestActivity" />
 
         <service
