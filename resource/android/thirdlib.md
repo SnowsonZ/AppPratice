@@ -1,25 +1,3 @@
-#### ScrollView嵌套ListView或者GridView导致显示不全
-```
-ScrollView
-
-final int childHeightMeasureSpec = MeasureSpec.makeSafeMeasureSpec(
-                MeasureSpec.getSize(parentHeightMeasureSpec), MeasureSpec.UNSPECIFIED);
-
-ListView or GridView
-
-if (mItemCount > 0 && (widthMode == MeasureSpec.UNSPECIFIED
-                || heightMode == MeasureSpec.UNSPECIFIED)) {
-    //省略部分code
-    final View child = obtainView(0, mIsScrap);
-    childHeight = child.getMeasuredHeight();
-}
-//heightSize == 单个item的高度
-if (heightMode == MeasureSpec.UNSPECIFIED) {
-    heightSize = mListPadding.top + mListPadding.bottom + childHeight +
-   getVerticalFadingEdgeLength() * 2;
-}
-```
-
 #### Gson
 ##### 基本数据类型的解析与生成
 ```
@@ -256,8 +234,39 @@ Gson gson = new GsonBuilder().registerTypeHierarchyAdapter(List.class, new JsonD
 }).create();
 ```
 
-#### Java访问修饰符
-1. public 公开级访问权限
-2. default 包级访问权限
-3. protected 子类+private及访问权限
-4. private 类级访问权限
+#### retrofit
+##### 路径参数及单一查询参数
+@GET("group/{id}/users")
+public void getUsers(@Path("id") int groupId, @Query("sort") String sort);
+
+##### 多查询参数
+@QueryMap Map<String, String>
+
+##### 入参为object
+@Body User user
+
+##### 表单数据
+@FormUrlEncoded
+@POST
+Call<User> updateUser(@Field("first_name") String first, @Field("last_name") String last);
+
+##### 多媒体数据
+@Multipart
+@PUT("user/photo")
+Call<User> updateUser(@Part("photo") RequestBody photo)
+
+##### 头信息
+
+@Header("Cache-Control: max-age=640000")
+@GET("url")
+
+@Headers({
+    "Accept: application/vnd.github.v3.full+json",
+    "User-Agent: Retrofit-Sample-App"
+})
+@GET("users/{username}")
+Call<User> getUser(@Path("username") String username);
+
+//动态更新头部
+@GET("user")
+Call<User> getUser(@Header("Authorization") String authorization)

@@ -12,7 +12,7 @@ public class TypeB implements Observer{
 
     @Override
     public void update(Observable observable, Object o) {
-        System.out.println("A放生了变化");
+        System.out.println("A发生了变化");
         if(o instanceof Integer) {
             number = (int) o;
         }
