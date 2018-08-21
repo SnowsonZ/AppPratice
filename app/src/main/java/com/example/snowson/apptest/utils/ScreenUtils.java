@@ -18,6 +18,60 @@ import android.widget.Toast;
  */
 
 public class ScreenUtils {
+	
+	private static float originDensity, originScaleDensity;
+    private static final int DENSITY_WIDTH_DP = 360;
+    private static final int DENSITY_HEIGHT_DP = 640;
+    public static final int TYPE_WIDTH = 0;
+    public static final int TYPE_HEIGHT = 1;
+
+    public static void setCustomeDensity(@NonNull Activity activity,
+                                         @NonNull final Application application,
+                                         int type) {
+        DisplayMetrics appDisplayMetrics = application.getResources().getDisplayMetrics();
+        //获取原来的density
+        if (originDensity == 0) {
+            originDensity = appDisplayMetrics.density;
+            originScaleDensity = appDisplayMetrics.scaledDensity;
+            application.registerComponentCallbacks(new ComponentCallbacks() {
+                @Override
+                public void onConfigurationChanged(Configuration configuration) {
+                    if (configuration != null && configuration.fontScale > 0) {
+                        originScaleDensity
+                                = application.getResources().getDisplayMetrics().scaledDensity;
+                    }
+                }
+
+                @Override
+                public void onLowMemory() {
+
+                }
+            });
+        }
+        //计算目标density
+        float targetDensity;
+        //根据宽或者高进行适配
+        switch (type) {
+            case TYPE_HEIGHT:
+                targetDensity = appDisplayMetrics.heightPixels / DENSITY_HEIGHT_DP;
+                break;
+            case TYPE_WIDTH:
+            default:
+                targetDensity = appDisplayMetrics.widthPixels / DENSITY_WIDTH_DP;
+        }
+        float targetScaleDensity = targetDensity * originScaleDensity / originDensity;
+        int targetDensityDpi = (int) (targetDensity * 160);
+        //设置目标density
+        appDisplayMetrics.density = targetDensity;
+        appDisplayMetrics.scaledDensity = targetScaleDensity;
+        appDisplayMetrics.densityDpi = targetDensityDpi;
+
+        //设置activity的density
+        DisplayMetrics activityDisplayMetrics = activity.getResources().getDisplayMetrics();
+        activityDisplayMetrics.density = targetDensity;
+        activityDisplayMetrics.scaledDensity = targetScaleDensity;
+        activityDisplayMetrics.densityDpi = targetDensityDpi;
+    }
 
     public static float dp2px(Context context, float dp) {
         if (context == null || dp <= 0) {
