@@ -1,13 +1,18 @@
 package com.example.snowson.apptest.utils;
 
 import android.app.Activity;
+import android.app.Application;
+import android.content.ComponentCallbacks;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
@@ -18,8 +23,8 @@ import android.widget.Toast;
  */
 
 public class ScreenUtils {
-	
-	private static float originDensity, originScaleDensity;
+
+    private static float originDensity, originScaleDensity;
     private static final int DENSITY_WIDTH_DP = 360;
     private static final int DENSITY_HEIGHT_DP = 640;
     public static final int TYPE_WIDTH = 0;
@@ -120,6 +125,7 @@ public class ScreenUtils {
 
     /**
      * 透明状态栏
+     *
      * @param activity
      */
     public static void transparentStatus(Activity activity) {
@@ -137,6 +143,7 @@ public class ScreenUtils {
 
     /**
      * 秒转化为时间点
+     *
      * @param seconds
      * @return
      */
